@@ -6,12 +6,12 @@ use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
 use Fortifi\FortifiApi\Employee\Endpoints\EmployeeEndpoint;
 use Fortifi\FortifiApi\Employee\Payloads\CreateEmployeePayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeCompaniesPayload;
+use Fortifi\FortifiApi\Employee\Payloads\EmployeeEmailFidPayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeEmailPayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeePaginatedPayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeePayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeProfilePayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeRolesPayload;
-use Fortifi\FortifiApi\Employee\Payloads\RemoveEmployeeEmailPayload;
 use Fortifi\FortifiApi\Employee\Payloads\SetEmployeeAdminPayload;
 use Fortifi\FortifiApi\Employee\Payloads\SetPermissionPayload;
 use Fortifi\FortifiApi\Employee\Responses\CreateEmployeeResponse;
@@ -365,7 +365,7 @@ class EmployeeModel extends FortifiApiModel
    */
   public function removeEmail($fid, $emailFid)
   {
-    $payload            = new RemoveEmployeeEmailPayload();
+    $payload            = new EmployeeEmailFidPayload();
     $payload->fid       = $fid;
     $payload->emailFid  = $emailFid;
 
