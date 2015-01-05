@@ -1,0 +1,23 @@
+{
+  "name": "fortifi/sdk",
+  "description": "Fortifi SDK",
+  "homepage": "http://fortifi.co",
+  "license": "BSD-3-Clause",
+  "require": {
+    "fortifi/fortifi-api": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Fortifi\\Sdk\\": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:fortifi/fortifi-api.git"
+    }
+  ]
+}
