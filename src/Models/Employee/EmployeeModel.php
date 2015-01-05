@@ -26,18 +26,19 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class EmployeeModel extends FortifiApiModel
 {
   /**
-   * @param null $limit
-   * @param null $page
-   * @param null $sortField
-   * @param null $sortDirection
-   * @param int  $showDeleted
-   * @param int  $showDisabled
+   * @param null   $limit
+   * @param null   $page
+   * @param null   $sortField
+   * @param null   $sortDirection
+   * @param int    $showDeleted
+   * @param int    $showDisabled
+   * @param string $filter
    *
    * @return FortifiApiRequestInterface|EmployeesResponse
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
-    $showDeleted = 0, $showDisabled = 1
+    $showDeleted = 0, $showDisabled = 1, $filter = null
   )
   {
     $payload                = new EmployeePaginatedPayload();
@@ -47,6 +48,7 @@ class EmployeeModel extends FortifiApiModel
     $payload->sortDirection = $sortDirection;
     $payload->showDeleted   = $showDeleted;
     $payload->showDisabled  = $showDisabled;
+    $payload->filter        = $filter;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

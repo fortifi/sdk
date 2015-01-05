@@ -23,12 +23,13 @@ class CompanyModel extends FortifiApiModel
    * @param string $sortField
    * @param string $sortDirection
    * @param bool   $showDeleted
+   * @param string $filter
    *
    * @return CompaniesResponse
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
-    $showDeleted = false
+    $showDeleted = false, $filter = null
   )
   {
     $payload                = new PaginatedDataNodePayload();
@@ -37,6 +38,7 @@ class CompanyModel extends FortifiApiModel
     $payload->sortField     = $sortField;
     $payload->sortDirection = $sortDirection;
     $payload->showDeleted   = $showDeleted;
+    $payload->filter        = $filter;
 
     $ep = CompanyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

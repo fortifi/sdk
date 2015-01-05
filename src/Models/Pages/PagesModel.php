@@ -18,11 +18,13 @@ class PagesModel extends FortifiApiModel
    * @param int    $page
    * @param string $sortField
    * @param string $sortDirection
+   * @param string $filter
    *
    * @return PagesResponse
    */
   public function all(
-    $limit = null, $page = null, $sortField = null, $sortDirection = null
+    $limit = null, $page = null, $sortField = null, $sortDirection = null,
+    $filter = null
   )
   {
     $payload                = new PaginatedDataNodePayload();
@@ -30,6 +32,7 @@ class PagesModel extends FortifiApiModel
     $payload->page          = $page;
     $payload->sortField     = $sortField;
     $payload->sortDirection = $sortDirection;
+    $payload->filter        = $filter;
 
     $ep = PagesEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

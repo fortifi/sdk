@@ -16,18 +16,19 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class MailerModel extends FortifiApiModel
 {
   /**
-   * @param null $limit
-   * @param null $page
-   * @param null $sortField
-   * @param null $sortDirection
-   * @param int  $showDeleted
-   * @param int  $showDisabled
+   * @param int    $limit
+   * @param int    $page
+   * @param string $sortField
+   * @param string $sortDirection
+   * @param int    $showDeleted
+   * @param int    $showDisabled
+   * @param string $filter
    *
    * @return FortifiApiRequestInterface|MailerEmailsResponse
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
-    $showDeleted = 0, $showDisabled = 1
+    $showDeleted = 0, $showDisabled = 1, $filter = null
   )
   {
     $payload                = new MailerPaginatedPayload();
@@ -37,6 +38,7 @@ class MailerModel extends FortifiApiModel
     $payload->sortDirection = $sortDirection;
     $payload->showDeleted   = $showDeleted;
     $payload->showDisabled  = $showDisabled;
+    $payload->filter        = $filter;
 
     $ep = MailerEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

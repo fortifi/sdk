@@ -21,12 +21,13 @@ class RoleModel extends FortifiApiModel
    * @param string $sortField
    * @param string $sortDirection
    * @param bool   $showDeleted
+   * @param string $filter
    *
    * @return EmployeeRolesResponse
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
-    $showDeleted = false
+    $showDeleted = false, $filter = null
   )
   {
     $payload                = new EmployeeRolePaginatedPayload();
@@ -35,6 +36,7 @@ class RoleModel extends FortifiApiModel
     $payload->sortField     = $sortField;
     $payload->sortDirection = $sortDirection;
     $payload->showDeleted   = $showDeleted;
+    $payload->filter        = $filter;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

@@ -25,20 +25,22 @@ class TagModel extends FortifiApiModel
    * @param string $sortField
    * @param string $sortDirection
    * @param bool   $showDeleted
+   * @param string $filter
    *
    * @return TagsResponse
    */
   public function all(
     $limit = 10, $page = 1, $sortField = null, $sortDirection = null,
-    $showDeleted = false
+    $showDeleted = false, $filter = null
   )
   {
     $payload = new TagsPaginatedPayload();
-    $payload->limit = $limit;
-    $payload->page = $page;
-    $payload->sortField = $sortField;
+    $payload->limit         = $limit;
+    $payload->page          = $page;
+    $payload->sortField     = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted = $showDeleted;
+    $payload->showDeleted   = $showDeleted;
+    $payload->filter        = $filter;
 
     $ep = TagEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

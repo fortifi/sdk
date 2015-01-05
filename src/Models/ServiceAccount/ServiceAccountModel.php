@@ -17,11 +17,13 @@ class ServiceAccountModel extends FortifiApiModel
    * @param int    $page
    * @param string $sortField
    * @param string $sortDirection
+   * @param string $filter
    *
    * @return ServiceAccountsResponse
    */
   public function all(
-    $limit = null, $page = null, $sortField = null, $sortDirection = null
+    $limit = null, $page = null, $sortField = null, $sortDirection = null,
+    $filter = null
   )
   {
     $payload                = new PaginatedPayload();
@@ -29,6 +31,7 @@ class ServiceAccountModel extends FortifiApiModel
     $payload->page          = $page;
     $payload->sortField     = $sortField;
     $payload->sortDirection = $sortDirection;
+    $payload->filter        = $filter;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

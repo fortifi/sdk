@@ -14,14 +14,23 @@ class NotificationModel extends FortifiApiModel
   /**
    * @param int $page
    * @param int $limit
+   * @param string $sortField
+   * @param string $sortDirection
+   * @param string $filter
    *
    * @return UserNotificationsResponse
    */
-  public function all($page = 1, $limit = 5)
+  public function all($page = 1, $limit = 5, $sortField = null,
+    $sortDirection = null, $filter = null
+  )
   {
     $payload = new PaginatedPayload();
-    $payload->page = $page;
-    $payload->limit = $limit;
+    $payload->page          = $page;
+    $payload->limit         = $limit;
+    $payload->sortField     = $sortField;
+    $payload->sortDirection = $sortDirection;
+    $payload->filter        = $filter;
+
     $ep = NotificationEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
   }
