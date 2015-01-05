@@ -3,6 +3,7 @@ namespace Fortifi\Sdk\Models\Mailer;
 
 use Fortifi\FortifiApi\Mailer\Endpoints\MailerEndpoint;
 use Fortifi\FortifiApi\Mailer\Payloads\CreateMailerEmailPayload;
+use Fortifi\FortifiApi\Mailer\Payloads\MailerLogPayload;
 use Fortifi\FortifiApi\Mailer\Payloads\UpdateMailerEmailPayload;
 use Fortifi\FortifiApi\Mailer\Payloads\MailerPaginatedPayload;
 use Fortifi\FortifiApi\Mailer\Payloads\MailerPayload;
@@ -11,6 +12,7 @@ use Fortifi\FortifiApi\Mailer\Responses\MailerEmailResponse;
 use Fortifi\FortifiApi\Mailer\Responses\MailerEmailsResponse;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
+use Fortifi\FortifiApi\Mailer\Responses\MailerLogsResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class MailerModel extends FortifiApiModel
@@ -123,5 +125,19 @@ class MailerModel extends FortifiApiModel
 
     $ep = MailerEndpoint::bound($this->getApi());
     return $ep->restore($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return FortifiApiRequestInterface|MailerLogsResponse
+   */
+  public function getLogs($fid)
+  {
+    $payload      = new MailerLogPayload();
+    $payload->fid = $fid;
+
+    $ep = MailerEndpoint::bound($this->getApi());
+    return $ep->getLogs($payload)->get();
   }
 }
