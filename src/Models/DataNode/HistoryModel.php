@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\DataNode\Models;
+namespace Fortifi\Sdk\Models\DataNode;
 
 use Fortifi\FortifiApi\DataNode\Responses\DataNodeChangesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;

@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Company\Models;
+namespace Fortifi\Sdk\Models\Company;
 
 use Fortifi\FortifiApi\Company\Payloads\CompanyEmployeesPayload;
 use Fortifi\FortifiApi\Company\Payloads\CreateCompanyPayload;

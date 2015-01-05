@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Employee\Models;
+namespace Fortifi\Sdk\Models\Employee;
 
 use Fortifi\FortifiApi\Company\Responses\CompaniesResponse;
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;

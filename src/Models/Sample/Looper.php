@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Sample\Models;
+namespace Fortifi\Sdk\Models\Sample;
 
 use Fortifi\FortifiApi\Sample\Payloads\SampleLoopPayload;
 use Fortifi\FortifiApi\Sample\Responses\SampleLoopResponse;

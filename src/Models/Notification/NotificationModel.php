@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Notification\Models;
+namespace Fortifi\Sdk\Models\Notification;
 
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedPayload;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;

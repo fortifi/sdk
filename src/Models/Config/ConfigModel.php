@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Config\Models;
+namespace Fortifi\Sdk\Models\Config;
 
 use Fortifi\FortifiApi\Config\Payloads\ConfigItemPayload;
 use Fortifi\FortifiApi\Config\Payloads\GetConfigurationPayload;

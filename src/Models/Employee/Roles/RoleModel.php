@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Employee\Models\Roles;
+namespace Fortifi\Sdk\Models\Employee\Roles;
 
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
 use Fortifi\FortifiApi\Employee\Payloads\Roles\EmployeeRolePaginatedPayload;

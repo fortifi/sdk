@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Search\Models;
+namespace Fortifi\Sdk\Models\Search;
 
 use Fortifi\FortifiApi\Search\Endpoints\SearchEndpoint;
 use Fortifi\FortifiApi\Search\Payloads\SearchPayload;

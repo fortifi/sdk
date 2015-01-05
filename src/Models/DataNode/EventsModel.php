@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\DataNode\Models;
+namespace Fortifi\Sdk\Models\DataNode;
 
 use Fortifi\FortifiApi\DataNode\Payloads\DataNodeEventPayload;
 use Fortifi\FortifiApi\DataNode\Responses\DataNodeEventsResponse;

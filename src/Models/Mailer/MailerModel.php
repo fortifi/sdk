@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Mailer\Models;
+namespace Fortifi\Sdk\Models\Mailer;
 
 use Fortifi\FortifiApi\Mailer\Endpoints\MailerEndpoint;
 use Fortifi\FortifiApi\Mailer\Payloads\CreateMailerEmailPayload;

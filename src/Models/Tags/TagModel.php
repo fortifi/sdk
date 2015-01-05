@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Tags\Models;
+namespace Fortifi\Sdk\Models\Tags;
 
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;

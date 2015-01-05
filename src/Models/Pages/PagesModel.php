@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Pages\Models;
+namespace Fortifi\Sdk\Models\Pages;
 
 use Fortifi\FortifiApi\Pages\Payloads\CreatePagePayload;
 use Fortifi\FortifiApi\Pages\Payloads\UpdatePagePayload;

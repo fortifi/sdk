@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\ServiceAccount\Models;
+namespace Fortifi\Sdk\Models\ServiceAccount;
 
 use Fortifi\FortifiApi\Auth\Payloads\CreateServiceAccountPayload;
 use Fortifi\FortifiApi\Auth\Payloads\ServiceAccountNamePayload;

@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\AuthLogs\Models;
+namespace Fortifi\Sdk\Models\AuthLogs;
 
 use Fortifi\FortifiApi\Auth\Endpoints\AuthEndpoint;
 use Fortifi\FortifiApi\Auth\Payloads\LoginLogPayload;

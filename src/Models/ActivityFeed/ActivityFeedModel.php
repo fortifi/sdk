@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\ActivityFeed\Models;
+namespace Fortifi\Sdk\Models\ActivityFeed;
 
 use Fortifi\FortifiApi\ActivityFeed\Endpoints\ActivityFeedEndpoint;
 use Fortifi\FortifiApi\ActivityFeed\Payloads\ActivityFeedPayload;

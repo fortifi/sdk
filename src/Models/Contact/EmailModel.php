@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\FortifiCo\Applications\Contact\Models;
+namespace Fortifi\Sdk\Models\Contact;
 
 use Fortifi\FortifiApi\Contact\Payloads\Email\EmailAddressPayload;
 use Fortifi\FortifiApi\Contact\Endpoints\EmailEndpoint;
