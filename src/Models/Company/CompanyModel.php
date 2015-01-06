@@ -9,10 +9,13 @@ use Fortifi\FortifiApi\Company\Responses\CompanyResponse;
 use Fortifi\FortifiApi\Company\Responses\CompaniesResponse;
 use Fortifi\FortifiApi\Company\Responses;
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
+use Fortifi\FortifiApi\Employee\Responses\EmployeesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
+use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Foundation\Responses\FidResponse;
+use Fortifi\FortifiApi\Foundation\Responses\FidsResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class CompanyModel extends FortifiApiModel
@@ -25,7 +28,7 @@ class CompanyModel extends FortifiApiModel
    * @param bool   $showDeleted
    * @param string $filter
    *
-   * @return CompaniesResponse
+   * @return CompaniesResponse|FortifiApiRequestInterface
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
@@ -47,7 +50,7 @@ class CompanyModel extends FortifiApiModel
   /**
    * @param int $fid
    *
-   * @return CompanyResponse
+   * @return CompanyResponse|FortifiApiRequestInterface
    */
   public function retrieve($fid)
   {
@@ -63,7 +66,7 @@ class CompanyModel extends FortifiApiModel
    * @param string $name
    * @param string $description
    *
-   * @return FidResponse
+   * @return FortifiApiRequestInterface|FidResponse
    */
   public function create($legalName, $name, $description)
   {
@@ -82,7 +85,7 @@ class CompanyModel extends FortifiApiModel
    * @param string $name
    * @param string $description
    *
-   * @return BoolResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update($fid, $legalName, $name, $description)
   {
@@ -99,7 +102,7 @@ class CompanyModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return BoolResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function delete($fid)
   {
@@ -111,9 +114,9 @@ class CompanyModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
    *
-   * @return $this
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function restore($fid)
   {
@@ -125,10 +128,10 @@ class CompanyModel extends FortifiApiModel
   }
 
   /**
-   * @param $companyFid
-   * @param $items
+   * @param string $companyFid
+   * @param        $items
    *
-   * @return $this
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function addEmployees($companyFid, $items)
   {
@@ -141,10 +144,10 @@ class CompanyModel extends FortifiApiModel
   }
 
   /**
-   * @param $companyFid
-   * @param $items
+   * @param string $companyFid
+   * @param        $items
    *
-   * @return $this
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function removeEmployees($companyFid, $items)
   {
@@ -157,10 +160,10 @@ class CompanyModel extends FortifiApiModel
   }
 
   /**
-   * @param $companyFid
-   * @param $items
+   * @param string $companyFid
+   * @param        $items
    *
-   * @return $this
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function replaceEmployees($companyFid, $items)
   {
@@ -173,9 +176,9 @@ class CompanyModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
    *
-   * @return $this
+   * @return EmployeesResponse|FortifiApiRequestInterface|FidsResponse
    */
   public function getEmployees($fid)
   {
