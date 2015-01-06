@@ -74,26 +74,6 @@ class ConfigModel extends FortifiApiModel
   }
 
   /**
-   * @param $objectFid
-   * @param $section
-   * @param $name
-   * @param $value
-   *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
-   */
-  public function createConfigItem($objectFid, $section, $name, $value)
-  {
-    $payload            = new ConfigItemPayload();
-    $payload->objectFid = $objectFid;
-    $payload->section   = $section;
-    $payload->name      = $name;
-    $payload->value     = $value;
-
-    $ep = ConfigEndpoint::bound($this->getApi());
-    return $ep->setConfigItem($payload)->get();
-  }
-
-  /**
    * @param $fid
    * @param $objectFid
    * @param $section
