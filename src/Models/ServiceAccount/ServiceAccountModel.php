@@ -7,7 +7,7 @@ use Fortifi\FortifiApi\Auth\Payloads\ServiceAccountPayload;
 use Fortifi\FortifiApi\Auth\Responses\ServiceAccountResponse;
 use Fortifi\FortifiApi\Auth\Endpoints\ServiceAccountEndpoint;
 use Fortifi\FortifiApi\Auth\Responses\ServiceAccountsResponse;
-use Fortifi\FortifiApi\Foundation\Payloads\PaginatedPayload;
+use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class ServiceAccountModel extends FortifiApiModel
@@ -17,20 +17,22 @@ class ServiceAccountModel extends FortifiApiModel
    * @param int    $page
    * @param string $sortField
    * @param string $sortDirection
+   * @param bool   $showDeleted
    * @param string $filter
    *
    * @return ServiceAccountsResponse
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
-    $filter = null
+    $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedPayload();
+    $payload                = new PaginatedDataNodePayload();
     $payload->limit         = $limit;
     $payload->page          = $page;
     $payload->sortField     = $sortField;
     $payload->sortDirection = $sortDirection;
+    $payload->showDeleted   = $showDeleted;
     $payload->filter        = $filter;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
