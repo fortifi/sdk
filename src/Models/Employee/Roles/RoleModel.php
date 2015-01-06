@@ -9,8 +9,12 @@ use Fortifi\FortifiApi\Employee\Payloads\Roles\RoleEmployeesPayload;
 use Fortifi\FortifiApi\Employee\Payloads\Roles\UpdateEmployeeRolePayload;
 use Fortifi\FortifiApi\Employee\Endpoints\EmployeeRoleEndpoint;
 use Fortifi\FortifiApi\Employee\Payloads\SetPermissionPayload;
+use Fortifi\FortifiApi\Employee\Responses\EmployeesResponse;
 use Fortifi\FortifiApi\Employee\Responses\Roles\EmployeeRoleResponse;
 use Fortifi\FortifiApi\Employee\Responses\Roles\EmployeeRolesResponse;
+use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
+use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
+use Fortifi\FortifiApi\Foundation\Responses\FidsResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class RoleModel extends FortifiApiModel
@@ -23,7 +27,7 @@ class RoleModel extends FortifiApiModel
    * @param bool   $showDeleted
    * @param string $filter
    *
-   * @return EmployeeRolesResponse
+   * @return EmployeeRolesResponse|FortifiApiRequestInterface
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
@@ -43,9 +47,9 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
    *
-   * @return EmployeeRoleResponse
+   * @return EmployeeRoleResponse|FortifiApiRequestInterface
    */
   public function retrieve($fid)
   {
@@ -57,10 +61,10 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $name
-   * @param $description
+   * @param string $name
+   * @param string $description
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return EmployeeRoleResponse|FortifiApiRequestInterface
    */
   public function create($name, $description)
   {
@@ -73,11 +77,11 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
-   * @param $name
-   * @param $description
+   * @param string $fid
+   * @param string $name
+   * @param string $description
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update($fid, $name, $description)
   {
@@ -91,9 +95,9 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function delete($fid)
   {
@@ -106,9 +110,9 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function restore($fid)
   {
@@ -120,12 +124,12 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param       $fid
-   * @param array $addPermissions
-   * @param array $removePermissions
-   * @param array $replacePermissions
+   * @param string $fid
+   * @param array  $addPermissions
+   * @param array  $removePermissions
+   * @param array  $replacePermissions
    *
-   * @return $this
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function setPermissions(
     $fid, array $addPermissions = [], array $removePermissions = [],
@@ -143,10 +147,10 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $roleFid
-   * @param $items
+   * @param string $roleFid
+   * @param        $items
    *
-   * @return mixed
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function addEmployees($roleFid, $items)
   {
@@ -159,10 +163,10 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $roleFid
-   * @param $items
+   * @param string $roleFid
+   * @param        $items
    *
-   * @return mixed
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function removeEmployees($roleFid, $items)
   {
@@ -175,10 +179,10 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $roleFid
-   * @param $items
+   * @param string $roleFid
+   * @param        $items
    *
-   * @return $this
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function replaceEmployees($roleFid, $items)
   {
@@ -191,10 +195,10 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
-   * @param $loadRefs
+   * @param string $fid
+   * @param bool   $loadRefs
    *
-   * @return $this
+   * @return EmployeesResponse|FortifiApiRequestInterface|FidsResponse
    */
   public function getEmployees($fid, $loadRefs = false)
   {

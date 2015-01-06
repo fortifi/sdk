@@ -2,6 +2,7 @@
 namespace Fortifi\Sdk\Models\Tags;
 
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
+use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Foundation\Responses\DataNodeResponse;
 use Fortifi\FortifiApi\Foundation\Responses\DynamicDataNodesResponse;
@@ -27,7 +28,7 @@ class TagModel extends FortifiApiModel
    * @param bool   $showDeleted
    * @param string $filter
    *
-   * @return TagsResponse
+   * @return FortifiApiRequestInterface|TagsResponse
    */
   public function all(
     $limit = 10, $page = 1, $sortField = null, $sortDirection = null,
@@ -49,7 +50,7 @@ class TagModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return TagResponse
+   * @return FortifiApiRequestInterface|TagResponse
    */
   public function retrieve($fid)
   {
@@ -65,7 +66,7 @@ class TagModel extends FortifiApiModel
    * @param string $icon
    * @param string $colour
    *
-   * @return DataNodeResponse
+   * @return FortifiApiRequestInterface|DataNodeResponse
    */
   public function create($name, $icon, $colour)
   {
@@ -82,7 +83,7 @@ class TagModel extends FortifiApiModel
    * @param string $fid
    * @param string $name
    *
-   * @return BoolResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function rename($fid, $name)
   {
@@ -99,7 +100,7 @@ class TagModel extends FortifiApiModel
    * @param string $icon
    * @param string $colour
    *
-   * @return BoolResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function setStyle($fid, $icon, $colour)
   {
@@ -115,7 +116,7 @@ class TagModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return BoolResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function delete($fid)
   {
@@ -134,7 +135,7 @@ class TagModel extends FortifiApiModel
    * @param string $sortField
    * @param string $sortDirection
    *
-   * @return TagsResponse|FidsResponse
+   * @return FortifiApiRequestInterface|TagsResponse|FidsResponse
    */
   public function getTags(
     $objectFid, $loadRefs = true, $limit = 10, $page = 1, $sortField = null,
@@ -161,7 +162,7 @@ class TagModel extends FortifiApiModel
    * @param string $sortField
    * @param string $sortDirection
    *
-   * @return DynamicDataNodesResponse
+   * @return FortifiApiRequestInterface|DynamicDataNodesResponse|FidsResponse
    */
   public function getObjects(
     $fid, $loadRefs = true, $limit = 10, $page = 1, $sortField = null,
@@ -184,7 +185,7 @@ class TagModel extends FortifiApiModel
    * @param string $tagFid
    * @param string $objectFid
    *
-   * @return BoolResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function addObject($tagFid, $objectFid)
   {
@@ -200,7 +201,7 @@ class TagModel extends FortifiApiModel
    * @param string $tagFid
    * @param string $objectFid
    *
-   * @return BoolResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function removeObject($tagFid, $objectFid)
   {

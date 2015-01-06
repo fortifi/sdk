@@ -8,6 +8,8 @@ use Fortifi\FortifiApi\Auth\Responses\ServiceAccountResponse;
 use Fortifi\FortifiApi\Auth\Endpoints\ServiceAccountEndpoint;
 use Fortifi\FortifiApi\Auth\Responses\ServiceAccountsResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
+use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
+use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class ServiceAccountModel extends FortifiApiModel
@@ -20,7 +22,7 @@ class ServiceAccountModel extends FortifiApiModel
    * @param bool   $showDeleted
    * @param string $filter
    *
-   * @return ServiceAccountsResponse
+   * @return ServiceAccountsResponse|FortifiApiRequestInterface
    */
   public function all(
     $limit = null, $page = null, $sortField = null, $sortDirection = null,
@@ -42,7 +44,7 @@ class ServiceAccountModel extends FortifiApiModel
   /**
    * @param int $fid
    *
-   * @return ServiceAccountResponse
+   * @return ServiceAccountResponse|FortifiApiRequestInterface
    */
   public function retrieve($fid)
   {
@@ -56,7 +58,7 @@ class ServiceAccountModel extends FortifiApiModel
   /**
    * @param string $name
    *
-   * @return ServiceAccountResponse
+   * @return ServiceAccountResponse|FortifiApiRequestInterface
    */
   public function create($name)
   {
@@ -70,7 +72,7 @@ class ServiceAccountModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return ServiceAccountResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function delete($fid)
   {
@@ -84,7 +86,7 @@ class ServiceAccountModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return ServiceAccountResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function enable($fid)
   {
@@ -98,7 +100,7 @@ class ServiceAccountModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return ServiceAccountResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function disable($fid)
   {
@@ -113,7 +115,7 @@ class ServiceAccountModel extends FortifiApiModel
    * @param string $fid
    * @param string $name
    *
-   * @return ServiceAccountResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function setName($fid, $name)
   {
