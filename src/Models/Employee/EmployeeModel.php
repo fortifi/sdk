@@ -248,14 +248,16 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
+   * @param bool   $loadRefs
    *
    * @return FortifiApiRequestInterface|FidsResponse|CompaniesResponse
    */
-  public function getCompanies($fid)
+  public function getCompanies($fid, $loadRefs = false)
   {
-    $payload        = new EdgePayload();
-    $payload->fid  = $fid;
+    $payload           = new EdgePayload();
+    $payload->fid      = $fid;
+    $payload->loadRefs = $loadRefs;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->getCompanies($payload)->get();
@@ -310,14 +312,16 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
+   * @param bool   $loadRefs
    *
    * @return FortifiApiRequestInterface|FidsResponse|EmployeeRolesResponse
    */
-  public function getRoles($fid)
+  public function getRoles($fid, $loadRefs = false)
   {
-    $payload       = new EdgePayload();
-    $payload->fid  = $fid;
+    $payload           = new EdgePayload();
+    $payload->fid      = $fid;
+    $payload->loadRefs = $loadRefs;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->getRoles($payload)->get();
