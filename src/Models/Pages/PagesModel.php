@@ -39,7 +39,7 @@ class PagesModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return PageResponse
    */
@@ -53,11 +53,11 @@ class PagesModel extends FortifiApiModel
   }
 
   /**
-   * @param $title
-   * @param $content
-   * @param $type
-   * @param $isDisabled
-   * @param $notes
+   * @param string $title
+   * @param string $content
+   * @param string $type
+   * @param int    $isDisabled
+   * @param string $notes
    *
    * @return $this
    */
@@ -75,12 +75,12 @@ class PagesModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
-   * @param $title
-   * @param $content
-   * @param $type
-   * @param $isDisabled
-   * @param $notes
+   * @param string $fid
+   * @param string $title
+   * @param string $content
+   * @param string $type
+   * @param int    $isDisabled
+   * @param string $notes
    *
    * @return $this
    */
@@ -113,7 +113,7 @@ class PagesModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return BoolResponse
    */
@@ -126,7 +126,7 @@ class PagesModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return BoolResponse
    */
@@ -139,7 +139,7 @@ class PagesModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return BoolResponse
    */
