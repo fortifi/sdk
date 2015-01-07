@@ -59,7 +59,7 @@ class PagesModel extends FortifiApiModel
    * @param int    $isDisabled
    * @param string $notes
    *
-   * @return $this
+   * @return BoolResponse
    */
   public function create($title, $content, $type, $isDisabled, $notes)
   {
@@ -82,7 +82,7 @@ class PagesModel extends FortifiApiModel
    * @param int    $isDisabled
    * @param string $notes
    *
-   * @return $this
+   * @return BoolResponse
    */
   public function update($fid, $title, $content, $type, $isDisabled, $notes)
   {
