@@ -5,6 +5,10 @@ use Fortifi\FortifiApi\Config\Payloads\ConfigItemPayload;
 use Fortifi\FortifiApi\Config\Payloads\GetConfigurationPayload;
 use Fortifi\FortifiApi\Config\Payloads\GetUserConfigurationPayload;
 use Fortifi\FortifiApi\Config\Endpoints\ConfigEndpoint;
+use Fortifi\FortifiApi\Config\Responses\ConfigItemResponse;
+use Fortifi\FortifiApi\Config\Responses\ConfigurationResponse;
+use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
+use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class ConfigModel extends FortifiApiModel
@@ -16,7 +20,7 @@ class ConfigModel extends FortifiApiModel
    * @param $name
    * @param $value
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return ConfigItemResponse|FortifiApiRequestInterface
    */
   public function getItem($fid, $objectFid, $section, $name, $value)
   {
@@ -35,7 +39,7 @@ class ConfigModel extends FortifiApiModel
    * @param $objectFid
    * @param $section
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return ConfigurationResponse|FortifiApiRequestInterface
    */
   public function getConfiguration(
     $objectFid, $section
@@ -56,7 +60,7 @@ class ConfigModel extends FortifiApiModel
    * @param $blend
    * @param $section
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return ConfigurationResponse|FortifiApiRequestInterface
    */
   public function getUserConfiguration(
     $companyFid, $userFid, $organisation, $blend, $section
@@ -80,7 +84,7 @@ class ConfigModel extends FortifiApiModel
    * @param $name
    * @param $value
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function setConfigItem($fid, $objectFid, $section, $name, $value)
   {
@@ -102,7 +106,7 @@ class ConfigModel extends FortifiApiModel
    * @param $name
    * @param $value
    *
-   * @return \Packaged\Api\Interfaces\ApiResponseInterface
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function deleteConfigItem($fid, $objectFid, $section, $name, $value)
   {
