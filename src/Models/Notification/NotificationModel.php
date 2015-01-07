@@ -51,17 +51,21 @@ class NotificationModel extends FortifiApiModel
   }
 
   /**
-   * @param $objectFid
-   * @param $microtime
+   * @param string $objectFid
+   * @param string $microtime
+   * @param bool   $hasViewed
+   * @param string $userFid
    *
    * @return BoolResponse
    */
-  public function viewed($objectFid, $microtime)
+  public function viewed($objectFid, $microtime, $hasViewed = true, $userFid = null)
   {
     $payload = new NotificationPayload();
-    $payload->hasViewed = true;
+    $payload->userFid   = $userFid;
     $payload->objectFid = $objectFid;
     $payload->microtime = $microtime;
+    $payload->hasViewed = $hasViewed;
+
     $ep = NotificationEndpoint::bound($this->getApi());
     return $ep->viewed($payload)->get();
   }
