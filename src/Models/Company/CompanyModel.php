@@ -178,13 +178,27 @@ class CompanyModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return EmployeesResponse|FortifiApiRequestInterface|FidsResponse
+   * @param bool   $loadRefs
+   * @param int    $limit
+   * @param int    $page
+   * @param string $sortField
+   * @param string $sortDirection
+   * @param string $filter
+   *
+   * @return EmployeesResponse
    */
-  public function getEmployees($fid)
+  public function getEmployees(
+    $fid, $loadRefs, $limit, $page, $sortField, $sortDirection, $filter
+  )
   {
-    $payload            = new EdgePayload();
-    $payload->fid       = $fid;
-    $payload->loadRefs  = true;
+    $payload = new EdgePayload();
+    $payload->fid = $fid;
+    $payload->loadRefs = $loadRefs;
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
+    $payload->sortDirection = $sortDirection;
+    $payload->filter = $filter;
 
     $ep = CompanyEndpoint::bound($this->getApi());
     return $ep->getEmployees($payload)->get();
