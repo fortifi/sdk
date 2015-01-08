@@ -1,6 +1,8 @@
 <?php
 namespace Fortifi\Sdk\Models\DataNode;
 
+use Fortifi\FortifiApi\DataNode\Payloads\DataNodeChangePayload;
+use Fortifi\FortifiApi\DataNode\Responses\DataNodeChangeResponse;
 use Fortifi\FortifiApi\DataNode\Responses\DataNodeChangesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\DataNode\Endpoints\DataNodeChangesEndpoint;
@@ -19,7 +21,22 @@ class HistoryModel extends FortifiApiModel
     $payload->fid = $fid;
 
     $ep = DataNodeChangesEndpoint::bound($this->getApi());
-
     return $ep->all($payload)->get();
+  }
+
+  /**
+   * @param string $objectFid
+   * @param string $microtime
+   *
+   * @return DataNodeChangeResponse
+   */
+  public function retrieve($objectFid, $microtime)
+  {
+    $payload = new DataNodeChangePayload();
+    $payload->objectFid = $objectFid;
+    $payload->microtime = $microtime;
+
+    $ep = DataNodeChangesEndpoint::bound($this->getApi());
+    return $ep->retrieve($payload)->get();
   }
 }
