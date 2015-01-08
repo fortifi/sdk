@@ -188,7 +188,8 @@ class CompanyModel extends FortifiApiModel
    * @return EmployeesResponse
    */
   public function getEmployees(
-    $fid, $loadRefs, $limit, $page, $sortField, $sortDirection, $filter
+    $fid, $loadRefs = true, $limit = 10, $page = 1, $sortField = 'title',
+    $sortDirection = 'asc', $filter = null
   )
   {
     $payload = new EdgePayload();
