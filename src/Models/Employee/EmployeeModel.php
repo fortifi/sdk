@@ -55,7 +55,7 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return FortifiApiRequestInterface|EmployeeResponse
    */
@@ -125,7 +125,7 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
@@ -138,7 +138,7 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
@@ -151,7 +151,7 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
@@ -164,7 +164,7 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
