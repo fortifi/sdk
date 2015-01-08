@@ -327,14 +327,27 @@ class EmployeeModel extends FortifiApiModel
   /**
    * @param string $fid
    * @param bool   $loadRefs
+   * @param int    $limit
+   * @param int    $page
+   * @param string $sortField
+   * @param string $sortDirection
+   * @param string $filter
    *
-   * @return FortifiApiRequestInterface|FidsResponse|EmployeeRolesResponse
+   * @return EmployeeRolesResponse|FidsResponse
    */
-  public function getRoles($fid, $loadRefs = false)
+  public function getRoles(
+    $fid, $loadRefs = false, $limit = 10, $page = 1, $sortField = 'name',
+    $sortDirection = 'asc', $filter = null
+  )
   {
-    $payload           = new EdgePayload();
-    $payload->fid      = $fid;
+    $payload = new EdgePayload();
+    $payload->fid = $fid;
     $payload->loadRefs = $loadRefs;
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
+    $payload->sortDirection = $sortDirection;
+    $payload->filter = $filter;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->getRoles($payload)->get();
