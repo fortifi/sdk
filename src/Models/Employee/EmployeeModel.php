@@ -4,6 +4,7 @@ namespace Fortifi\Sdk\Models\Employee;
 use Fortifi\FortifiApi\Company\Responses\CompaniesResponse;
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
 use Fortifi\FortifiApi\Employee\Endpoints\EmployeeEndpoint;
+use Fortifi\FortifiApi\Employee\Endpoints\EmployeeRoleEndpoint;
 use Fortifi\FortifiApi\Employee\Payloads\CreateEmployeePayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeCompaniesPayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeEmailFidPayload;
@@ -12,6 +13,7 @@ use Fortifi\FortifiApi\Employee\Payloads\EmployeePaginatedPayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeePayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeProfilePayload;
 use Fortifi\FortifiApi\Employee\Payloads\EmployeeRolesPayload;
+use Fortifi\FortifiApi\Employee\Payloads\Roles\EmployeeRolePaginatedPayload;
 use Fortifi\FortifiApi\Employee\Payloads\SetEmployeeAdminPayload;
 use Fortifi\FortifiApi\Employee\Payloads\SetPermissionPayload;
 use Fortifi\FortifiApi\Employee\Responses\CreateEmployeeResponse;
@@ -325,32 +327,31 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param string $fid
-   * @param bool   $loadRefs
+   *
+   * @param bool   $showDeleted
    * @param int    $limit
    * @param int    $page
    * @param string $sortField
    * @param string $sortDirection
    * @param string $filter
    *
-   * @return EmployeeRolesResponse|FidsResponse
+   * @return EmployeeRolesResponse
    */
   public function getRoles(
-    $fid, $loadRefs = false, $limit = 10, $page = 1, $sortField = 'name',
+    $showDeleted = false, $limit = 10, $page = 1, $sortField = 'name',
     $sortDirection = 'asc', $filter = null
   )
   {
-    $payload = new EdgePayload();
-    $payload->fid = $fid;
-    $payload->loadRefs = $loadRefs;
+    $payload = new EmployeeRolePaginatedPayload();
+    $payload->showDeleted = $showDeleted;
     $payload->limit = $limit;
     $payload->page = $page;
     $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
     $payload->filter = $filter;
 
-    $ep = EmployeeEndpoint::bound($this->getApi());
-    return $ep->getRoles($payload)->get();
+    $ep = EmployeeRoleEndpoint::bound($this->getApi());
+    return $ep->all($payload)->get();
   }
 
   /**
