@@ -42,7 +42,7 @@ class ServiceAccountModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return ServiceAccountResponse|FortifiApiRequestInterface
    */
