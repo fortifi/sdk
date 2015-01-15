@@ -207,6 +207,11 @@ class EmployeeModel extends FortifiApiModel
    */
   public function addCompanies($fid, $items)
   {
+    if (!is_array($items))
+    {
+      $items = [$items];
+    }
+
     $payload = new EmployeeCompaniesPayload();
     $payload->employeeFid = $fid;
     $payload->items = $items;
@@ -223,6 +228,11 @@ class EmployeeModel extends FortifiApiModel
    */
   public function removeCompanies($fid, $items)
   {
+    if (!is_array($items))
+    {
+      $items = [$items];
+    }
+
     $payload = new EmployeeCompaniesPayload();
     $payload->employeeFid = $fid;
     $payload->items = $items;
@@ -284,6 +294,11 @@ class EmployeeModel extends FortifiApiModel
    */
   public function addRoles($fid, $items)
   {
+    if (!is_array($items))
+    {
+      $items = [$items];
+    }
+
     $payload = new EmployeeRolesPayload();
     $payload->employeeFid = $fid;
     $payload->items       = $items;
@@ -300,6 +315,11 @@ class EmployeeModel extends FortifiApiModel
    */
   public function removeRoles($fid, $items)
   {
+    if (!is_array($items))
+    {
+      $items = [$items];
+    }
+
     $payload = new EmployeeRolesPayload();
     $payload->employeeFid = $fid;
     $payload->items       = $items;
