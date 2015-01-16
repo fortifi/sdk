@@ -422,4 +422,21 @@ class EmployeeModel extends FortifiApiModel
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->removeEmail($payload)->get();
   }
+
+  /**
+   * @param string $employeeFid
+   * @param string $emailFid
+   *
+   * @return BoolResponse
+   */
+  public function setDefaultEmail($employeeFid, $emailFid)
+  {
+    $payload                = new EmployeeEmailPayload();
+    $payload->fid           = $employeeFid;
+    $payload->email         = $emailFid;
+    $payload->setAsDefault  = true;
+
+    $ep = EmployeeEndpoint::bound($this->getApi());
+    return $ep->addEmail($payload)->get();
+  }
 }
