@@ -12,6 +12,7 @@ use Fortifi\FortifiApi\Auth\Responses\ServiceAccountsResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
+use Fortifi\FortifiApi\Foundation\Responses\StringResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class ServiceAccountModel extends FortifiApiModel
@@ -132,7 +133,7 @@ class ServiceAccountModel extends FortifiApiModel
   /**
    * @param string $fid
    *
-   * @return FortifiApiRequestInterface|BoolResponse
+   * @return FortifiApiRequestInterface|StringResponse
    */
   public function regenerateApiKey($fid)
   {
