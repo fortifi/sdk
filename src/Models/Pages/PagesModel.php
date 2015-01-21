@@ -83,20 +83,17 @@ class PagesModel extends FortifiApiModel
    * @param string $title
    * @param string $content
    * @param string $notes
-   * @param string $type
    * @param int    $isDisabled
    *
    * @return BoolResponse
    */
-  public function update($fid, $title, $content, $notes,
-    $type = 'custom', $isDisabled = 0
+  public function update($fid, $title, $content, $notes, $isDisabled = 0
   )
   {
     $payload              = new UpdatePagePayload();
     $payload->fid         = $fid;
     $payload->title       = $title;
     $payload->content     = $content;
-    $payload->type        = $type;
     $payload->isDisabled  = $isDisabled;
     $payload->notes       = $notes;
 
