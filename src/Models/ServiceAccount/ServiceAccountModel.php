@@ -1,9 +1,11 @@
 <?php
 namespace Fortifi\Sdk\Models\ServiceAccount;
 
+use Fortifi\FortifiApi\Auth\Endpoints\AuthEndpoint;
 use Fortifi\FortifiApi\Auth\Payloads\CreateServiceAccountPayload;
 use Fortifi\FortifiApi\Auth\Payloads\ServiceAccountNamePayload;
 use Fortifi\FortifiApi\Auth\Payloads\ServiceAccountPayload;
+use Fortifi\FortifiApi\Auth\Payloads\UserPayload;
 use Fortifi\FortifiApi\Auth\Responses\ServiceAccountResponse;
 use Fortifi\FortifiApi\Auth\Endpoints\ServiceAccountEndpoint;
 use Fortifi\FortifiApi\Auth\Responses\ServiceAccountsResponse;
@@ -125,5 +127,19 @@ class ServiceAccountModel extends FortifiApiModel
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
     return $ep->setName($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function regenerateApiKey($fid)
+  {
+    $payload      = new UserPayload();
+    $payload->fid = $fid;
+
+    $ep = AuthEndpoint::bound($this->getApi());
+    return $ep->regenerateApiKey($payload)->get();
   }
 }
