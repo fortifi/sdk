@@ -48,7 +48,7 @@ class CompanyModel extends FortifiApiModel
   }
 
   /**
-   * @param int $fid
+   * @param string $fid
    *
    * @return CompanyResponse|FortifiApiRequestInterface
    */
