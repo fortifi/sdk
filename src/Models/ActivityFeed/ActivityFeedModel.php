@@ -11,7 +11,7 @@ class ActivityFeedModel extends FortifiApiModel
 {
 
   /**
-   * @param int    $objectFid
+   * @param string $objectFid
    * @param int    $time
    * @param int    $limit
    * @param string $order
