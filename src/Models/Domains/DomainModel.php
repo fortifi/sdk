@@ -1,5 +1,5 @@
 <?php
-namespace Fortifi\Sdk\Models\Company;
+namespace Fortifi\Sdk\Models\Domains;
 
 use Fortifi\FortifiApi\Company\Responses;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
