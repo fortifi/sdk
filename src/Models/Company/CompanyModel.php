@@ -15,7 +15,6 @@ use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Foundation\Responses\FidResponse;
-use Fortifi\FortifiApi\Foundation\Responses\FidsResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class CompanyModel extends FortifiApiModel
