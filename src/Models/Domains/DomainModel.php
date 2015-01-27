@@ -22,12 +22,17 @@ class DomainModel extends FortifiApiModel
 
   }
 
-  public function retrieve()
+  public function current()
   {
 
   }
 
-  public function current()
+  public function assign()
+  {
+
+  }
+
+  public function unassign()
   {
 
   }
