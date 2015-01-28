@@ -63,7 +63,7 @@ class DomainModel extends FortifiApiModel
    *
    * @return FidResponse
    */
-  public function create($domain, $companyFid)
+  public function create($domain, $companyFid = null)
   {
     $payload             = new CreateDomainPayload();
     $payload->domain     = $domain;
