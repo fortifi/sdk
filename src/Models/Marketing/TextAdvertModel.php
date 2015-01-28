@@ -3,18 +3,19 @@ namespace Fortifi\Sdk\Models\Marketing;
 
 use Fortifi\FortifiApi\Foundation\Responses\FidResponse;
 use Fortifi\FortifiApi\Marketing\Payloads\CreateTextAdvertPayload;
+use Fortifi\FortifiApi\Marketing\Payloads\ListAdvertPayload;
 use Fortifi\FortifiApi\Marketing\Payloads\UpdateTextAdvertPayload;
 use Fortifi\FortifiApi\Marketing\Endpoints\TextAdvertEndpoint;
 use Fortifi\FortifiApi\Marketing\Responses\TextAdvertResponse;
 use Fortifi\FortifiApi\Marketing\Responses\TextAdvertsResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class TextAdvertModel extends FortifiApiModel
 {
   /**
+   * @param string $companyFid
    * @param int    $limit
    * @param int    $page
    * @param string $sortField
@@ -25,11 +26,13 @@ class TextAdvertModel extends FortifiApiModel
    * @return TextAdvertsResponse
    */
   public function all(
-    $limit = null, $page = null, $sortField = null, $sortDirection = null,
+    $companyFid, $limit = null, $page = null,
+    $sortField = null, $sortDirection = null,
     $showDeleted = null, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
+    $payload                = new ListAdvertPayload();
+    $payload->companyFid    = $companyFid;
     $payload->limit         = $limit;
     $payload->page          = $page;
     $payload->sortField     = $sortField;
