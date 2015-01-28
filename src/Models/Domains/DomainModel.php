@@ -136,13 +136,28 @@ class DomainModel extends FortifiApiModel
 
   /**
    * @param $companyFid
+   * @param int    $limit
+   * @param int    $page
+   * @param string $sortField
+   * @param string $sortDirection
+   * @param int    $showDeleted
+   * @param string $filter
    *
    * @return DomainsResponse
    */
-  public function getByCompany($companyFid)
+  public function getByCompany(
+    $companyFid, $limit = null, $page = null, $sortField = null,
+    $sortDirection = null, $showDeleted = null, $filter = null
+  )
   {
-    $payload             = new PaginatedDomainsByCompanyFidPayload();
-    $payload->companyFid = $companyFid;
+    $payload                = new PaginatedDomainsByCompanyFidPayload();
+    $payload->companyFid    = $companyFid;
+    $payload->limit         = $limit;
+    $payload->page          = $page;
+    $payload->sortField     = $sortField;
+    $payload->sortDirection = $sortDirection;
+    $payload->showDeleted   = $showDeleted;
+    $payload->filter        = $filter;
 
     $ep = DomainEndpoint::bound($this->getApi());
     return $ep->getByCompany($payload)->get();
