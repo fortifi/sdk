@@ -58,7 +58,7 @@ class BannerAdvertModel extends FortifiApiModel
   /**
    * @param string $title
    * @param string $action
-   * @param string $company
+   * @param string $companyFid
    * @param string $language
    * @param string $type
    * @param string $imageUrl
@@ -68,14 +68,14 @@ class BannerAdvertModel extends FortifiApiModel
    *
    * @return FidResponse
    */
-  public function create($title, $action, $company, $language,
+  public function create($title, $action, $companyFid, $language,
                          $type, $imageUrl, $rawCode, $height, $width
   )
   {
     $payload              = new CreateBannerAdvertPayload();
     $payload->title       = $title;
     $payload->action      = $action;
-    $payload->company     = $company;
+    $payload->companyFid  = $companyFid;
     $payload->language    = $language;
     $payload->type        = $type;
     $payload->imageUrl    = $imageUrl;
@@ -91,7 +91,7 @@ class BannerAdvertModel extends FortifiApiModel
    * @param string $fid
    * @param string $title
    * @param string $action
-   * @param string $company
+   * @param string $companyFid
    * @param string $language
    * @param string $type
    * @param string $imageUrl
@@ -101,7 +101,7 @@ class BannerAdvertModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
-  public function update($fid, $title, $action, $company, $language,
+  public function update($fid, $title, $action, $companyFid, $language,
                          $type, $imageUrl, $rawCode, $height, $width
   )
   {
@@ -109,7 +109,7 @@ class BannerAdvertModel extends FortifiApiModel
     $payload->fid         = $fid;
     $payload->title       = $title;
     $payload->action      = $action;
-    $payload->company     = $company;
+    $payload->companyFid  = $companyFid;
     $payload->language    = $language;
     $payload->type        = $type;
     $payload->imageUrl    = $imageUrl;
