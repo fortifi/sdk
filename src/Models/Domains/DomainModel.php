@@ -94,6 +94,20 @@ class DomainModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
+  public function delete($fid)
+  {
+    $payload      = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = DomainEndpoint::bound($this->getApi());
+    return $ep->delete($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return BoolResponse
+   */
   public function verify($fid)
   {
     $payload      = new FidPayload();
