@@ -4,14 +4,17 @@
   "homepage": "http://fortifi.co",
   "license": "BSD-3-Clause",
   "require": {
-    "fortifi/fortifi-api": "dev-master"
+    "fortifi/fortifi-api": "dev-master",
+    "league/oauth2-client": "~0.5",
+    "packaged/helpers": "~0.6"
   },
   "require-dev": {
     "phpunit/phpunit": "4.2"
   },
   "autoload": {
     "psr-4": {
-      "Fortifi\\Sdk\\": "src/"
+      "Fortifi\\Sdk\\": "src/",
+      "Fortifi\\Tests\\Integration\\": "tests/"
     }
   },
   "repositories": [
