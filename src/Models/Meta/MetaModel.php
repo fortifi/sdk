@@ -34,7 +34,7 @@ class MetaModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function setMetaDatum($objectFid, $key, $value)
+  public function setMetaData($objectFid, $key, $value)
   {
     $payload            = new MetaDataPayload();
     $payload->objectFid = $objectFid;
