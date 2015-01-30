@@ -28,9 +28,9 @@ class MetaModel extends FortifiApiModel
   }
 
   /**
-   * @param $objectFid
-   * @param $key
-   * @param $value
+   * @param string $objectFid
+   * @param string $key
+   * @param string $value
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
