@@ -6,7 +6,7 @@ use Fortifi\FortifiApi\Company\Payloads\CompanyBrandingPayload;
 use Fortifi\FortifiApi\Company\Responses\CompanyBrandingResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
-use Fortifi\FortifiApi\Foundation\Responses\FidResponse;
+use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class CompanyBrandingModel extends FortifiApiModel
@@ -30,7 +30,7 @@ class CompanyBrandingModel extends FortifiApiModel
    * @param string $theme
    * @param string $logoUrl
    *
-   * @return FortifiApiRequestInterface|FidResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function setCompanyBranding($companyFid, $theme, $logoUrl)
   {
