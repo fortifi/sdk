@@ -29,14 +29,12 @@ class CompanyBrandingModel extends FortifiApiModel
    * @param string $companyFid
    * @param string $theme
    * @param string $logoUrl
-   * @param string $fid
    *
    * @return FortifiApiRequestInterface|FidResponse
    */
-  public function setCompanyBranding($companyFid, $theme, $logoUrl, $fid = null)
+  public function setCompanyBranding($companyFid, $theme, $logoUrl)
   {
     $payload             = new CompanyBrandingPayload();
-    $payload->fid        = $fid;
     $payload->companyFid = $companyFid;
     $payload->theme      = $theme;
     $payload->logoUrl    = $logoUrl;
