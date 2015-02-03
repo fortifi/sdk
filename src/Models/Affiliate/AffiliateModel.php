@@ -13,7 +13,7 @@ class AffiliateModel extends FortifiApiModel
    */
   public function retrieve()
   {
-
+    return new AffiliateResponse();
   }
 
   /**
@@ -21,7 +21,7 @@ class AffiliateModel extends FortifiApiModel
    */
   public function all()
   {
-
+    return new AffiliatesResponse();
   }
 
 }
