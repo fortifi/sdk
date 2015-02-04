@@ -3,7 +3,10 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\CreateAffiliatePayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateAccountManagerPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateNamePayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateTypePayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateWebsitePayload;
 use Fortifi\FortifiApi\Affiliate\Responses\AffiliateResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\AffiliatesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
@@ -91,12 +94,12 @@ class AffiliateModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $displayName, $name)
+  public function setName($fid, $displayName, $name)
   {
-    $payload                    = new SetAffiliateNamePayload();
-    $payload->fid               = $fid;
-    $payload->displayName       = $displayName;
-    $payload->name              = $name;
+    $payload              = new SetAffiliateNamePayload();
+    $payload->fid         = $fid;
+    $payload->displayName = $displayName;
+    $payload->name        = $name;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->setName($payload)->get();
@@ -128,6 +131,82 @@ class AffiliateModel extends FortifiApiModel
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->restore($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function suspend($fid)
+  {
+    $payload      = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->suspend($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function reactivate($fid)
+  {
+    $payload      = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->reactivate($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @param string $website
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function setWebsite($fid, $website)
+  {
+    $payload          = new SetAffiliateWebsitePayload();
+    $payload->fid     = $fid;
+    $payload->website = $website;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->setWebsite($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @param string $type
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function SetType($fid, $type)
+  {
+    $payload        = new SetAffiliateTypePayload();
+    $payload->fid   = $fid;
+    $payload->type  = $type;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->setType($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @param string $accountManagerFid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function setAccountManager($fid, $accountManagerFid)
+  {
+    $payload                    = new SetAffiliateAccountManagerPayload();
+    $payload->fid               = $fid;
+    $payload->accountManagerFid = $accountManagerFid;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->setAccountManager($payload)->get();
   }
 
 }
