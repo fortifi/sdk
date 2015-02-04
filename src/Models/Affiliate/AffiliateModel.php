@@ -9,11 +9,11 @@ use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateTypePayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateWebsitePayload;
 use Fortifi\FortifiApi\Affiliate\Responses\AffiliateResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\AffiliatesResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\CreateAffiliateResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
-use Fortifi\FortifiApi\Foundation\Responses\FidResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class AffiliateModel extends FortifiApiModel
@@ -68,7 +68,7 @@ class AffiliateModel extends FortifiApiModel
    * @param string $website
    * @param string $accountManagerFid
    *
-   * @return FortifiApiRequestInterface|FidResponse
+   * @return FortifiApiRequestInterface|CreateAffiliateResponse
    */
   public function create($type, $displayName,
     $name, $phone, $email, $website, $accountManagerFid
