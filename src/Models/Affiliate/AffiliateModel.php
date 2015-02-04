@@ -3,7 +3,7 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\CreateAffiliatePayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\UpdateAffiliatePayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateNamePayload;
 use Fortifi\FortifiApi\Affiliate\Responses\AffiliateResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\AffiliatesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
@@ -63,15 +63,12 @@ class AffiliateModel extends FortifiApiModel
    * @param string $phone
    * @param string $email
    * @param string $website
-   * @param bool   $acceptedTerms
-   * @param bool   $suspended
    * @param string $accountManagerFid
    *
    * @return FortifiApiRequestInterface|FidResponse
    */
   public function create($type, $displayName,
-    $name, $phone, $email, $website, $acceptedTerms = false,
-    $suspended = false, $accountManagerFid
+    $name, $phone, $email, $website, $accountManagerFid
   )
   {
     $payload                    = new CreateAffiliatePayload();
@@ -81,8 +78,6 @@ class AffiliateModel extends FortifiApiModel
     $payload->phone             = $phone;
     $payload->email             = $email;
     $payload->website           = $website;
-    $payload->acceptedTerms     = $acceptedTerms;
-    $payload->suspended         = $suspended;
     $payload->accountManagerFid = $accountManagerFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -91,39 +86,20 @@ class AffiliateModel extends FortifiApiModel
 
   /**
    * @param string $fid
-   * @param string $userFid
-   * @param string $type
    * @param string $displayName
    * @param string $name
-   * @param string $phone
-   * @param string $email
-   * @param string $website
-   * @param bool   $acceptedTerms
-   * @param bool   $suspended
-   * @param string $accountManagerFid
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $userFid, $type, $displayName,
-    $name, $phone, $email, $website, $acceptedTerms = false,
-    $suspended = false, $accountManagerFid
-  )
+  public function update($fid, $displayName, $name)
   {
-    $payload                    = new UpdateAffiliatePayload();
+    $payload                    = new SetAffiliateNamePayload();
     $payload->fid               = $fid;
-    $payload->userFid           = $userFid;
-    $payload->type              = $type;
     $payload->displayName       = $displayName;
     $payload->name              = $name;
-    $payload->phone             = $phone;
-    $payload->email             = $email;
-    $payload->website           = $website;
-    $payload->acceptedTerms     = $acceptedTerms;
-    $payload->suspended         = $suspended;
-    $payload->accountManagerFid = $accountManagerFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
-    return $ep->update($payload)->get();
+    return $ep->setName($payload)->get();
   }
 
   /**
