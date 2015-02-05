@@ -28,7 +28,7 @@ class AffiliateModel extends FortifiApiModel
    *
    * @return AffiliatesResponse|FortifiApiRequestInterface
    */
-  public function all($limit = null, $page = null,
+  public function all($limit = 10, $page = 1,
     $sortField = null, $sortDirection = null,
     $showDeleted = false, $filter = null
   )
