@@ -2,6 +2,10 @@
 namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateEndpoint;
+use Fortifi\FortifiApi\Affiliate\Payloads\AffiliateEmailFidPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\AffiliateEmailPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\AffiliatePhoneFidPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\AffiliatePhonePayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\CreateAffiliatePayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateAccountManagerPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\SetAffiliateNamePayload;
@@ -209,4 +213,105 @@ class AffiliateModel extends FortifiApiModel
     return $ep->setAccountManager($payload)->get();
   }
 
+  /**
+   * @param $fid
+   * @param $email
+   * @param $setAsDefault
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function addEmail($fid, $email, $setAsDefault)
+  {
+    $payload                = new AffiliateEmailPayload();
+    $payload->fid           = $fid;
+    $payload->email         = $email;
+    $payload->setAsDefault  = $setAsDefault;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->addEmail($payload)->get();
+  }
+
+  /**
+   * @param $fid
+   * @param $emailFid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function removeEmail($fid, $emailFid)
+  {
+    $payload            = new AffiliateEmailFidPayload();
+    $payload->fid       = $fid;
+    $payload->emailFid  = $emailFid;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->removeEmail($payload)->get();
+  }
+
+  /**
+   * @param string $employeeFid
+   * @param string $emailFid
+   *
+   * @return BoolResponse
+   */
+  public function setDefaultEmail($employeeFid, $emailFid)
+  {
+    $payload                = new AffiliateEmailPayload();
+    $payload->fid           = $employeeFid;
+    $payload->email         = $emailFid;
+    $payload->setAsDefault  = true;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->addEmail($payload)->get();
+  }
+
+  /**
+   * @param $fid
+   * @param $phone
+   * @param $setAsDefault
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function addPhone($fid, $phone, $setAsDefault)
+  {
+    $payload                = new AffiliatePhonePayload();
+    $payload->fid           = $fid;
+    $payload->phone         = $phone;
+    $payload->setAsDefault  = $setAsDefault;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->addPhone($payload)->get();
+  }
+
+  /**
+   * @param $fid
+   * @param $phoneFid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function removePhone($fid, $phoneFid)
+  {
+    $payload            = new AffiliatePhoneFidPayload();
+    $payload->fid       = $fid;
+    $payload->phoneFid  = $phoneFid;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->removePhone($payload)->get();
+  }
+
+  /**
+   * @param string $employeeFid
+   * @param string $phoneFid
+   *
+   * @return BoolResponse
+   */
+  public function setDefaultPhone($employeeFid, $phoneFid)
+  {
+    $payload                = new AffiliatePhonePayload();
+    $payload->fid           = $employeeFid;
+    $payload->phone         = $phoneFid;
+    $payload->setAsDefault  = true;
+
+    $ep = AffiliateEndpoint::bound($this->getApi());
+    return $ep->addPhone($payload)->get();
+  }
 }
