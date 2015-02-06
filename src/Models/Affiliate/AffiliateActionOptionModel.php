@@ -4,10 +4,10 @@ namespace Fortifi\Sdk\Models\Affiliate;
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateActionOptionEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Action\CreateAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Action\UpdateAffiliateActionOptionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Action\RetrieveAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Action\AffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Action\AffiliateActionOptionsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Action\CreateAffiliateActionOptionResponse;
-use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
@@ -43,13 +43,15 @@ class AffiliateActionOptionModel extends FortifiApiModel
 
   /**
    * @param string $fid
+   * @param string $key
    *
    * @return AffiliateActionOptionResponse|FortifiApiRequestInterface
    */
-  public function retrieve($fid)
+  public function retrieve($fid, $key)
   {
-    $payload      = new FidPayload();
+    $payload      = new RetrieveAffiliateActionOptionPayload();
     $payload->fid = $fid;
+    $payload->key = $key;
 
     $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
     return $ep->retrieve($payload)->get();
