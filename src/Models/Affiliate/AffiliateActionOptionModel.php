@@ -2,12 +2,12 @@
 namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateActionOptionEndpoint;
-use Fortifi\FortifiApi\Affiliate\Payloads\Action\CreateAffiliateActionOptionPayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\Action\UpdateAffiliateActionOptionPayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\Action\RetrieveAffiliateActionOptionPayload;
-use Fortifi\FortifiApi\Affiliate\Responses\Action\AffiliateActionOptionResponse;
-use Fortifi\FortifiApi\Affiliate\Responses\Action\AffiliateActionOptionsResponse;
-use Fortifi\FortifiApi\Affiliate\Responses\Action\CreateAffiliateActionOptionResponse;
+use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\CreateAffiliateActionOptionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\UpdateAffiliateActionOptionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\RetrieveAffiliateActionOptionPayload;
+use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionsResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\CreateAffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
@@ -26,7 +26,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @return AffiliateActionOptionsResponse|FortifiApiRequestInterface
    */
   public function all($limit = 10, $page = 1, $sortField = null,
-    $sortDirection = null, $showDeleted = false, $filter = null
+                      $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
     $payload                = new PaginatedDataNodePayload();
@@ -70,7 +70,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|CreateAffiliateActionOptionResponse
    */
   public function create($actionFid, $key, $name, $visibility, $valueType,
-    $values, $defaultValue, $urlType
+                         $values, $defaultValue, $urlType
   )
   {
     $payload               = new CreateAffiliateActionOptionPayload();
@@ -101,7 +101,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update($actionFid, $fid, $key, $name, $visibility,
-    $valueType, $values, $defaultValue, $urlType
+                         $valueType, $values, $defaultValue, $urlType
   )
   {
     $payload               = new UpdateAffiliateActionOptionPayload();
