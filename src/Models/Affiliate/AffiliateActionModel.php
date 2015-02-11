@@ -92,16 +92,30 @@ class AffiliateActionModel extends FortifiApiModel
   /**
    * @param string $fid
    * @param string $name
-   * @param string $options
+   * @param string $description
+   * @param string $type
+   * @param string $approvalType
+   * @param int    $approvalDays
+   * @param string $maxCommission
+   * @param string $url
+   * @param int    $redirectCode
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $name, $options)
+  public function update($fid, $name, $description, $type,
+    $approvalType, $approvalDays, $maxCommission, $url, $redirectCode
+  )
   {
-    $payload          = new UpdateAffiliateActionPayload();
-    $payload->fid     = $fid;
-    $payload->name    = $name;
-    $payload->options = $options;
+    $payload                = new UpdateAffiliateActionPayload();
+    $payload->fid           = $fid;
+    $payload->name          = $name;
+    $payload->description   = $description;
+    $payload->type          = $type;
+    $payload->approvalType  = $approvalType;
+    $payload->approvalDays  = $approvalDays;
+    $payload->maxCommission = $maxCommission;
+    $payload->url           = $url;
+    $payload->redirectCode  = $redirectCode;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
