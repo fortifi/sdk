@@ -60,7 +60,7 @@ class AffiliateActionModel extends FortifiApiModel
    * @param string $key
    * @param string $name
    * @param string $description
-   * @param string $type
+   * @param int    $type
    * @param string $approvalType
    * @param int    $approvalDays
    * @param string $maxCommission
@@ -93,7 +93,7 @@ class AffiliateActionModel extends FortifiApiModel
    * @param string $fid
    * @param string $name
    * @param string $description
-   * @param string $type
+   * @param int    $type
    * @param string $approvalType
    * @param int    $approvalDays
    * @param string $maxCommission
