@@ -13,13 +13,15 @@ class FlagModel extends FortifiApiModel
 {
   /**
    * @param $userFid
+   * @param $objectFid (optional)
    *
    * @return FlagsResponse
    */
-  public function all($userFid)
+  public function all($userFid, $objectFid = null)
   {
     $payload = new ListFlagsPayload();
     $payload->userFid = $userFid;
+    $payload->objectFid = $objectFid;
 
     $ep = FlagEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
