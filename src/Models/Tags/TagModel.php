@@ -63,15 +63,17 @@ class TagModel extends FortifiApiModel
 
   /**
    * @param string $name
+   * @param string $description
    * @param string $icon
    * @param string $colour
    *
    * @return FortifiApiRequestInterface|DataNodeResponse
    */
-  public function create($name, $icon, $colour)
+  public function create($name, $description, $icon, $colour)
   {
     $payload = new CreateTagPayload();
     $payload->name = $name;
+    $payload->description = $description;
     $payload->icon = $icon;
     $payload->colour = $colour;
 
