@@ -8,6 +8,7 @@ use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\RetrieveAffiliateActionOp
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\CreateAffiliateActionOptionResponse;
+use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
@@ -26,7 +27,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @return AffiliateActionOptionsResponse|FortifiApiRequestInterface
    */
   public function all($limit = 10, $page = 1, $sortField = null,
-                      $sortDirection = null, $showDeleted = false, $filter = null
+    $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
     $payload                = new PaginatedDataNodePayload();
@@ -117,5 +118,18 @@ class AffiliateActionOptionModel extends FortifiApiModel
 
     $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function delete($fid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
+    return $ep->delete($payload)->get();
   }
 }

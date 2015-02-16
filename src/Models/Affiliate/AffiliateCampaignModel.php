@@ -3,7 +3,8 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateCampaignEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Campaign\CreateAffiliateCampaignPayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\Campaign\UpdateAffiliateCampaignPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Campaign\SetNameAffiliateCampaignPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Campaign\SetOptionsAffiliateCampaignPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Campaign\AffiliateCampaignResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Campaign\AffiliateCampaignsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Campaign\CreateAffiliateCampaignResponse;
@@ -78,18 +79,32 @@ class AffiliateCampaignModel extends FortifiApiModel
   /**
    * @param string $fid
    * @param string $name
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function setName($fid, $name)
+  {
+    $payload          = new SetNameAffiliateCampaignPayload();
+    $payload->fid     = $fid;
+    $payload->name    = $name;
+
+    $ep = AffiliateCampaignEndpoint::bound($this->getApi());
+    return $ep->setName($payload)->get();
+  }
+
+  /**
+   * @param string $fid
    * @param string $options
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $name, $options)
+  public function setOptions($fid, $options)
   {
-    $payload          = new UpdateAffiliateCampaignPayload();
+    $payload          = new SetOptionsAffiliateCampaignPayload();
     $payload->fid     = $fid;
-    $payload->name    = $name;
     $payload->options = $options;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
-    return $ep->update($payload)->get();
+    return $ep->setOptions($payload)->get();
   }
 }
