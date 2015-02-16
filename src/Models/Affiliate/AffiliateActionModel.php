@@ -3,6 +3,8 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateActionEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Action\CreateAffiliateActionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Action\SetKeyAffiliateActionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Action\SetTypeAffiliateActionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Action\UpdateAffiliateActionPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Action\AffiliateActionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Action\AffiliateActionsResponse;
@@ -93,7 +95,6 @@ class AffiliateActionModel extends FortifiApiModel
    * @param string $fid
    * @param string $name
    * @param string $description
-   * @param int    $type
    * @param string $approvalType
    * @param int    $approvalDays
    * @param string $maxCommission
@@ -102,15 +103,14 @@ class AffiliateActionModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $name, $description, $type,
-    $approvalType, $approvalDays, $maxCommission, $url, $redirectCode
+  public function update($fid, $name, $description, $approvalType,
+    $approvalDays, $maxCommission, $url, $redirectCode
   )
   {
     $payload                = new UpdateAffiliateActionPayload();
     $payload->fid           = $fid;
     $payload->name          = $name;
     $payload->description   = $description;
-    $payload->type          = $type;
     $payload->approvalType  = $approvalType;
     $payload->approvalDays  = $approvalDays;
     $payload->maxCommission = $maxCommission;
@@ -119,5 +119,37 @@ class AffiliateActionModel extends FortifiApiModel
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @param string $type
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function setType($fid, $type)
+  {
+    $payload        = new SetTypeAffiliateActionPayload();
+    $payload->fid   = $fid;
+    $payload->type  = $type;
+
+    $ep = AffiliateActionEndpoint::bound($this->getApi());
+    return $ep->setType($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @param string $key
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function setKey($fid, $key)
+  {
+    $payload      = new SetKeyAffiliateActionPayload();
+    $payload->fid = $fid;
+    $payload->key = $key;
+
+    $ep = AffiliateActionEndpoint::bound($this->getApi());
+    return $ep->setKey($payload)->get();
   }
 }
