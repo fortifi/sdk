@@ -12,15 +12,13 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class FlagModel extends FortifiApiModel
 {
   /**
-   * @param $userFid
-   * @param $objectFid (optional)
+   * @param string $objectFid
    *
    * @return FlagsResponse
    */
-  public function all($userFid, $objectFid = null)
+  public function all($objectFid = null)
   {
     $payload = new ListFlagsPayload();
-    $payload->userFid = $userFid;
     $payload->objectFid = $objectFid;
 
     $ep = FlagEndpoint::bound($this->getApi());
@@ -28,17 +26,15 @@ class FlagModel extends FortifiApiModel
   }
 
   /**
-   * @param $userFid
-   * @param $objectFid
-   * @param $colour
-   * @param $notes
+   * @param string $objectFid
+   * @param string $colour
+   * @param string $notes
    *
    * @return BoolResponse
    */
-  public function create($userFid, $objectFid, $colour = null, $notes = null)
+  public function create($objectFid, $colour = null, $notes = null)
   {
     $payload = new CreateFlagPayload();
-    $payload->userFid = $userFid;
     $payload->objectFid = $objectFid;
     $payload->colour = $colour;
     $payload->notes = $notes;
@@ -48,7 +44,7 @@ class FlagModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
+   * @param string $fid
    *
    * @return BoolResponse
    */
