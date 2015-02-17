@@ -6,7 +6,7 @@ use Fortifi\FortifiApi\Affiliate\Payloads\AdvancedSearch\AffiliateAdvancedSearch
 use Fortifi\FortifiApi\Affiliate\Payloads\AdvancedSearch\AffiliateAdvancedSearchEmailPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\AdvancedSearch\AffiliateAdvancedSearchTrackingLinkPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\AdvancedSearch\AffiliateAdvancedSearchWebsitePayload;
-use Fortifi\FortifiApi\Affiliate\Responses\AffiliatesResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\AffiliateResponse;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
@@ -15,7 +15,7 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
   /**
    * @param string $email
    *
-   * @return FortifiApiRequestInterface|AffiliatesResponse
+   * @return FortifiApiRequestInterface|AffiliateResponse
    */
   public function email($email)
   {
@@ -29,7 +29,7 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
   /**
    * @param string $campaignHash
    *
-   * @return FortifiApiRequestInterface|AffiliatesResponse
+   * @return FortifiApiRequestInterface|AffiliateResponse
    */
   public function campaignHash($campaignHash)
   {
@@ -43,7 +43,7 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
   /**
    * @param string $trackingLink
    *
-   * @return FortifiApiRequestInterface|AffiliatesResponse
+   * @return FortifiApiRequestInterface|AffiliateResponse
    */
   public function trackingLink($trackingLink)
   {
@@ -57,7 +57,7 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
   /**
    * @param string $website
    *
-   * @return FortifiApiRequestInterface|AffiliatesResponse
+   * @return FortifiApiRequestInterface|AffiliateResponse
    */
   public function website($website)
   {
