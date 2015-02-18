@@ -59,7 +59,7 @@ class TextAdvertModel extends FortifiApiModel
   }
 
   /**
-   * @param string $title
+   * @param string $displayName
    * @param string $action
    * @param string $companyFid
    * @param string $language
@@ -70,12 +70,12 @@ class TextAdvertModel extends FortifiApiModel
    *
    * @return FidResponse
    */
-  public function create($title, $action, $companyFid, $language,
-                         $headline, $lineOne, $lineTwo, $displayUrl
+  public function create($displayName, $action, $companyFid, $language,
+    $headline, $lineOne, $lineTwo, $displayUrl
   )
   {
     $payload              = new CreateTextAdvertPayload();
-    $payload->title       = $title;
+    $payload->displayName = $displayName;
     $payload->action      = $action;
     $payload->companyFid  = $companyFid;
     $payload->language    = $language;
@@ -90,7 +90,7 @@ class TextAdvertModel extends FortifiApiModel
 
   /**
    * @param string $fid
-   * @param string $title
+   * @param string $displayName
    * @param string $action
    * @param string $companyFid
    * @param string $language
@@ -101,13 +101,13 @@ class TextAdvertModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
-  public function update($fid, $title, $action, $companyFid, $language,
-                         $headline, $lineOne, $lineTwo, $displayUrl
+  public function update($fid, $displayName, $action, $companyFid,
+    $language, $headline, $lineOne, $lineTwo, $displayUrl
   )
   {
     $payload              = new UpdateTextAdvertPayload();
     $payload->fid         = $fid;
-    $payload->title       = $title;
+    $payload->displayName = $displayName;
     $payload->action      = $action;
     $payload->companyFid  = $companyFid;
     $payload->language    = $language;

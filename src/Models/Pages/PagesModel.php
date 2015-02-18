@@ -55,7 +55,7 @@ class PagesModel extends FortifiApiModel
   }
 
   /**
-   * @param string $title
+   * @param string $displayName
    * @param string $content
    * @param string $notes
    * @param string $type
@@ -63,12 +63,12 @@ class PagesModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
-  public function create($title, $content, $notes,
+  public function create($displayName, $content, $notes,
     $type = 'custom', $isDisabled = 0
   )
   {
     $payload              = new CreatePagePayload();
-    $payload->title       = $title;
+    $payload->displayName = $displayName;
     $payload->content     = $content;
     $payload->type        = $type;
     $payload->isDisabled  = $isDisabled;
@@ -80,19 +80,19 @@ class PagesModel extends FortifiApiModel
 
   /**
    * @param string $fid
-   * @param string $title
+   * @param string $displayName
    * @param string $content
    * @param string $notes
    * @param int    $isDisabled
    *
    * @return BoolResponse
    */
-  public function update($fid, $title, $content, $notes, $isDisabled = 0
+  public function update($fid, $displayName, $content, $notes, $isDisabled = 0
   )
   {
     $payload              = new UpdatePagePayload();
     $payload->fid         = $fid;
-    $payload->title       = $title;
+    $payload->displayName = $displayName;
     $payload->content     = $content;
     $payload->isDisabled  = $isDisabled;
     $payload->notes       = $notes;

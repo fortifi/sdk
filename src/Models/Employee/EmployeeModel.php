@@ -106,8 +106,8 @@ class EmployeeModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update(
-    $fid, $firstName, $lastName, $middleNames, $displayName, $title, $position,
-    $description
+    $fid, $firstName, $lastName, $middleNames, $displayName,
+    $title, $position, $description
   )
   {
     $payload              = new EmployeeProfilePayload();
