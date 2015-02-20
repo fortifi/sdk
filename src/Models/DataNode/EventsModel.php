@@ -10,6 +10,8 @@ class EventsModel extends FortifiApiModel
 {
   /**
    * @param string $fid
+   * @param        $startMicro
+   * @param        $limit
    *
    * @return DataNodeEventsResponse
    */
