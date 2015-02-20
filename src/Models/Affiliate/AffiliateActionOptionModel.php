@@ -3,8 +3,8 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateActionOptionEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\CreateAffiliateActionOptionPayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\UpdateAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\RetrieveAffiliateActionOptionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\UpdateAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\CreateAffiliateActionOptionResponse;
@@ -26,17 +26,18 @@ class AffiliateActionOptionModel extends FortifiApiModel
    *
    * @return AffiliateActionOptionsResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -50,7 +51,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
    */
   public function retrieve($fid, $key)
   {
-    $payload      = new RetrieveAffiliateActionOptionPayload();
+    $payload = new RetrieveAffiliateActionOptionPayload();
     $payload->fid = $fid;
     $payload->key = $key;
 
@@ -70,19 +71,20 @@ class AffiliateActionOptionModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|CreateAffiliateActionOptionResponse
    */
-  public function create($actionFid, $key, $name, $visibility, $valueType,
-                         $values, $defaultValue, $urlType
+  public function create(
+    $actionFid, $key, $name, $visibility, $valueType,
+    $values, $defaultValue, $urlType
   )
   {
-    $payload               = new CreateAffiliateActionOptionPayload();
-    $payload->actionFid    = $actionFid;
-    $payload->key          = $key;
-    $payload->name         = $name;
-    $payload->visibility   = $visibility;
-    $payload->valueType    = $valueType;
-    $payload->values       = $values;
+    $payload = new CreateAffiliateActionOptionPayload();
+    $payload->actionFid = $actionFid;
+    $payload->key = $key;
+    $payload->name = $name;
+    $payload->visibility = $visibility;
+    $payload->valueType = $valueType;
+    $payload->values = $values;
     $payload->defaultValue = $defaultValue;
-    $payload->urlType      = $urlType;
+    $payload->urlType = $urlType;
 
     $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -101,20 +103,21 @@ class AffiliateActionOptionModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($actionFid, $fid, $key, $name, $visibility,
-                         $valueType, $values, $defaultValue, $urlType
+  public function update(
+    $actionFid, $fid, $key, $name, $visibility,
+    $valueType, $values, $defaultValue, $urlType
   )
   {
-    $payload               = new UpdateAffiliateActionOptionPayload();
-    $payload->fid          = $fid;
-    $payload->actionFid    = $actionFid;
-    $payload->key          = $key;
-    $payload->name         = $name;
-    $payload->visibility   = $visibility;
-    $payload->valueType    = $valueType;
-    $payload->values       = $values;
+    $payload = new UpdateAffiliateActionOptionPayload();
+    $payload->fid = $fid;
+    $payload->actionFid = $actionFid;
+    $payload->key = $key;
+    $payload->name = $name;
+    $payload->visibility = $visibility;
+    $payload->valueType = $valueType;
+    $payload->values = $values;
     $payload->defaultValue = $defaultValue;
-    $payload->urlType      = $urlType;
+    $payload->urlType = $urlType;
 
     $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
@@ -122,6 +125,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
 
   /**
    * @param string $fid
+   *
    * @return FortifiApiRequestInterface|BoolResponse
    */
   public function delete($fid)

@@ -18,7 +18,7 @@ class CompanyBrandingModel extends FortifiApiModel
    */
   public function getCompanyBranding($companyFid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $companyFid;
 
     $ep = CompanyBrandingEndpoint::bound($this->getApi());
@@ -34,10 +34,10 @@ class CompanyBrandingModel extends FortifiApiModel
    */
   public function setCompanyBranding($companyFid, $theme, $logoUrl)
   {
-    $payload             = new CompanyBrandingPayload();
+    $payload = new CompanyBrandingPayload();
     $payload->companyFid = $companyFid;
-    $payload->theme      = $theme;
-    $payload->logoUrl    = $logoUrl;
+    $payload->theme = $theme;
+    $payload->logoUrl = $logoUrl;
 
     $ep = CompanyBrandingEndpoint::bound($this->getApi());
     return $ep->setCompanyBranding($payload)->get();

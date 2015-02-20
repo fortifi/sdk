@@ -1,12 +1,12 @@
 <?php
 namespace Fortifi\Sdk\Models\Meta;
 
-use Fortifi\FortifiApi\Meta\Payloads\GetMetaDataPayload;
-use Fortifi\FortifiApi\Meta\Payloads\MetaDataPayload;
-use Fortifi\FortifiApi\Meta\Endpoints\MetaDataEndpoint;
-use Fortifi\FortifiApi\Meta\Responses\MetaDataResponse;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
+use Fortifi\FortifiApi\Meta\Endpoints\MetaDataEndpoint;
+use Fortifi\FortifiApi\Meta\Payloads\GetMetaDataPayload;
+use Fortifi\FortifiApi\Meta\Payloads\MetaDataPayload;
+use Fortifi\FortifiApi\Meta\Responses\MetaDataResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class MetaModel extends FortifiApiModel
@@ -19,9 +19,9 @@ class MetaModel extends FortifiApiModel
    */
   public function getMetaData($objectFid, $filter = null)
   {
-    $payload            = new GetMetaDataPayload();
+    $payload = new GetMetaDataPayload();
     $payload->objectFid = $objectFid;
-    $payload->filter    = $filter;
+    $payload->filter = $filter;
 
     $ep = MetaDataEndpoint::bound($this->getApi());
     return $ep->getMetaData($payload)->get();
@@ -36,10 +36,10 @@ class MetaModel extends FortifiApiModel
    */
   public function setMetaData($objectFid, $key, $value)
   {
-    $payload            = new MetaDataPayload();
+    $payload = new MetaDataPayload();
     $payload->objectFid = $objectFid;
-    $payload->key       = $key;
-    $payload->value     = $value;
+    $payload->key = $key;
+    $payload->value = $value;
 
     $ep = MetaDataEndpoint::bound($this->getApi());
     return $ep->setMetaData($payload)->get();

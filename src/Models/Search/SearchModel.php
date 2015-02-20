@@ -19,11 +19,11 @@ class SearchModel extends FortifiApiModel
    */
   public function search($query, $type = null, $subType = null)
   {
-    $payload             = new SearchPayload();
-    $payload->query      = $query;
-    $payload->fidType    = $type;
+    $payload = new SearchPayload();
+    $payload->query = $query;
+    $payload->fidType = $type;
     $payload->fidSubType = $subType;
-    $ep                  = SearchEndpoint::bound($this->getApi());
+    $ep = SearchEndpoint::bound($this->getApi());
     return $ep->search($payload)->get();
   }
 }

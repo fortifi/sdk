@@ -9,7 +9,7 @@ class Client
   public function __construct($id, $secret)
   {
     $this->_secret = $secret;
-    $this->_id     = $id;
+    $this->_id = $id;
   }
 
   public function getId()

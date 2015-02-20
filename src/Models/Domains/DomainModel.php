@@ -31,13 +31,13 @@ class DomainModel extends FortifiApiModel
     $showDeleted = null, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = DomainEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -50,7 +50,7 @@ class DomainModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = DomainEndpoint::bound($this->getApi());
@@ -65,8 +65,8 @@ class DomainModel extends FortifiApiModel
    */
   public function create($domain, $companyFid = null)
   {
-    $payload             = new CreateDomainPayload();
-    $payload->domain     = $domain;
+    $payload = new CreateDomainPayload();
+    $payload->domain = $domain;
     $payload->companyFid = $companyFid;
 
     $ep = DomainEndpoint::bound($this->getApi());
@@ -81,8 +81,8 @@ class DomainModel extends FortifiApiModel
    */
   public function update($fid, $domain)
   {
-    $payload         = new UpdateDomainPayload();
-    $payload->fid    = $fid;
+    $payload = new UpdateDomainPayload();
+    $payload->fid = $fid;
     $payload->domain = $domain;
 
     $ep = DomainEndpoint::bound($this->getApi());
@@ -96,7 +96,7 @@ class DomainModel extends FortifiApiModel
    */
   public function delete($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = DomainEndpoint::bound($this->getApi());
@@ -110,7 +110,7 @@ class DomainModel extends FortifiApiModel
    */
   public function verify($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = DomainEndpoint::bound($this->getApi());
@@ -125,8 +125,8 @@ class DomainModel extends FortifiApiModel
    */
   public function setCompany($fid, $companyFid)
   {
-    $payload             = new DomainCompanyFidPayload();
-    $payload->fid        = $fid;
+    $payload = new DomainCompanyFidPayload();
+    $payload->fid = $fid;
     $payload->companyFid = $companyFid;
 
     $ep = DomainEndpoint::bound($this->getApi());
@@ -140,16 +140,15 @@ class DomainModel extends FortifiApiModel
    */
   public function unlinkCompany($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = DomainEndpoint::bound($this->getApi());
     return $ep->unlinkCompany($payload)->get();
-
   }
 
   /**
-   * @param $companyFid
+   * @param        $companyFid
    * @param int    $limit
    * @param int    $page
    * @param string $sortField
@@ -164,14 +163,14 @@ class DomainModel extends FortifiApiModel
     $sortDirection = null, $showDeleted = null, $filter = null
   )
   {
-    $payload                = new PaginatedDomainsByCompanyFidPayload();
-    $payload->companyFid    = $companyFid;
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDomainsByCompanyFidPayload();
+    $payload->companyFid = $companyFid;
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = DomainEndpoint::bound($this->getApi());
     return $ep->getByCompany($payload)->get();

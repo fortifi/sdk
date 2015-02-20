@@ -25,17 +25,18 @@ class AffiliateFoundationModel extends FortifiApiModel
    *
    * @return AffiliateFoundationsResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
-                      $sortDirection = null, $showDeleted = false, $filter = null
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
+    $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateFoundationEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -48,7 +49,7 @@ class AffiliateFoundationModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateFoundationEndpoint::bound($this->getApi());
@@ -63,7 +64,7 @@ class AffiliateFoundationModel extends FortifiApiModel
    */
   public function create($name, $type)
   {
-    $payload       = new CreateAffiliateFoundationPayload();
+    $payload = new CreateAffiliateFoundationPayload();
     $payload->name = $name;
     $payload->type = $type;
 
@@ -80,8 +81,8 @@ class AffiliateFoundationModel extends FortifiApiModel
    */
   public function update($fid, $name, $type)
   {
-    $payload       = new UpdateAffiliateFoundationPayload();
-    $payload->fid  = $fid;
+    $payload = new UpdateAffiliateFoundationPayload();
+    $payload->fid = $fid;
     $payload->name = $name;
     $payload->type = $type;
 

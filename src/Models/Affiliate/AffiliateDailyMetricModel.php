@@ -21,17 +21,18 @@ class AffiliateDailyMetricModel extends FortifiApiModel
    *
    * @return AffiliateDailyMetricsResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -45,9 +46,9 @@ class AffiliateDailyMetricModel extends FortifiApiModel
    */
   public function retrieve($affiliateFid, $date)
   {
-    $payload                = new RetrieveAffiliateDailyMetricPayload();
-    $payload->affiliateFid  = $affiliateFid;
-    $payload->date          = $date;
+    $payload = new RetrieveAffiliateDailyMetricPayload();
+    $payload->affiliateFid = $affiliateFid;
+    $payload->date = $date;
 
     $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
     return $ep->retrieve($payload)->get();

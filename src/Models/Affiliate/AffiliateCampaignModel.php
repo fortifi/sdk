@@ -26,17 +26,18 @@ class AffiliateCampaignModel extends FortifiApiModel
    *
    * @return AffiliateCampaignsResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -49,7 +50,7 @@ class AffiliateCampaignModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
@@ -66,11 +67,11 @@ class AffiliateCampaignModel extends FortifiApiModel
    */
   public function create($affiliateFid, $companyFid, $name, $options)
   {
-    $payload               = new CreateAffiliateCampaignPayload();
+    $payload = new CreateAffiliateCampaignPayload();
     $payload->affiliateFid = $affiliateFid;
-    $payload->companyFid   = $companyFid;
-    $payload->name         = $name;
-    $payload->options      = $options;
+    $payload->companyFid = $companyFid;
+    $payload->name = $name;
+    $payload->options = $options;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -84,9 +85,9 @@ class AffiliateCampaignModel extends FortifiApiModel
    */
   public function setName($fid, $name)
   {
-    $payload          = new SetNameAffiliateCampaignPayload();
-    $payload->fid     = $fid;
-    $payload->name    = $name;
+    $payload = new SetNameAffiliateCampaignPayload();
+    $payload->fid = $fid;
+    $payload->name = $name;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
     return $ep->setName($payload)->get();
@@ -100,8 +101,8 @@ class AffiliateCampaignModel extends FortifiApiModel
    */
   public function setOptions($fid, $options)
   {
-    $payload          = new SetOptionsAffiliateCampaignPayload();
-    $payload->fid     = $fid;
+    $payload = new SetOptionsAffiliateCampaignPayload();
+    $payload->fid = $fid;
     $payload->options = $options;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());

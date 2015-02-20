@@ -2,12 +2,12 @@
 namespace Fortifi\Sdk\Models\Employee\Roles;
 
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
+use Fortifi\FortifiApi\Employee\Endpoints\EmployeeRoleEndpoint;
+use Fortifi\FortifiApi\Employee\Payloads\Roles\CreateEmployeeRolePayload;
 use Fortifi\FortifiApi\Employee\Payloads\Roles\EmployeeRolePaginatedPayload;
 use Fortifi\FortifiApi\Employee\Payloads\Roles\EmployeeRolePayload;
-use Fortifi\FortifiApi\Employee\Payloads\Roles\CreateEmployeeRolePayload;
 use Fortifi\FortifiApi\Employee\Payloads\Roles\RoleEmployeesPayload;
 use Fortifi\FortifiApi\Employee\Payloads\Roles\UpdateEmployeeRolePayload;
-use Fortifi\FortifiApi\Employee\Endpoints\EmployeeRoleEndpoint;
 use Fortifi\FortifiApi\Employee\Payloads\SetPermissionPayload;
 use Fortifi\FortifiApi\Employee\Responses\EmployeesResponse;
 use Fortifi\FortifiApi\Employee\Responses\Roles\EmployeeRoleResponse;
@@ -34,13 +34,13 @@ class RoleModel extends FortifiApiModel
     $showDeleted = false, $filter = null
   )
   {
-    $payload                = new EmployeeRolePaginatedPayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new EmployeeRolePaginatedPayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -53,7 +53,7 @@ class RoleModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new EmployeeRolePayload();
+    $payload = new EmployeeRolePayload();
     $payload->fid = $fid;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
@@ -68,8 +68,8 @@ class RoleModel extends FortifiApiModel
    */
   public function create($name, $description)
   {
-    $payload              = new CreateEmployeeRolePayload();
-    $payload->name        = $name;
+    $payload = new CreateEmployeeRolePayload();
+    $payload->name = $name;
     $payload->description = $description;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
@@ -85,9 +85,9 @@ class RoleModel extends FortifiApiModel
    */
   public function update($fid, $name, $description)
   {
-    $payload              = new UpdateEmployeeRolePayload();
-    $payload->fid         = $fid;
-    $payload->name        = $name;
+    $payload = new UpdateEmployeeRolePayload();
+    $payload->fid = $fid;
+    $payload->name = $name;
     $payload->description = $description;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
@@ -101,7 +101,7 @@ class RoleModel extends FortifiApiModel
    */
   public function delete($fid)
   {
-    $payload      = new EmployeeRolePayload();
+    $payload = new EmployeeRolePayload();
     $payload->fid = $fid;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
@@ -116,7 +116,7 @@ class RoleModel extends FortifiApiModel
    */
   public function restore($fid)
   {
-    $payload      = new EmployeeRolePayload();
+    $payload = new EmployeeRolePayload();
     $payload->fid = $fid;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
@@ -136,11 +136,11 @@ class RoleModel extends FortifiApiModel
     array $replacePermissions = []
   )
   {
-    $payload                      = new SetPermissionPayload();
-    $payload->fid                 = $fid;
-    $payload->addPermissions      = $addPermissions;
-    $payload->removePermissions   = $removePermissions;
-    $payload->replacePermissions  = $replacePermissions;
+    $payload = new SetPermissionPayload();
+    $payload->fid = $fid;
+    $payload->addPermissions = $addPermissions;
+    $payload->removePermissions = $removePermissions;
+    $payload->replacePermissions = $replacePermissions;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
     return $ep->setPermissions($payload)->get();
@@ -154,9 +154,9 @@ class RoleModel extends FortifiApiModel
    */
   public function addEmployees($roleFid, $items)
   {
-    $payload          = new RoleEmployeesPayload();
+    $payload = new RoleEmployeesPayload();
     $payload->roleFid = $roleFid;
-    $payload->items   = $items;
+    $payload->items = $items;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
     return $ep->addEmployees($payload)->get();
@@ -170,9 +170,9 @@ class RoleModel extends FortifiApiModel
    */
   public function removeEmployees($roleFid, $items)
   {
-    $payload          = new RoleEmployeesPayload();
+    $payload = new RoleEmployeesPayload();
     $payload->roleFid = $roleFid;
-    $payload->items   = $items;
+    $payload->items = $items;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
     return $ep->removeEmployees($payload)->get();
@@ -186,9 +186,9 @@ class RoleModel extends FortifiApiModel
    */
   public function replaceEmployees($roleFid, $items)
   {
-    $payload          = new RoleEmployeesPayload();
+    $payload = new RoleEmployeesPayload();
     $payload->roleFid = $roleFid;
-    $payload->items   = $items;
+    $payload->items = $items;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());
     return $ep->replaceEmployees($payload)->get();
@@ -202,8 +202,8 @@ class RoleModel extends FortifiApiModel
    */
   public function getEmployees($fid, $loadRefs = false)
   {
-    $payload           = new EdgePayload();
-    $payload->fid      = $fid;
+    $payload = new EdgePayload();
+    $payload->fid = $fid;
     $payload->loadRefs = $loadRefs;
 
     $ep = EmployeeRoleEndpoint::bound($this->getApi());

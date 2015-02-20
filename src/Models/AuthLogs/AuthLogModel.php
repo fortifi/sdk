@@ -16,8 +16,8 @@ class AuthLogModel extends FortifiApiModel
    */
   public function retrieve($fid, $success)
   {
-    $payload             = new LoginLogPayload();
-    $payload->fid        = $fid;
+    $payload = new LoginLogPayload();
+    $payload->fid = $fid;
     $payload->successful = $success;
 
     $ep = AuthEndpoint::bound($this->getApi());

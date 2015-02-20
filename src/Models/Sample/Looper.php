@@ -17,9 +17,9 @@ class Looper extends FortifiApiModel
    */
   public function run($id, $name, $email)
   {
-    $payload        = new SampleLoopPayload();
-    $payload->id    = $id;
-    $payload->name  = $name;
+    $payload = new SampleLoopPayload();
+    $payload->id = $id;
+    $payload->name = $name;
     $payload->email = $email;
 
     $ep = SampleEndpoint::bound($this->getApi());

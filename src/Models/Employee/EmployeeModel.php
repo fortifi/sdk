@@ -41,14 +41,14 @@ class EmployeeModel extends FortifiApiModel
     $showDeleted = 0, $showDisabled = 1, $filter = null
   )
   {
-    $payload                = new EmployeePaginatedPayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new EmployeePaginatedPayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->showDisabled  = $showDisabled;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->showDisabled = $showDisabled;
+    $payload->filter = $filter;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -81,13 +81,13 @@ class EmployeeModel extends FortifiApiModel
     $username, $firstName, $lastName, $email, $password, $isAdmin = false
   )
   {
-    $payload            = new CreateEmployeePayload();
-    $payload->username  = $username;
+    $payload = new CreateEmployeePayload();
+    $payload->username = $username;
     $payload->firstName = $firstName;
-    $payload->lastName  = $lastName;
-    $payload->email     = $email;
-    $payload->isAdmin   = $isAdmin;
-    $payload->password  = $password;
+    $payload->lastName = $lastName;
+    $payload->email = $email;
+    $payload->isAdmin = $isAdmin;
+    $payload->password = $password;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -110,14 +110,14 @@ class EmployeeModel extends FortifiApiModel
     $title, $position, $description
   )
   {
-    $payload              = new EmployeeProfilePayload();
-    $payload->fid         = $fid;
-    $payload->firstName   = $firstName;
-    $payload->lastName    = $lastName;
+    $payload = new EmployeeProfilePayload();
+    $payload->fid = $fid;
+    $payload->firstName = $firstName;
+    $payload->lastName = $lastName;
     $payload->middleNames = $middleNames;
     $payload->displayName = $displayName;
-    $payload->title       = $title;
-    $payload->position    = $position;
+    $payload->title = $title;
+    $payload->position = $position;
     $payload->description = $description;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
@@ -189,11 +189,11 @@ class EmployeeModel extends FortifiApiModel
     array $replacePermissions = []
   )
   {
-    $payload                      = new SetPermissionPayload();
-    $payload->fid                 = $fid;
-    $payload->addPermissions      = $addPermissions;
-    $payload->removePermissions   = $removePermissions;
-    $payload->replacePermissions  = $replacePermissions;
+    $payload = new SetPermissionPayload();
+    $payload->fid = $fid;
+    $payload->addPermissions = $addPermissions;
+    $payload->removePermissions = $removePermissions;
+    $payload->replacePermissions = $replacePermissions;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->setPermissions($payload)->get();
@@ -207,7 +207,7 @@ class EmployeeModel extends FortifiApiModel
    */
   public function addCompanies($fid, $items)
   {
-    if (!is_array($items))
+    if(!is_array($items))
     {
       $items = [$items];
     }
@@ -228,7 +228,7 @@ class EmployeeModel extends FortifiApiModel
    */
   public function removeCompanies($fid, $items)
   {
-    if (!is_array($items))
+    if(!is_array($items))
     {
       $items = [$items];
     }
@@ -294,14 +294,14 @@ class EmployeeModel extends FortifiApiModel
    */
   public function addRoles($fid, $items)
   {
-    if (!is_array($items))
+    if(!is_array($items))
     {
       $items = [$items];
     }
 
     $payload = new EmployeeRolesPayload();
     $payload->employeeFid = $fid;
-    $payload->items       = $items;
+    $payload->items = $items;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->addRoles($payload)->get();
@@ -315,14 +315,14 @@ class EmployeeModel extends FortifiApiModel
    */
   public function removeRoles($fid, $items)
   {
-    if (!is_array($items))
+    if(!is_array($items))
     {
       $items = [$items];
     }
 
     $payload = new EmployeeRolesPayload();
     $payload->employeeFid = $fid;
-    $payload->items       = $items;
+    $payload->items = $items;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->removeRoles($payload)->get();
@@ -338,7 +338,7 @@ class EmployeeModel extends FortifiApiModel
   {
     $payload = new EmployeeRolesPayload();
     $payload->employeeFid = $fid;
-    $payload->items       = $items;
+    $payload->items = $items;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->replaceRoles($payload)->get();
@@ -381,8 +381,8 @@ class EmployeeModel extends FortifiApiModel
    */
   public function setAdmin($fid, $isAdmin)
   {
-    $payload          = new SetEmployeeAdminPayload();
-    $payload->fid     = $fid;
+    $payload = new SetEmployeeAdminPayload();
+    $payload->fid = $fid;
     $payload->isAdmin = $isAdmin;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
@@ -398,10 +398,10 @@ class EmployeeModel extends FortifiApiModel
    */
   public function addEmail($fid, $email, $setAsDefault)
   {
-    $payload                = new EmployeeEmailPayload();
-    $payload->fid           = $fid;
-    $payload->email         = $email;
-    $payload->setAsDefault  = $setAsDefault;
+    $payload = new EmployeeEmailPayload();
+    $payload->fid = $fid;
+    $payload->email = $email;
+    $payload->setAsDefault = $setAsDefault;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->addEmail($payload)->get();
@@ -415,9 +415,9 @@ class EmployeeModel extends FortifiApiModel
    */
   public function removeEmail($fid, $emailFid)
   {
-    $payload            = new EmployeeEmailFidPayload();
-    $payload->fid       = $fid;
-    $payload->emailFid  = $emailFid;
+    $payload = new EmployeeEmailFidPayload();
+    $payload->fid = $fid;
+    $payload->emailFid = $emailFid;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->removeEmail($payload)->get();
@@ -431,10 +431,10 @@ class EmployeeModel extends FortifiApiModel
    */
   public function setDefaultEmail($employeeFid, $emailFid)
   {
-    $payload                = new EmployeeEmailPayload();
-    $payload->fid           = $employeeFid;
-    $payload->email         = $emailFid;
-    $payload->setAsDefault  = true;
+    $payload = new EmployeeEmailPayload();
+    $payload->fid = $employeeFid;
+    $payload->email = $emailFid;
+    $payload->setAsDefault = true;
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->addEmail($payload)->get();

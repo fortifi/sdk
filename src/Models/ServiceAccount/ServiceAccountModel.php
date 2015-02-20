@@ -2,12 +2,12 @@
 namespace Fortifi\Sdk\Models\ServiceAccount;
 
 use Fortifi\FortifiApi\Auth\Endpoints\AuthEndpoint;
+use Fortifi\FortifiApi\Auth\Endpoints\ServiceAccountEndpoint;
 use Fortifi\FortifiApi\Auth\Payloads\CreateServiceAccountPayload;
 use Fortifi\FortifiApi\Auth\Payloads\ServiceAccountNamePayload;
 use Fortifi\FortifiApi\Auth\Payloads\ServiceAccountPayload;
 use Fortifi\FortifiApi\Auth\Payloads\UserPayload;
 use Fortifi\FortifiApi\Auth\Responses\ServiceAccountResponse;
-use Fortifi\FortifiApi\Auth\Endpoints\ServiceAccountEndpoint;
 use Fortifi\FortifiApi\Auth\Responses\ServiceAccountsResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
@@ -32,13 +32,13 @@ class ServiceAccountModel extends FortifiApiModel
     $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -51,7 +51,7 @@ class ServiceAccountModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new ServiceAccountPayload();
+    $payload = new ServiceAccountPayload();
     $payload->fid = $fid;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
@@ -65,7 +65,7 @@ class ServiceAccountModel extends FortifiApiModel
    */
   public function create($name)
   {
-    $payload       = new CreateServiceAccountPayload();
+    $payload = new CreateServiceAccountPayload();
     $payload->name = $name;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
@@ -79,7 +79,7 @@ class ServiceAccountModel extends FortifiApiModel
    */
   public function delete($fid)
   {
-    $payload      = new ServiceAccountPayload();
+    $payload = new ServiceAccountPayload();
     $payload->fid = $fid;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
@@ -93,7 +93,7 @@ class ServiceAccountModel extends FortifiApiModel
    */
   public function enable($fid)
   {
-    $payload      = new ServiceAccountPayload();
+    $payload = new ServiceAccountPayload();
     $payload->fid = $fid;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
@@ -107,7 +107,7 @@ class ServiceAccountModel extends FortifiApiModel
    */
   public function disable($fid)
   {
-    $payload      = new ServiceAccountPayload();
+    $payload = new ServiceAccountPayload();
     $payload->fid = $fid;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
@@ -122,8 +122,8 @@ class ServiceAccountModel extends FortifiApiModel
    */
   public function setName($fid, $name)
   {
-    $payload       = new ServiceAccountNamePayload();
-    $payload->fid  = $fid;
+    $payload = new ServiceAccountNamePayload();
+    $payload->fid = $fid;
     $payload->name = $name;
 
     $ep = ServiceAccountEndpoint::bound($this->getApi());
@@ -137,7 +137,7 @@ class ServiceAccountModel extends FortifiApiModel
    */
   public function regenerateApiKey($fid)
   {
-    $payload      = new UserPayload();
+    $payload = new UserPayload();
     $payload->fid = $fid;
 
     $ep = AuthEndpoint::bound($this->getApi());

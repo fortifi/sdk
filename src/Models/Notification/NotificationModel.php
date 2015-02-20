@@ -20,16 +20,17 @@ class NotificationModel extends FortifiApiModel
    *
    * @return UserNotificationsResponse
    */
-  public function all($page = 1, $limit = 5, $sortField = null,
+  public function all(
+    $page = 1, $limit = 5, $sortField = null,
     $sortDirection = null, $filter = null
   )
   {
     $payload = new PaginatedPayload();
-    $payload->page          = $page;
-    $payload->limit         = $limit;
-    $payload->sortField     = $sortField;
+    $payload->page = $page;
+    $payload->limit = $limit;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->filter        = $filter;
+    $payload->filter = $filter;
 
     $ep = NotificationEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -58,10 +59,12 @@ class NotificationModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
-  public function viewed($objectFid, $microtime, $hasViewed = true, $userFid = null)
+  public function viewed(
+    $objectFid, $microtime, $hasViewed = true, $userFid = null
+  )
   {
     $payload = new NotificationPayload();
-    $payload->userFid   = $userFid;
+    $payload->userFid = $userFid;
     $payload->objectFid = $objectFid;
     $payload->microtime = $microtime;
     $payload->hasViewed = $hasViewed;

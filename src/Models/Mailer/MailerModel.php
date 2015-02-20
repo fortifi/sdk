@@ -1,17 +1,17 @@
 <?php
 namespace Fortifi\Sdk\Models\Mailer;
 
+use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
+use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Mailer\Endpoints\MailerEndpoint;
 use Fortifi\FortifiApi\Mailer\Payloads\CreateMailerEmailPayload;
 use Fortifi\FortifiApi\Mailer\Payloads\MailerLogPayload;
-use Fortifi\FortifiApi\Mailer\Payloads\UpdateMailerEmailPayload;
 use Fortifi\FortifiApi\Mailer\Payloads\MailerPaginatedPayload;
 use Fortifi\FortifiApi\Mailer\Payloads\MailerPayload;
+use Fortifi\FortifiApi\Mailer\Payloads\UpdateMailerEmailPayload;
 use Fortifi\FortifiApi\Mailer\Responses\CreateMailerEmailResponse;
 use Fortifi\FortifiApi\Mailer\Responses\MailerEmailResponse;
 use Fortifi\FortifiApi\Mailer\Responses\MailerEmailsResponse;
-use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
-use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Mailer\Responses\MailerLogsResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
@@ -33,14 +33,14 @@ class MailerModel extends FortifiApiModel
     $showDeleted = 0, $showDisabled = 1, $filter = null
   )
   {
-    $payload                = new MailerPaginatedPayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new MailerPaginatedPayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->showDisabled  = $showDisabled;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->showDisabled = $showDisabled;
+    $payload->filter = $filter;
 
     $ep = MailerEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -69,11 +69,11 @@ class MailerModel extends FortifiApiModel
    */
   public function create($name, $subject, $content, $sender)
   {
-    $payload          = new CreateMailerEmailPayload();
-    $payload->name    = $name;
+    $payload = new CreateMailerEmailPayload();
+    $payload->name = $name;
     $payload->subject = $subject;
     $payload->content = $content;
-    $payload->sender  = $sender;
+    $payload->sender = $sender;
 
     $ep = MailerEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -90,12 +90,12 @@ class MailerModel extends FortifiApiModel
    */
   public function update($fid, $name, $subject, $content, $sender)
   {
-    $payload          = new UpdateMailerEmailPayload();
-    $payload->fid     = $fid;
-    $payload->name    = $name;
+    $payload = new UpdateMailerEmailPayload();
+    $payload->fid = $fid;
+    $payload->name = $name;
     $payload->subject = $subject;
     $payload->content = $content;
-    $payload->sender  = $sender;
+    $payload->sender = $sender;
 
     $ep = MailerEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
@@ -134,7 +134,7 @@ class MailerModel extends FortifiApiModel
    */
   public function getLogs($fid)
   {
-    $payload      = new MailerLogPayload();
+    $payload = new MailerLogPayload();
     $payload->fid = $fid;
 
     $ep = MailerEndpoint::bound($this->getApi());

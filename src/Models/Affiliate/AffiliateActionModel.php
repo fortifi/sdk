@@ -27,17 +27,18 @@ class AffiliateActionModel extends FortifiApiModel
    *
    * @return AffiliateActionsResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -50,7 +51,7 @@ class AffiliateActionModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
@@ -71,21 +72,22 @@ class AffiliateActionModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|CreateAffiliateActionResponse
    */
-  public function create($companyFid, $key, $name, $description, $type,
+  public function create(
+    $companyFid, $key, $name, $description, $type,
     $approvalType, $approvalDays, $maxCommission, $url, $redirectCode
   )
   {
-    $payload                = new CreateAffiliateActionPayload();
-    $payload->companyFid    = $companyFid;
-    $payload->key           = $key;
-    $payload->name          = $name;
-    $payload->description   = $description;
-    $payload->type          = $type;
-    $payload->approvalType  = $approvalType;
-    $payload->approvalDays  = $approvalDays;
+    $payload = new CreateAffiliateActionPayload();
+    $payload->companyFid = $companyFid;
+    $payload->key = $key;
+    $payload->name = $name;
+    $payload->description = $description;
+    $payload->type = $type;
+    $payload->approvalType = $approvalType;
+    $payload->approvalDays = $approvalDays;
     $payload->maxCommission = $maxCommission;
-    $payload->url           = $url;
-    $payload->redirectCode  = $redirectCode;
+    $payload->url = $url;
+    $payload->redirectCode = $redirectCode;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -103,19 +105,20 @@ class AffiliateActionModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $name, $description, $approvalType,
+  public function update(
+    $fid, $name, $description, $approvalType,
     $approvalDays, $maxCommission, $url, $redirectCode
   )
   {
-    $payload                = new UpdateAffiliateActionPayload();
-    $payload->fid           = $fid;
-    $payload->name          = $name;
-    $payload->description   = $description;
-    $payload->approvalType  = $approvalType;
-    $payload->approvalDays  = $approvalDays;
+    $payload = new UpdateAffiliateActionPayload();
+    $payload->fid = $fid;
+    $payload->name = $name;
+    $payload->description = $description;
+    $payload->approvalType = $approvalType;
+    $payload->approvalDays = $approvalDays;
     $payload->maxCommission = $maxCommission;
-    $payload->url           = $url;
-    $payload->redirectCode  = $redirectCode;
+    $payload->url = $url;
+    $payload->redirectCode = $redirectCode;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
@@ -129,9 +132,9 @@ class AffiliateActionModel extends FortifiApiModel
    */
   public function setType($fid, $type)
   {
-    $payload        = new SetTypeAffiliateActionPayload();
-    $payload->fid   = $fid;
-    $payload->type  = $type;
+    $payload = new SetTypeAffiliateActionPayload();
+    $payload->fid = $fid;
+    $payload->type = $type;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->setType($payload)->get();
@@ -145,7 +148,7 @@ class AffiliateActionModel extends FortifiApiModel
    */
   public function setKey($fid, $key)
   {
-    $payload      = new SetKeyAffiliateActionPayload();
+    $payload = new SetKeyAffiliateActionPayload();
     $payload->fid = $fid;
     $payload->key = $key;
 

@@ -4,8 +4,8 @@ namespace Fortifi\Sdk\Models\Affiliate\Policies;
 use Fortifi\FortifiApi\Affiliate\Endpoints\Policies\AffiliatePaycheckPolicyEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\Paycheck\CreateAffiliatePaycheckPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\Paycheck\UpdateAffiliatePaycheckPolicyPayload;
-use Fortifi\FortifiApi\Affiliate\Responses\Policies\Paycheck\AffiliatePaycheckPolicyResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Paycheck\AffiliatePaycheckPoliciesResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\Policies\Paycheck\AffiliatePaycheckPolicyResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Paycheck\CreateAffiliatePaycheckPolicyResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
@@ -25,17 +25,18 @@ class AffiliatePaycheckPolicyModel extends FortifiApiModel
    *
    * @return AffiliatePaycheckPoliciesResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliatePaycheckPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -48,7 +49,7 @@ class AffiliatePaycheckPolicyModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliatePaycheckPolicyEndpoint::bound($this->getApi());
@@ -73,26 +74,27 @@ class AffiliatePaycheckPolicyModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|CreateAffiliatePaycheckPolicyResponse
    */
-  public function create($companyFid, $resourceFid, $campaignHash,
+  public function create(
+    $companyFid, $resourceFid, $campaignHash,
     $sid1, $sid2, $sid3, $action, $country, $platform, $description,
     $minimumEarnings, $reservePercent, $reserveDays, $frequency
   )
   {
-    $payload                  = new CreateAffiliatePaycheckPolicyPayload();
-    $payload->companyFid      = $companyFid;
-    $payload->resourceFid     = $resourceFid;
-    $payload->campaignHash    = $campaignHash;
-    $payload->sid1            = $sid1;
-    $payload->sid2            = $sid2;
-    $payload->sid3            = $sid3;
-    $payload->action          = $action;
-    $payload->country         = $country;
-    $payload->platform        = $platform;
-    $payload->description     = $description;
+    $payload = new CreateAffiliatePaycheckPolicyPayload();
+    $payload->companyFid = $companyFid;
+    $payload->resourceFid = $resourceFid;
+    $payload->campaignHash = $campaignHash;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
+    $payload->action = $action;
+    $payload->country = $country;
+    $payload->platform = $platform;
+    $payload->description = $description;
     $payload->minimumEarnings = $minimumEarnings;
-    $payload->reservePercent  = $reservePercent;
-    $payload->reserveDays     = $reserveDays;
-    $payload->frequency       = $frequency;
+    $payload->reservePercent = $reservePercent;
+    $payload->reserveDays = $reserveDays;
+    $payload->frequency = $frequency;
 
     $ep = AffiliatePaycheckPolicyEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -108,17 +110,18 @@ class AffiliatePaycheckPolicyModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $description,
+  public function update(
+    $fid, $description,
     $minimumEarnings, $reservePercent, $reserveDays, $frequency
   )
   {
-    $payload                  = new UpdateAffiliatePaycheckPolicyPayload();
-    $payload->fid             = $fid;
-    $payload->description     = $description;
+    $payload = new UpdateAffiliatePaycheckPolicyPayload();
+    $payload->fid = $fid;
+    $payload->description = $description;
     $payload->minimumEarnings = $minimumEarnings;
-    $payload->reservePercent  = $reservePercent;
-    $payload->reserveDays     = $reserveDays;
-    $payload->frequency       = $frequency;
+    $payload->reservePercent = $reservePercent;
+    $payload->reserveDays = $reserveDays;
+    $payload->frequency = $frequency;
 
     $ep = AffiliatePaycheckPolicyEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();

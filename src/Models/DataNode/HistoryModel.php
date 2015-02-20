@@ -1,11 +1,11 @@
 <?php
 namespace Fortifi\Sdk\Models\DataNode;
 
+use Fortifi\FortifiApi\DataNode\Endpoints\DataNodeChangesEndpoint;
 use Fortifi\FortifiApi\DataNode\Payloads\DataNodeChangePayload;
 use Fortifi\FortifiApi\DataNode\Responses\DataNodeChangeResponse;
 use Fortifi\FortifiApi\DataNode\Responses\DataNodeChangesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\DataNode\Endpoints\DataNodeChangesEndpoint;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class HistoryModel extends FortifiApiModel
@@ -17,7 +17,7 @@ class HistoryModel extends FortifiApiModel
    */
   public function all($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = DataNodeChangesEndpoint::bound($this->getApi());

@@ -1,8 +1,8 @@
 <?php
 namespace Fortifi\Sdk\Models\Contact;
 
-use Fortifi\FortifiApi\Contact\Payloads\Email\EmailAddressPayload;
 use Fortifi\FortifiApi\Contact\Endpoints\EmailEndpoint;
+use Fortifi\FortifiApi\Contact\Payloads\Email\EmailAddressPayload;
 use Fortifi\FortifiApi\Contact\Responses\EmailResponse;
 use Fortifi\FortifiApi\Contact\Responses\EmailsResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
@@ -18,7 +18,7 @@ class EmailModel extends FortifiApiModel
    */
   public function create($emailAddress)
   {
-    $payload               = new EmailAddressPayload();
+    $payload = new EmailAddressPayload();
     $payload->emailAddress = $emailAddress;
 
     $ep = EmailEndpoint::bound($this->getApi());
@@ -44,7 +44,7 @@ class EmailModel extends FortifiApiModel
    */
   public function listFromObject($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = EmailEndpoint::bound($this->getApi());

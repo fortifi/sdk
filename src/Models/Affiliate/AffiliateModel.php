@@ -32,18 +32,19 @@ class AffiliateModel extends FortifiApiModel
    *
    * @return AffiliatesResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1,
+  public function all(
+    $limit = 10, $page = 1,
     $sortField = null, $sortDirection = null,
     $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -56,7 +57,7 @@ class AffiliateModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -74,17 +75,18 @@ class AffiliateModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|CreateAffiliateResponse
    */
-  public function create($type, $displayName,
+  public function create(
+    $type, $displayName,
     $name, $phone, $email, $website, $accountManagerFid
   )
   {
-    $payload                    = new CreateAffiliatePayload();
-    $payload->type              = $type;
-    $payload->displayName       = $displayName;
-    $payload->name              = $name;
-    $payload->phone             = $phone;
-    $payload->email             = $email;
-    $payload->website           = $website;
+    $payload = new CreateAffiliatePayload();
+    $payload->type = $type;
+    $payload->displayName = $displayName;
+    $payload->name = $name;
+    $payload->phone = $phone;
+    $payload->email = $email;
+    $payload->website = $website;
     $payload->accountManagerFid = $accountManagerFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -100,10 +102,10 @@ class AffiliateModel extends FortifiApiModel
    */
   public function setName($fid, $displayName, $name)
   {
-    $payload              = new SetAffiliateNamePayload();
-    $payload->fid         = $fid;
+    $payload = new SetAffiliateNamePayload();
+    $payload->fid = $fid;
     $payload->displayName = $displayName;
-    $payload->name        = $name;
+    $payload->name = $name;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->setName($payload)->get();
@@ -116,7 +118,7 @@ class AffiliateModel extends FortifiApiModel
    */
   public function delete($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -130,7 +132,7 @@ class AffiliateModel extends FortifiApiModel
    */
   public function restore($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -144,7 +146,7 @@ class AffiliateModel extends FortifiApiModel
    */
   public function suspend($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -158,7 +160,7 @@ class AffiliateModel extends FortifiApiModel
    */
   public function reactivate($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -173,8 +175,8 @@ class AffiliateModel extends FortifiApiModel
    */
   public function setWebsite($fid, $website)
   {
-    $payload          = new SetAffiliateWebsitePayload();
-    $payload->fid     = $fid;
+    $payload = new SetAffiliateWebsitePayload();
+    $payload->fid = $fid;
     $payload->website = $website;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -189,9 +191,9 @@ class AffiliateModel extends FortifiApiModel
    */
   public function SetType($fid, $type)
   {
-    $payload        = new SetAffiliateTypePayload();
-    $payload->fid   = $fid;
-    $payload->type  = $type;
+    $payload = new SetAffiliateTypePayload();
+    $payload->fid = $fid;
+    $payload->type = $type;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->setType($payload)->get();
@@ -205,8 +207,8 @@ class AffiliateModel extends FortifiApiModel
    */
   public function setAccountManager($fid, $accountManagerFid)
   {
-    $payload                    = new SetAffiliateAccountManagerPayload();
-    $payload->fid               = $fid;
+    $payload = new SetAffiliateAccountManagerPayload();
+    $payload->fid = $fid;
     $payload->accountManagerFid = $accountManagerFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
@@ -222,10 +224,10 @@ class AffiliateModel extends FortifiApiModel
    */
   public function addEmail($fid, $email, $setAsDefault)
   {
-    $payload                = new AffiliateEmailPayload();
-    $payload->fid           = $fid;
-    $payload->email         = $email;
-    $payload->setAsDefault  = $setAsDefault;
+    $payload = new AffiliateEmailPayload();
+    $payload->fid = $fid;
+    $payload->email = $email;
+    $payload->setAsDefault = $setAsDefault;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->addEmail($payload)->get();
@@ -239,9 +241,9 @@ class AffiliateModel extends FortifiApiModel
    */
   public function removeEmail($fid, $emailFid)
   {
-    $payload            = new AffiliateEmailFidPayload();
-    $payload->fid       = $fid;
-    $payload->emailFid  = $emailFid;
+    $payload = new AffiliateEmailFidPayload();
+    $payload->fid = $fid;
+    $payload->emailFid = $emailFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->removeEmail($payload)->get();
@@ -255,10 +257,10 @@ class AffiliateModel extends FortifiApiModel
    */
   public function setDefaultEmail($employeeFid, $emailFid)
   {
-    $payload                = new AffiliateEmailPayload();
-    $payload->fid           = $employeeFid;
-    $payload->email         = $emailFid;
-    $payload->setAsDefault  = true;
+    $payload = new AffiliateEmailPayload();
+    $payload->fid = $employeeFid;
+    $payload->email = $emailFid;
+    $payload->setAsDefault = true;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->addEmail($payload)->get();
@@ -273,10 +275,10 @@ class AffiliateModel extends FortifiApiModel
    */
   public function addPhone($fid, $phone, $setAsDefault)
   {
-    $payload                = new AffiliatePhonePayload();
-    $payload->fid           = $fid;
-    $payload->phone         = $phone;
-    $payload->setAsDefault  = $setAsDefault;
+    $payload = new AffiliatePhonePayload();
+    $payload->fid = $fid;
+    $payload->phone = $phone;
+    $payload->setAsDefault = $setAsDefault;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->addPhone($payload)->get();
@@ -290,9 +292,9 @@ class AffiliateModel extends FortifiApiModel
    */
   public function removePhone($fid, $phoneFid)
   {
-    $payload            = new AffiliatePhoneFidPayload();
-    $payload->fid       = $fid;
-    $payload->phoneFid  = $phoneFid;
+    $payload = new AffiliatePhoneFidPayload();
+    $payload->fid = $fid;
+    $payload->phoneFid = $phoneFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->removePhone($payload)->get();
@@ -306,10 +308,10 @@ class AffiliateModel extends FortifiApiModel
    */
   public function setDefaultPhone($employeeFid, $phoneFid)
   {
-    $payload                = new AffiliatePhonePayload();
-    $payload->fid           = $employeeFid;
-    $payload->phone         = $phoneFid;
-    $payload->setAsDefault  = true;
+    $payload = new AffiliatePhonePayload();
+    $payload->fid = $employeeFid;
+    $payload->phone = $phoneFid;
+    $payload->setAsDefault = true;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->addPhone($payload)->get();

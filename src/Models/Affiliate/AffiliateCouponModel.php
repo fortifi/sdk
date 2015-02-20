@@ -2,9 +2,9 @@
 namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateCouponEndpoint;
+use Fortifi\FortifiApi\Affiliate\Payloads\Coupons\AffiliateCouponCodePayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Coupons\CreateAffiliateCouponPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Coupons\UpdateAffiliateCouponPayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\Coupons\AffiliateCouponCodePayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Coupons\AffiliateCouponResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Coupons\AffiliateCouponsResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
@@ -24,17 +24,18 @@ class AffiliateCouponModel extends FortifiApiModel
    *
    * @return AffiliateCouponsResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateCouponEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -47,7 +48,7 @@ class AffiliateCouponModel extends FortifiApiModel
    */
   public function retrieve($couponCode)
   {
-    $payload             = new AffiliateCouponCodePayload();
+    $payload = new AffiliateCouponCodePayload();
     $payload->couponCode = $couponCode;
 
     $ep = AffiliateCouponEndpoint::bound($this->getApi());
@@ -64,17 +65,18 @@ class AffiliateCouponModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function create($couponCode, $affiliateFid,
+  public function create(
+    $couponCode, $affiliateFid,
     $campaignHash, $sid1, $sid2, $sid3
   )
   {
-    $payload               = new CreateAffiliateCouponPayload();
-    $payload->couponCode   = $couponCode;
+    $payload = new CreateAffiliateCouponPayload();
+    $payload->couponCode = $couponCode;
     $payload->affiliateFid = $affiliateFid;
     $payload->campaignHash = $campaignHash;
-    $payload->sid1         = $sid1;
-    $payload->sid2         = $sid2;
-    $payload->sid3         = $sid3;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
 
     $ep = AffiliateCouponEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -89,16 +91,17 @@ class AffiliateCouponModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($couponCode, $campaignHash,
+  public function update(
+    $couponCode, $campaignHash,
     $sid1, $sid2, $sid3
   )
   {
-    $payload               = new UpdateAffiliateCouponPayload();
-    $payload->couponCode   = $couponCode;
+    $payload = new UpdateAffiliateCouponPayload();
+    $payload->couponCode = $couponCode;
     $payload->campaignHash = $campaignHash;
-    $payload->sid1         = $sid1;
-    $payload->sid2         = $sid2;
-    $payload->sid3         = $sid3;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
 
     $ep = AffiliateCouponEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
@@ -111,7 +114,7 @@ class AffiliateCouponModel extends FortifiApiModel
    */
   public function delete($couponCode)
   {
-    $payload             = new AffiliateCouponCodePayload();
+    $payload = new AffiliateCouponCodePayload();
     $payload->couponCode = $couponCode;
 
     $ep = AffiliateCouponEndpoint::bound($this->getApi());

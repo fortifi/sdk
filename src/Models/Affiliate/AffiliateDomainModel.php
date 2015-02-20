@@ -23,17 +23,18 @@ class AffiliateDomainModel extends FortifiApiModel
    *
    * @return AffiliateDomainsResponse|FortifiApiRequestInterface
    */
-  public function all($limit = 10, $page = 1, $sortField = null,
+  public function all(
+    $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = AffiliateDomainEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -46,7 +47,7 @@ class AffiliateDomainModel extends FortifiApiModel
    */
   public function retrieve($domain)
   {
-    $payload         = new RetrieveAffiliateDomainPayload();
+    $payload = new RetrieveAffiliateDomainPayload();
     $payload->domain = $domain;
 
     $ep = AffiliateDomainEndpoint::bound($this->getApi());
@@ -63,17 +64,18 @@ class AffiliateDomainModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function create($domain, $affiliateFid, $campaignHash,
+  public function create(
+    $domain, $affiliateFid, $campaignHash,
     $sid1, $sid2, $sid3
   )
   {
-    $payload               = new AffiliateDomainPayload();
-    $payload->domain       = $domain;
+    $payload = new AffiliateDomainPayload();
+    $payload->domain = $domain;
     $payload->affiliateFid = $affiliateFid;
     $payload->campaignHash = $campaignHash;
-    $payload->sid1         = $sid1;
-    $payload->sid2         = $sid2;
-    $payload->sid3         = $sid3;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
 
     $ep = AffiliateDomainEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -89,17 +91,18 @@ class AffiliateDomainModel extends FortifiApiModel
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($domain, $affiliateFid, $campaignHash,
+  public function update(
+    $domain, $affiliateFid, $campaignHash,
     $sid1, $sid2, $sid3
   )
   {
-    $payload                   = new AffiliateDomainPayload();
-    $payload->domain       = $domain;
+    $payload = new AffiliateDomainPayload();
+    $payload->domain = $domain;
     $payload->affiliateFid = $affiliateFid;
     $payload->campaignHash = $campaignHash;
-    $payload->sid1         = $sid1;
-    $payload->sid2         = $sid2;
-    $payload->sid3         = $sid3;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
 
     $ep = AffiliateDomainEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();

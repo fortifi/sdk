@@ -1,15 +1,15 @@
 <?php
 namespace Fortifi\Sdk\Models\Marketing;
 
+use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
+use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Foundation\Responses\FidResponse;
+use Fortifi\FortifiApi\Marketing\Endpoints\TextAdvertEndpoint;
 use Fortifi\FortifiApi\Marketing\Payloads\CreateTextAdvertPayload;
 use Fortifi\FortifiApi\Marketing\Payloads\ListAdvertPayload;
 use Fortifi\FortifiApi\Marketing\Payloads\UpdateTextAdvertPayload;
-use Fortifi\FortifiApi\Marketing\Endpoints\TextAdvertEndpoint;
 use Fortifi\FortifiApi\Marketing\Responses\TextAdvertResponse;
 use Fortifi\FortifiApi\Marketing\Responses\TextAdvertsResponse;
-use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class TextAdvertModel extends FortifiApiModel
@@ -31,14 +31,14 @@ class TextAdvertModel extends FortifiApiModel
     $showDeleted = null, $filter = null
   )
   {
-    $payload                = new ListAdvertPayload();
-    $payload->companyFid    = $companyFid;
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new ListAdvertPayload();
+    $payload->companyFid = $companyFid;
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = TextAdvertEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -51,7 +51,7 @@ class TextAdvertModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = TextAdvertEndpoint::bound($this->getApi());
@@ -70,19 +70,20 @@ class TextAdvertModel extends FortifiApiModel
    *
    * @return FidResponse
    */
-  public function create($displayName, $action, $companyFid, $language,
+  public function create(
+    $displayName, $action, $companyFid, $language,
     $headline, $lineOne, $lineTwo, $displayUrl
   )
   {
-    $payload              = new CreateTextAdvertPayload();
+    $payload = new CreateTextAdvertPayload();
     $payload->displayName = $displayName;
-    $payload->action      = $action;
-    $payload->companyFid  = $companyFid;
-    $payload->language    = $language;
-    $payload->headline    = $headline;
-    $payload->lineOne     = $lineOne;
-    $payload->lineTwo     = $lineTwo;
-    $payload->displayUrl  = $displayUrl;
+    $payload->action = $action;
+    $payload->companyFid = $companyFid;
+    $payload->language = $language;
+    $payload->headline = $headline;
+    $payload->lineOne = $lineOne;
+    $payload->lineTwo = $lineTwo;
+    $payload->displayUrl = $displayUrl;
 
     $ep = TextAdvertEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -101,20 +102,21 @@ class TextAdvertModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
-  public function update($fid, $displayName, $action, $companyFid,
+  public function update(
+    $fid, $displayName, $action, $companyFid,
     $language, $headline, $lineOne, $lineTwo, $displayUrl
   )
   {
-    $payload              = new UpdateTextAdvertPayload();
-    $payload->fid         = $fid;
+    $payload = new UpdateTextAdvertPayload();
+    $payload->fid = $fid;
     $payload->displayName = $displayName;
-    $payload->action      = $action;
-    $payload->companyFid  = $companyFid;
-    $payload->language    = $language;
-    $payload->headline    = $headline;
-    $payload->lineOne     = $lineOne;
-    $payload->lineTwo     = $lineTwo;
-    $payload->displayUrl  = $displayUrl;
+    $payload->action = $action;
+    $payload->companyFid = $companyFid;
+    $payload->language = $language;
+    $payload->headline = $headline;
+    $payload->lineOne = $lineOne;
+    $payload->lineTwo = $lineTwo;
+    $payload->displayUrl = $displayUrl;
 
     $ep = TextAdvertEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
@@ -127,7 +129,7 @@ class TextAdvertModel extends FortifiApiModel
    */
   public function delete($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = TextAdvertEndpoint::bound($this->getApi());

@@ -70,7 +70,7 @@ class FortifiProvider extends AbstractProvider
    */
   public function userDetails($response, AccessToken $token)
   {
-    $user   = new OAuthUser();
+    $user = new OAuthUser();
     $result = $response->result;
     /**
      * @var $result AuthUserDetailsResponse

@@ -19,7 +19,7 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
    */
   public function email($email)
   {
-    $payload        = new AffiliateAdvancedSearchEmailPayload();
+    $payload = new AffiliateAdvancedSearchEmailPayload();
     $payload->email = $email;
 
     $ep = AffiliateAdvancedSearchEndpoint::bound($this->getApi());
@@ -33,8 +33,8 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
    */
   public function campaignHash($campaignHash)
   {
-    $payload                = new AffiliateAdvancedSearchCampaignHashPayload();
-    $payload->campaignHash  = $campaignHash;
+    $payload = new AffiliateAdvancedSearchCampaignHashPayload();
+    $payload->campaignHash = $campaignHash;
 
     $ep = AffiliateAdvancedSearchEndpoint::bound($this->getApi());
     return $ep->campaignHash($payload)->get();
@@ -47,8 +47,8 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
    */
   public function trackingLink($trackingLink)
   {
-    $payload                = new AffiliateAdvancedSearchTrackingLinkPayload();
-    $payload->trackingLink  = $trackingLink;
+    $payload = new AffiliateAdvancedSearchTrackingLinkPayload();
+    $payload->trackingLink = $trackingLink;
 
     $ep = AffiliateAdvancedSearchEndpoint::bound($this->getApi());
     return $ep->trackingLink($payload)->get();
@@ -61,7 +61,7 @@ class AffiliateAdvancedSearchModel extends FortifiApiModel
    */
   public function website($website)
   {
-    $payload          = new AffiliateAdvancedSearchWebsitePayload();
+    $payload = new AffiliateAdvancedSearchWebsitePayload();
     $payload->website = $website;
 
     $ep = AffiliateAdvancedSearchEndpoint::bound($this->getApi());

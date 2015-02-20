@@ -1,8 +1,8 @@
 <?php
 namespace Fortifi\Sdk\Models\Contact;
 
-use Fortifi\FortifiApi\Contact\Payloads\Phone\PhoneNumberPayload;
 use Fortifi\FortifiApi\Contact\Endpoints\PhoneEndpoint;
+use Fortifi\FortifiApi\Contact\Payloads\Phone\PhoneNumberPayload;
 use Fortifi\FortifiApi\Contact\Responses\PhoneResponse;
 use Fortifi\FortifiApi\Contact\Responses\PhonesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
@@ -18,7 +18,7 @@ class PhoneModel extends FortifiApiModel
    */
   public function create($phoneNumber)
   {
-    $payload              = new PhoneNumberPayload();
+    $payload = new PhoneNumberPayload();
     $payload->phoneNumber = $phoneNumber;
 
     $ep = PhoneEndpoint::bound($this->getApi());
@@ -44,7 +44,7 @@ class PhoneModel extends FortifiApiModel
    */
   public function listFromObject($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = PhoneEndpoint::bound($this->getApi());

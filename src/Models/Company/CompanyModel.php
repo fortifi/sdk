@@ -1,13 +1,13 @@
 <?php
 namespace Fortifi\Sdk\Models\Company;
 
+use Fortifi\FortifiApi\Company\Endpoints\CompanyEndpoint;
 use Fortifi\FortifiApi\Company\Payloads\CompanyEmployeesPayload;
 use Fortifi\FortifiApi\Company\Payloads\CreateCompanyPayload;
 use Fortifi\FortifiApi\Company\Payloads\UpdateCompanyPayload;
-use Fortifi\FortifiApi\Company\Endpoints\CompanyEndpoint;
-use Fortifi\FortifiApi\Company\Responses\CompanyResponse;
-use Fortifi\FortifiApi\Company\Responses\CompaniesResponse;
 use Fortifi\FortifiApi\Company\Responses;
+use Fortifi\FortifiApi\Company\Responses\CompaniesResponse;
+use Fortifi\FortifiApi\Company\Responses\CompanyResponse;
 use Fortifi\FortifiApi\Edge\Payloads\EdgePayload;
 use Fortifi\FortifiApi\Employee\Responses\EmployeesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
@@ -34,13 +34,13 @@ class CompanyModel extends FortifiApiModel
     $showDeleted = false, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = CompanyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -53,7 +53,7 @@ class CompanyModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = CompanyEndpoint::bound($this->getApi());
@@ -69,9 +69,9 @@ class CompanyModel extends FortifiApiModel
    */
   public function create($legalName, $name, $description)
   {
-    $payload              = new CreateCompanyPayload();
-    $payload->legalName   = $legalName;
-    $payload->name        = $name;
+    $payload = new CreateCompanyPayload();
+    $payload->legalName = $legalName;
+    $payload->name = $name;
     $payload->description = $description;
 
     $ep = CompanyEndpoint::bound($this->getApi());
@@ -88,10 +88,10 @@ class CompanyModel extends FortifiApiModel
    */
   public function update($fid, $legalName, $name, $description)
   {
-    $payload              = new UpdateCompanyPayload();
-    $payload->fid         = $fid;
-    $payload->name        = $name;
-    $payload->legalName   = $legalName;
+    $payload = new UpdateCompanyPayload();
+    $payload->fid = $fid;
+    $payload->name = $name;
+    $payload->legalName = $legalName;
     $payload->description = $description;
 
     $ep = CompanyEndpoint::bound($this->getApi());
@@ -105,7 +105,7 @@ class CompanyModel extends FortifiApiModel
    */
   public function delete($fid)
   {
-    $payload      = new UpdateCompanyPayload();
+    $payload = new UpdateCompanyPayload();
     $payload->fid = $fid;
 
     $ep = CompanyEndpoint::bound($this->getApi());
@@ -119,7 +119,7 @@ class CompanyModel extends FortifiApiModel
    */
   public function restore($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = CompanyEndpoint::bound($this->getApi());
@@ -134,9 +134,9 @@ class CompanyModel extends FortifiApiModel
    */
   public function addEmployees($companyFid, $items)
   {
-    $payload              = new CompanyEmployeesPayload();
-    $payload->companyFid  = $companyFid;
-    $payload->items       = $items;
+    $payload = new CompanyEmployeesPayload();
+    $payload->companyFid = $companyFid;
+    $payload->items = $items;
 
     $ep = CompanyEndpoint::bound($this->getApi());
     return $ep->addEmployees($payload)->get();
@@ -150,9 +150,9 @@ class CompanyModel extends FortifiApiModel
    */
   public function removeEmployees($companyFid, $items)
   {
-    $payload              = new CompanyEmployeesPayload();
-    $payload->companyFid  = $companyFid;
-    $payload->items       = $items;
+    $payload = new CompanyEmployeesPayload();
+    $payload->companyFid = $companyFid;
+    $payload->items = $items;
 
     $ep = CompanyEndpoint::bound($this->getApi());
     return $ep->removeEmployees($payload)->get();
@@ -166,9 +166,9 @@ class CompanyModel extends FortifiApiModel
    */
   public function replaceEmployees($companyFid, $items)
   {
-    $payload              = new CompanyEmployeesPayload();
-    $payload->companyFid  = $companyFid;
-    $payload->items       = $items;
+    $payload = new CompanyEmployeesPayload();
+    $payload->companyFid = $companyFid;
+    $payload->items = $items;
 
     $ep = CompanyEndpoint::bound($this->getApi());
     return $ep->replaceEmployees($payload)->get();

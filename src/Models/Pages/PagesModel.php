@@ -1,14 +1,14 @@
 <?php
 namespace Fortifi\Sdk\Models\Pages;
 
-use Fortifi\FortifiApi\Pages\Payloads\CreatePagePayload;
-use Fortifi\FortifiApi\Pages\Payloads\UpdatePagePayload;
-use Fortifi\FortifiApi\Pages\Endpoints\PagesEndpoint;
-use Fortifi\FortifiApi\Pages\Responses\PageResponse;
-use Fortifi\FortifiApi\Pages\Responses\PagesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
+use Fortifi\FortifiApi\Pages\Endpoints\PagesEndpoint;
+use Fortifi\FortifiApi\Pages\Payloads\CreatePagePayload;
+use Fortifi\FortifiApi\Pages\Payloads\UpdatePagePayload;
+use Fortifi\FortifiApi\Pages\Responses\PageResponse;
+use Fortifi\FortifiApi\Pages\Responses\PagesResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class PagesModel extends FortifiApiModel
@@ -28,13 +28,13 @@ class PagesModel extends FortifiApiModel
     $showDeleted = null, $filter = null
   )
   {
-    $payload                = new PaginatedDataNodePayload();
-    $payload->limit         = $limit;
-    $payload->page          = $page;
-    $payload->sortField     = $sortField;
+    $payload = new PaginatedDataNodePayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
     $payload->sortDirection = $sortDirection;
-    $payload->showDeleted   = $showDeleted;
-    $payload->filter        = $filter;
+    $payload->showDeleted = $showDeleted;
+    $payload->filter = $filter;
 
     $ep = PagesEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -47,7 +47,7 @@ class PagesModel extends FortifiApiModel
    */
   public function retrieve($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = PagesEndpoint::bound($this->getApi());
@@ -63,16 +63,17 @@ class PagesModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
-  public function create($displayName, $content, $notes,
+  public function create(
+    $displayName, $content, $notes,
     $type = 'custom', $isDisabled = 0
   )
   {
-    $payload              = new CreatePagePayload();
+    $payload = new CreatePagePayload();
     $payload->displayName = $displayName;
-    $payload->content     = $content;
-    $payload->type        = $type;
-    $payload->isDisabled  = $isDisabled;
-    $payload->notes       = $notes;
+    $payload->content = $content;
+    $payload->type = $type;
+    $payload->isDisabled = $isDisabled;
+    $payload->notes = $notes;
 
     $ep = PagesEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -87,15 +88,16 @@ class PagesModel extends FortifiApiModel
    *
    * @return BoolResponse
    */
-  public function update($fid, $displayName, $content, $notes, $isDisabled = 0
+  public function update(
+    $fid, $displayName, $content, $notes, $isDisabled = 0
   )
   {
-    $payload              = new UpdatePagePayload();
-    $payload->fid         = $fid;
+    $payload = new UpdatePagePayload();
+    $payload->fid = $fid;
     $payload->displayName = $displayName;
-    $payload->content     = $content;
-    $payload->isDisabled  = $isDisabled;
-    $payload->notes       = $notes;
+    $payload->content = $content;
+    $payload->isDisabled = $isDisabled;
+    $payload->notes = $notes;
 
     $ep = PagesEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
@@ -108,7 +110,7 @@ class PagesModel extends FortifiApiModel
    */
   public function delete($fid)
   {
-    $payload      = new FidPayload();
+    $payload = new FidPayload();
     $payload->fid = $fid;
 
     $ep = PagesEndpoint::bound($this->getApi());
