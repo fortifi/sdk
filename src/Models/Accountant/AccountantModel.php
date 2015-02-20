@@ -1,7 +1,7 @@
 <?php
 namespace Fortifi\Sdk\Models\Accountant;
 
-use Fortifi\FortifiApi\Accountant\Endpoints\AccountEndpoint;
+use Fortifi\FortifiApi\Accountant\Endpoints\AccountantEndpoint;
 use Fortifi\FortifiApi\Accountant\Payloads\ListAccountsPayload;
 use Fortifi\FortifiApi\Accountant\Payloads\ListAccountTransactionsPayload;
 use Fortifi\FortifiApi\Accountant\Responses\AccountsResponse;
@@ -21,7 +21,7 @@ class AccountantModel extends FortifiApiModel
     $payload = new ListAccountsPayload();
     $payload->objectFid = $objectFid;
     $payload->accountType = $accountType;
-    return AccountEndpoint::bound($this->getApi())->all($payload);
+    return AccountantEndpoint::bound($this->getApi())->all($payload);
   }
 
   /**
@@ -37,6 +37,6 @@ class AccountantModel extends FortifiApiModel
     $payload->accountFid = $accountFid;
     $payload->startTime = $startTime;
     $payload->endTime = $endTime;
-    return AccountEndpoint::bound($this->getApi())->transactions($payload);
+    return AccountantEndpoint::bound($this->getApi())->transactions($payload);
   }
 }
