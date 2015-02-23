@@ -16,7 +16,7 @@ class AccountantModel extends FortifiApiModel
    *
    * @return AccountsResponse
    */
-  public function all($objectFid, $accountType)
+  public function all($objectFid, $accountType = null)
   {
     $payload = new ListAccountsPayload();
     $payload->objectFid = $objectFid;
