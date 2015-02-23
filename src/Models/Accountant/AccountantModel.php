@@ -21,7 +21,8 @@ class AccountantModel extends FortifiApiModel
     $payload = new ListAccountsPayload();
     $payload->objectFid = $objectFid;
     $payload->accountType = $accountType;
-    return AccountantEndpoint::bound($this->getApi())->all($payload);
+    $ep = AccountantEndpoint::bound($this->getApi());
+    return $ep->all($payload)->get();
   }
 
   /**
@@ -37,6 +38,7 @@ class AccountantModel extends FortifiApiModel
     $payload->accountFid = $accountFid;
     $payload->startTime = $startTime;
     $payload->endTime = $endTime;
-    return AccountantEndpoint::bound($this->getApi())->transactions($payload);
+    $ep = AccountantEndpoint::bound($this->getApi());
+    return $ep->transactions($payload)->get();
   }
 }
