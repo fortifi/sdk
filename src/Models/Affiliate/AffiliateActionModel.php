@@ -83,7 +83,7 @@ class AffiliateActionModel extends FortifiApiModel
     $payload->name = $name;
     $payload->description = $description;
     $payload->type = $type;
-    $payload->approvalType = $approvalType;
+    $payload->approvalType = is_null($approvalType) ? '' : $approvalType;
     $payload->approvalDays = $approvalDays;
     $payload->maxCommission = $maxCommission;
     $payload->url = $url;
