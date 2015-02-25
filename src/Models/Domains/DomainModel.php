@@ -5,6 +5,7 @@ use Fortifi\FortifiApi\Domain\Endpoints\DomainEndpoint;
 use Fortifi\FortifiApi\Domain\Payloads\CreateDomainPayload;
 use Fortifi\FortifiApi\Domain\Payloads\DomainCompanyFidPayload;
 use Fortifi\FortifiApi\Domain\Payloads\PaginatedDomainsByCompanyFidPayload;
+use Fortifi\FortifiApi\Domain\Payloads\SetCookieDaysDomainPayload;
 use Fortifi\FortifiApi\Domain\Payloads\UpdateDomainPayload;
 use Fortifi\FortifiApi\Domain\Responses\DomainResponse;
 use Fortifi\FortifiApi\Domain\Responses\DomainsResponse;
@@ -174,5 +175,21 @@ class DomainModel extends FortifiApiModel
 
     $ep = DomainEndpoint::bound($this->getApi());
     return $ep->getByCompany($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @param int    $cookieDays
+   *
+   * @return BoolResponse
+   */
+  public function setCookieDays($fid, $cookieDays)
+  {
+    $payload = new SetCookieDaysDomainPayload();
+    $payload->fid = $fid;
+    $payload->cookieDays = $cookieDays;
+
+    $ep = DomainEndpoint::bound($this->getApi());
+    return $ep->setCookieDays($payload)->get();
   }
 }
