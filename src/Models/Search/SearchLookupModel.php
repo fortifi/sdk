@@ -16,13 +16,13 @@ class SearchLookupModel extends FortifiApiModel
    *
    * @return SearchLookupResponse
    */
-  public function search($term, $type)
+  public function searchLookup($term, $type)
   {
     $payload = new SearchLookupPayload();
     $payload->term = $term;
     $payload->type = $type;
 
     $ep = SearchLookupEndpoint::bound($this->getApi());
-    return $ep->search($payload)->get();
+    return $ep->searchLookup($payload)->get();
   }
 }
