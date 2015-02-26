@@ -60,6 +60,7 @@ class AffiliateActionModel extends FortifiApiModel
 
   /**
    * @param string $companyFid
+   * @param string $displayName
    * @param string $key
    * @param string $description
    * @param int    $type
@@ -72,12 +73,13 @@ class AffiliateActionModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|CreateAffiliateActionResponse
    */
   public function create(
-    $companyFid, $key, $description, $type,
+    $companyFid, $displayName, $key, $description, $type,
     $approvalType, $approvalDays, $maxCommission, $url, $redirectCode
   )
   {
     $payload = new CreateAffiliateActionPayload();
     $payload->companyFid = $companyFid;
+    $payload->displayName = $displayName;
     $payload->key = $key;
     $payload->description = $description;
     $payload->type = $type;
@@ -93,6 +95,7 @@ class AffiliateActionModel extends FortifiApiModel
 
   /**
    * @param string $fid
+   * @param string $displayName
    * @param string $description
    * @param string $approvalType
    * @param int    $approvalDays
@@ -103,12 +106,13 @@ class AffiliateActionModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update(
-    $fid, $description, $approvalType,
+    $fid, $displayName, $description, $approvalType,
     $approvalDays, $maxCommission, $url, $redirectCode
   )
   {
     $payload = new UpdateAffiliateActionPayload();
     $payload->fid = $fid;
+    $payload->displayName = $displayName;
     $payload->description = $description;
     $payload->approvalType = $approvalType;
     $payload->approvalDays = $approvalDays;
