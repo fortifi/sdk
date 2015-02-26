@@ -62,16 +62,16 @@ class CompanyModel extends FortifiApiModel
 
   /**
    * @param string $legalName
-   * @param string $name
+   * @param string $displayName
    * @param string $description
    *
    * @return FortifiApiRequestInterface|FidResponse
    */
-  public function create($legalName, $name, $description)
+  public function create($legalName, $displayName, $description)
   {
     $payload = new CreateCompanyPayload();
     $payload->legalName = $legalName;
-    $payload->name = $name;
+    $payload->displayName = $displayName;
     $payload->description = $description;
 
     $ep = CompanyEndpoint::bound($this->getApi());
@@ -81,16 +81,16 @@ class CompanyModel extends FortifiApiModel
   /**
    * @param string $fid
    * @param string $legalName
-   * @param string $name
+   * @param string $displayName
    * @param string $description
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $legalName, $name, $description)
+  public function update($fid, $legalName, $displayName, $description)
   {
     $payload = new UpdateCompanyPayload();
     $payload->fid = $fid;
-    $payload->name = $name;
+    $payload->displayName = $displayName;
     $payload->legalName = $legalName;
     $payload->description = $description;
 
