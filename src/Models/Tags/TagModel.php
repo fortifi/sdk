@@ -62,17 +62,17 @@ class TagModel extends FortifiApiModel
   }
 
   /**
-   * @param string $name
+   * @param string $displayName
    * @param string $description
    * @param string $icon
    * @param string $colour
    *
    * @return FortifiApiRequestInterface|DataNodeResponse
    */
-  public function create($name, $description, $icon, $colour)
+  public function create($displayName, $description, $icon, $colour)
   {
     $payload = new CreateTagPayload();
-    $payload->name = $name;
+    $payload->displayName = $displayName;
     $payload->description = $description;
     $payload->icon = $icon;
     $payload->colour = $colour;
@@ -83,15 +83,15 @@ class TagModel extends FortifiApiModel
 
   /**
    * @param string $fid
-   * @param string $name
+   * @param string $displayName
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function rename($fid, $name)
+  public function rename($fid, $displayName)
   {
     $payload = new RenameTagPayload();
     $payload->fid = $fid;
-    $payload->name = $name;
+    $payload->displayName = $displayName;
 
     $ep = TagEndpoint::bound($this->getApi());
     return $ep->rename($payload)->get();
