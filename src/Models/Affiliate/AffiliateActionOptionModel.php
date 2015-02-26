@@ -3,13 +3,13 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateActionOptionEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\CreateAffiliateActionOptionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\ListAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\RetrieveAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\UpdateAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\CreateAffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -17,6 +17,7 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class AffiliateActionOptionModel extends FortifiApiModel
 {
   /**
+   * @param string $companyFid
    * @param int    $limit
    * @param int    $page
    * @param string $sortField
@@ -26,12 +27,13 @@ class AffiliateActionOptionModel extends FortifiApiModel
    *
    * @return AffiliateActionOptionsResponse|FortifiApiRequestInterface
    */
-  public function all(
+  public function all($companyFid,
     $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
-    $payload = new PaginatedDataNodePayload();
+    $payload = new ListAffiliateActionOptionPayload();
+    $payload->companyFid = $companyFid;
     $payload->limit = $limit;
     $payload->page = $page;
     $payload->sortField = $sortField;
