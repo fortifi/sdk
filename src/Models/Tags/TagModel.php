@@ -10,6 +10,7 @@ use Fortifi\FortifiApi\Foundation\Responses\FidsResponse;
 use Fortifi\FortifiApi\Tags\Endpoints\TagEndpoint;
 use Fortifi\FortifiApi\Tags\Payloads\CreateTagPayload;
 use Fortifi\FortifiApi\Tags\Payloads\RenameTagPayload;
+use Fortifi\FortifiApi\Tags\Payloads\SetTagDescriptionPayload;
 use Fortifi\FortifiApi\Tags\Payloads\SetTagStylePayload;
 use Fortifi\FortifiApi\Tags\Payloads\TagLinkPayload;
 use Fortifi\FortifiApi\Tags\Payloads\TagPayload;
@@ -113,6 +114,22 @@ class TagModel extends FortifiApiModel
 
     $ep = TagEndpoint::bound($this->getApi());
     return $ep->setStyle($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   * @param string $description
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function setDescription($fid, $description)
+  {
+    $payload = new SetTagDescriptionPayload();
+    $payload->fid = $fid;
+    $payload->description = $description;
+
+    $ep = TagEndpoint::bound($this->getApi());
+    return $ep->setDescription($payload)->get();
   }
 
   /**
