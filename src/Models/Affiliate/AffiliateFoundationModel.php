@@ -57,15 +57,15 @@ class AffiliateFoundationModel extends FortifiApiModel
   }
 
   /**
-   * @param string $name
+   * @param string $displayName
    * @param string $type
    *
    * @return FortifiApiRequestInterface|CreateAffiliateFoundationResponse
    */
-  public function create($name, $type)
+  public function create($displayName, $type)
   {
     $payload = new CreateAffiliateFoundationPayload();
-    $payload->name = $name;
+    $payload->displayName = $displayName;
     $payload->type = $type;
 
     $ep = AffiliateFoundationEndpoint::bound($this->getApi());
@@ -74,16 +74,16 @@ class AffiliateFoundationModel extends FortifiApiModel
 
   /**
    * @param string $fid
-   * @param string $name
+   * @param string $displayName
    * @param string $type
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $name, $type)
+  public function update($fid, $displayName, $type)
   {
     $payload = new UpdateAffiliateFoundationPayload();
     $payload->fid = $fid;
-    $payload->name = $name;
+    $payload->displayName = $displayName;
     $payload->type = $type;
 
     $ep = AffiliateFoundationEndpoint::bound($this->getApi());

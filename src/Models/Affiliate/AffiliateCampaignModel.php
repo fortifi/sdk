@@ -60,17 +60,17 @@ class AffiliateCampaignModel extends FortifiApiModel
   /**
    * @param string $affiliateFid
    * @param string $companyFid
-   * @param string $name
+   * @param string $displayName
    * @param string $options
    *
    * @return FortifiApiRequestInterface|CreateAffiliateCampaignResponse
    */
-  public function create($affiliateFid, $companyFid, $name, $options)
+  public function create($affiliateFid, $companyFid, $displayName, $options)
   {
     $payload = new CreateAffiliateCampaignPayload();
     $payload->affiliateFid = $affiliateFid;
     $payload->companyFid = $companyFid;
-    $payload->name = $name;
+    $payload->displayName = $displayName;
     $payload->options = $options;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
@@ -79,15 +79,15 @@ class AffiliateCampaignModel extends FortifiApiModel
 
   /**
    * @param string $fid
-   * @param string $name
+   * @param string $displayName
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function setName($fid, $name)
+  public function setName($fid, $displayName)
   {
     $payload = new SetNameAffiliateCampaignPayload();
     $payload->fid = $fid;
-    $payload->name = $name;
+    $payload->displayName = $displayName;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
     return $ep->setName($payload)->get();
