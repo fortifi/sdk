@@ -91,7 +91,6 @@ class AffiliateActionOptionModel extends FortifiApiModel
   }
 
   /**
-   * @param string $fid
    * @param string $actionFid
    * @param string $key
    * @param string $name
@@ -104,12 +103,11 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update(
-    $actionFid, $fid, $key, $name, $visibility,
+    $actionFid, $key, $name, $visibility,
     $valueType, $values, $defaultValue, $urlType
   )
   {
     $payload = new UpdateAffiliateActionOptionPayload();
-    $payload->fid = $fid;
     $payload->actionFid = $actionFid;
     $payload->key = $key;
     $payload->name = $name;
