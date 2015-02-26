@@ -68,13 +68,14 @@ class AffiliateCommissionPolicyModel extends FortifiApiModel
    * @param string $platform
    * @param string $description
    * @param string $commission
+   * @param bool   $isRevShare
    *
    * @return FortifiApiRequestInterface|CreateAffiliateCommissionPolicyResponse
    */
   public function create(
     $companyFid, $resourceFid, $campaignHash,
     $sid1, $sid2, $sid3, $action, $country, $platform, $description,
-    $commission
+    $commission, $isRevShare
   )
   {
     $payload = new CreateAffiliateCommissionPolicyPayload();
@@ -89,6 +90,7 @@ class AffiliateCommissionPolicyModel extends FortifiApiModel
     $payload->platform = $platform;
     $payload->description = $description;
     $payload->commission = $commission;
+    $payload->isRevShare = $isRevShare;
 
     $ep = AffiliateCommissionPolicyEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -98,15 +100,17 @@ class AffiliateCommissionPolicyModel extends FortifiApiModel
    * @param string $fid
    * @param string $description
    * @param string $commission
+   * @param bool   $isRevShare
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $description, $commission)
+  public function update($fid, $description, $commission, $isRevShare)
   {
     $payload = new UpdateAffiliateCommissionPolicyPayload();
     $payload->fid = $fid;
     $payload->description = $description;
     $payload->commission = $commission;
+    $payload->isRevShare = $isRevShare;
 
     $ep = AffiliateCommissionPolicyEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
