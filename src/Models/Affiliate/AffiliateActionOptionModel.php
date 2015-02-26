@@ -62,6 +62,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
   /**
    * @param string $actionFid
    * @param string $key
+   * @param string $destinationKey
    * @param string $name
    * @param string $visibility
    * @param string $valueType
@@ -72,13 +73,14 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|CreateAffiliateActionOptionResponse
    */
   public function create(
-    $actionFid, $key, $name, $visibility, $valueType,
-    $values, $defaultValue, $urlType
+    $actionFid, $key, $destinationKey, $name, $visibility,
+    $valueType, $values, $defaultValue, $urlType
   )
   {
     $payload = new CreateAffiliateActionOptionPayload();
     $payload->actionFid = $actionFid;
     $payload->key = $key;
+    $payload->destinationKey = $destinationKey;
     $payload->name = $name;
     $payload->visibility = $visibility;
     $payload->valueType = $valueType;
@@ -93,6 +95,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
   /**
    * @param string $actionFid
    * @param string $key
+   * @param string $destinationKey
    * @param string $name
    * @param string $visibility
    * @param string $valueType
@@ -103,13 +106,14 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update(
-    $actionFid, $key, $name, $visibility,
+    $actionFid, $key, $destinationKey, $name, $visibility,
     $valueType, $values, $defaultValue, $urlType
   )
   {
     $payload = new UpdateAffiliateActionOptionPayload();
     $payload->actionFid = $actionFid;
     $payload->key = $key;
+    $payload->destinationKey = $destinationKey;
     $payload->name = $name;
     $payload->visibility = $visibility;
     $payload->valueType = $valueType;
