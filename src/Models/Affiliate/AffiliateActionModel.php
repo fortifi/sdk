@@ -125,6 +125,20 @@ class AffiliateActionModel extends FortifiApiModel
   }
 
   /**
+   * @param $fid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function delete($fid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliateActionEndpoint::bound($this->getApi());
+    return $ep->delete($payload)->get();
+  }
+
+  /**
    * @param string $fid
    * @param string $type
    *
