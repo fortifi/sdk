@@ -79,7 +79,7 @@ class AffiliateTrafficBlockingPolicyModel extends FortifiApiModel
   )
   {
     $payload = new CreateAffiliateTrafficBlockingPolicyPayload();
-    $payload->companyFid = $companyFid;
+    $payload->companyFid = is_null($companyFid) ? '' : $companyFid;
     $payload->resourceFid = $resourceFid;
     $payload->campaignHash = $campaignHash;
     $payload->sid1 = $sid1;
