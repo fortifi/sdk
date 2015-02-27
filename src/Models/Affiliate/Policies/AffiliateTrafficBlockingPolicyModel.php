@@ -19,31 +19,17 @@ class AffiliateTrafficBlockingPolicyModel extends FortifiApiModel
    * @param string $companyFid;
    * @param string $affiliateFid;
    * @param string $foundationFid;
-   * @param string $sid1;
-   * @param string $sid2;
-   * @param string $sid3;
-   * @param string $action;
-   * @param string $country;
-   * @param string $platform;
    *
    * @return AffiliateTrafficBlockingPoliciesResponse|FortifiApiRequestInterface
    */
   public function all(
-    $companyFid = null, $affiliateFid = null, $foundationFid = null,
-    $sid1 = null, $sid2 = null, $sid3 = null, $action = null,
-    $country = null, $platform = null
+    $companyFid = null, $affiliateFid = null, $foundationFid = null
   )
   {
     $payload = new ListAffiliatePolicyPayload();
     $payload->companyFid = $companyFid;
     $payload->affiliateFid = $affiliateFid;
     $payload->foundationFid = $foundationFid;
-    $payload->sid1 = $sid1;
-    $payload->sid2 = $sid2;
-    $payload->sid3 = $sid3;
-    $payload->action = $action;
-    $payload->country = $country;
-    $payload->platform = $platform;
 
     $ep = AffiliateTrafficBlockingPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
