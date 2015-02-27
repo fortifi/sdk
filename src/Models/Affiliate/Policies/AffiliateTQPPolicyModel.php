@@ -2,13 +2,13 @@
 namespace Fortifi\Sdk\Models\Affiliate\Policies;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\Policies\AffiliateTQPPolicyEndpoint;
+use Fortifi\FortifiApi\Affiliate\Payloads\Policies\ListAffiliatePolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\TQP\CreateAffiliateTQPPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\TQP\UpdateAffiliateTQPPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\TQP\AffiliateTQPPoliciesResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\TQP\AffiliateTQPPolicyResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\TQP\CreateAffiliateTQPPolicyResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -16,27 +16,31 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class AffiliateTQPPolicyModel extends FortifiApiModel
 {
   /**
-   * @param int    $limit
-   * @param int    $page
-   * @param string $sortField
-   * @param string $sortDirection
-   * @param bool   $showDeleted
-   * @param string $filter
+   * @param string $companyFid;
+   * @param string $resourceFid;
+   * @param string $sid1;
+   * @param string $sid2;
+   * @param string $sid3;
+   * @param string $action;
+   * @param string $country;
+   * @param string $platform;
    *
    * @return AffiliateTQPPoliciesResponse|FortifiApiRequestInterface
    */
   public function all(
-    $limit = 10, $page = 1, $sortField = null,
-    $sortDirection = null, $showDeleted = false, $filter = null
+    $companyFid, $resourceFid, $sid1, $sid2, $sid3,
+    $action, $country, $platform
   )
   {
-    $payload = new PaginatedDataNodePayload();
-    $payload->limit = $limit;
-    $payload->page = $page;
-    $payload->sortField = $sortField;
-    $payload->sortDirection = $sortDirection;
-    $payload->showDeleted = $showDeleted;
-    $payload->filter = $filter;
+    $payload = new ListAffiliatePolicyPayload();
+    $payload->companyFid = $companyFid;
+    $payload->resourceFid = $resourceFid;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
+    $payload->action = $action;
+    $payload->country = $country;
+    $payload->platform = $platform;
 
     $ep = AffiliateTQPPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
