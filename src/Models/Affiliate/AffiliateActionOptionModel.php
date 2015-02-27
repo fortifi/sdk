@@ -3,13 +3,13 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateActionOptionEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\CreateAffiliateActionOptionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\DeleteAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\ListAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\RetrieveAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\UpdateAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\CreateAffiliateActionOptionResponse;
-use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -129,13 +129,15 @@ class AffiliateActionOptionModel extends FortifiApiModel
 
   /**
    * @param string $fid
+   * @param string $key
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function delete($fid)
+  public function delete($fid, $key)
   {
-    $payload = new FidPayload();
+    $payload = new DeleteAffiliateActionOptionPayload();
     $payload->fid = $fid;
+    $payload->fid = $key;
 
     $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
     return $ep->delete($payload)->get();
