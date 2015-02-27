@@ -17,7 +17,8 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
 {
   /**
    * @param string $companyFid;
-   * @param string $resourceFid;
+   * @param string $affiliateFid;
+   * @param string $foundationFid;
    * @param string $sid1;
    * @param string $sid2;
    * @param string $sid3;
@@ -28,13 +29,14 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
    * @return AffiliateTQPPoliciesResponse|FortifiApiRequestInterface
    */
   public function all(
-    $companyFid, $resourceFid, $sid1, $sid2, $sid3,
-    $action, $country, $platform
+    $companyFid, $affiliateFid, $foundationFid, $sid1,
+    $sid2, $sid3, $action, $country, $platform
   )
   {
     $payload = new ListAffiliatePolicyPayload();
     $payload->companyFid = $companyFid;
-    $payload->resourceFid = $resourceFid;
+    $payload->affiliateFid = $affiliateFid;
+    $payload->foundationFid = $foundationFid;
     $payload->sid1 = $sid1;
     $payload->sid2 = $sid2;
     $payload->sid3 = $sid3;
