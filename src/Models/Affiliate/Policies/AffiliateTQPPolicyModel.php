@@ -67,14 +67,14 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
    * @param string $country
    * @param string $platform
    * @param string $description
-   * @param int    $badPercentage
+   * @param int    $acceptPercentage
    *
    * @return FortifiApiRequestInterface|CreateAffiliateTQPPolicyResponse
    */
   public function create(
     $companyFid, $resourceFid, $campaignHash,
     $sid1, $sid2, $sid3, $action, $country, $platform, $description,
-    $badPercentage
+    $acceptPercentage
   )
   {
     $payload = new CreateAffiliateTQPPolicyPayload();
@@ -88,7 +88,7 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
     $payload->country = $country;
     $payload->platform = $platform;
     $payload->description = $description;
-    $payload->badPercentage = $badPercentage;
+    $payload->acceptPercentage = $acceptPercentage;
 
     $ep = AffiliateTQPPolicyEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -97,16 +97,16 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
   /**
    * @param string $fid
    * @param string $description
-   * @param int    $badPercentage
+   * @param int    $acceptPercentage
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($fid, $description, $badPercentage)
+  public function update($fid, $description, $acceptPercentage)
   {
     $payload = new UpdateAffiliateTQPPolicyPayload();
     $payload->fid = $fid;
     $payload->description = $description;
-    $payload->badPercentage = $badPercentage;
+    $payload->acceptPercentage = $acceptPercentage;
 
     $ep = AffiliateTQPPolicyEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
