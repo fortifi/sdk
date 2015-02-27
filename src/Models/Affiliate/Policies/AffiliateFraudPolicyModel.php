@@ -67,7 +67,6 @@ class AffiliateFraudPolicyModel extends FortifiApiModel
    * @param string $country
    * @param string $platform
    * @param string $description
-   * @param bool   $blockInboundIFrame
    * @param int    $blockRepeatSeconds
    * @param string $blockIps
    * @param string $blockReferrers
@@ -78,7 +77,7 @@ class AffiliateFraudPolicyModel extends FortifiApiModel
   public function create(
     $companyFid, $resourceFid, $campaignHash,
     $sid1, $sid2, $sid3, $action, $country, $platform, $description,
-    $blockInboundIFrame, $blockRepeatSeconds, $blockIps, $blockReferrers,
+    $blockRepeatSeconds, $blockIps, $blockReferrers,
     $approveOnlyReferrers
   )
   {
@@ -93,9 +92,6 @@ class AffiliateFraudPolicyModel extends FortifiApiModel
     $payload->country = $country;
     $payload->platform = $platform;
     $payload->description = $description;
-    $payload->blockInboundIFrame = is_null(
-      $blockInboundIFrame
-    ) ? '' : $blockInboundIFrame;
     $payload->blockRepeatSeconds = $blockRepeatSeconds;
     $payload->blockIps = is_null($blockIps) ? '' : $blockIps;
     $payload->blockReferrers = $blockReferrers;
@@ -108,7 +104,6 @@ class AffiliateFraudPolicyModel extends FortifiApiModel
   /**
    * @param string $fid
    * @param string $description
-   * @param bool   $blockInboundIFrame
    * @param int    $blockRepeatSeconds
    * @param string $blockIps
    * @param string $blockReferrers
@@ -118,14 +113,13 @@ class AffiliateFraudPolicyModel extends FortifiApiModel
    */
   public function update(
     $fid, $description,
-    $blockInboundIFrame, $blockRepeatSeconds, $blockIps, $blockReferrers,
+    $blockRepeatSeconds, $blockIps, $blockReferrers,
     $approveOnlyReferrers
   )
   {
     $payload = new UpdateAffiliateFraudPolicyPayload();
     $payload->fid = $fid;
     $payload->description = $description;
-    $payload->blockInboundIFrame = $blockInboundIFrame;
     $payload->blockRepeatSeconds = $blockRepeatSeconds;
     $payload->blockIps = $blockIps;
     $payload->blockReferrers = $blockReferrers;
