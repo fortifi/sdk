@@ -29,8 +29,9 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
    * @return AffiliateTQPPoliciesResponse|FortifiApiRequestInterface
    */
   public function all(
-    $companyFid, $affiliateFid, $foundationFid, $sid1,
-    $sid2, $sid3, $action, $country, $platform
+    $companyFid = null, $affiliateFid = null, $foundationFid = null,
+    $sid1 = null, $sid2 = null, $sid3 = null, $action = null,
+    $country = null, $platform = null
   )
   {
     $payload = new ListAffiliatePolicyPayload();
