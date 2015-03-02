@@ -106,4 +106,18 @@ class AffiliateCampaignModel extends FortifiApiModel
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
     return $ep->setOptions($payload)->get();
   }
+
+  /**
+   * @param string $fid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function delete($fid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliateCampaignEndpoint::bound($this->getApi());
+    return $ep->delete($payload)->get();
+  }
 }
