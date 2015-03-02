@@ -78,8 +78,8 @@ class AffiliateModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|CreateAffiliateResponse
    */
   public function create(
-    $username, $password, $type, $displayName,
-    $name, $phone, $email, $website, $accountManagerFid
+    $type, $displayName,
+    $name, $phone, $email, $website, $accountManagerFid = null
   )
   {
     $payload = new CreateAffiliatePayload();
@@ -91,7 +91,8 @@ class AffiliateModel extends FortifiApiModel
     $payload->phone = $phone;
     $payload->email = $email;
     $payload->website = $website;
-    $payload->accountManagerFid = $accountManagerFid;
+    $payload->accountManagerFid =
+      is_null($accountManagerFid) ? '' : $accountManagerFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
