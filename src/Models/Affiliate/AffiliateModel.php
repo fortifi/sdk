@@ -78,8 +78,8 @@ class AffiliateModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|CreateAffiliateResponse
    */
   public function create(
-    $type, $displayName,
-    $name, $phone, $email, $website, $accountManagerFid = null
+    $username, $password, $type, $displayName, $name, $phone, $email, $website,
+    $accountManagerFid = null
   )
   {
     $payload = new CreateAffiliatePayload();
