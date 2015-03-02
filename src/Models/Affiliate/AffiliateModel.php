@@ -65,6 +65,8 @@ class AffiliateModel extends FortifiApiModel
   }
 
   /**
+   * @param string $username
+   * @param string $password
    * @param string $type
    * @param string $displayName
    * @param string $name
@@ -76,11 +78,13 @@ class AffiliateModel extends FortifiApiModel
    * @return FortifiApiRequestInterface|CreateAffiliateResponse
    */
   public function create(
-    $type, $displayName,
+    $username, $password, $type, $displayName,
     $name, $phone, $email, $website, $accountManagerFid
   )
   {
     $payload = new CreateAffiliatePayload();
+    $payload->username = $username;
+    $payload->password = $password;
     $payload->type = $type;
     $payload->displayName = $displayName;
     $payload->name = $name;
