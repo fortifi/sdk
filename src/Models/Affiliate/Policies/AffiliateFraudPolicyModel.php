@@ -4,11 +4,11 @@ namespace Fortifi\Sdk\Models\Affiliate\Policies;
 use Fortifi\FortifiApi\Affiliate\Endpoints\Policies\AffiliateFraudPolicyEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\Fraud\CreateAffiliateFraudPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\Fraud\UpdateAffiliateFraudPolicyPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Policies\ListAffiliatePolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Fraud\AffiliateFraudPoliciesResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Fraud\AffiliateFraudPolicyResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Fraud\CreateAffiliateFraudPolicyResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -16,27 +16,20 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class AffiliateFraudPolicyModel extends FortifiApiModel
 {
   /**
-   * @param int $limit
-   * @param int $page
-   * @param string $sortField
-   * @param string $sortDirection
-   * @param bool $showDeleted
-   * @param string $filter
+   * @param string $companyFid;
+   * @param string $affiliateFid;
+   * @param string $foundationFid;
    *
    * @return AffiliateFraudPoliciesResponse|FortifiApiRequestInterface
    */
   public function all(
-    $limit = 10, $page = 1, $sortField = null,
-    $sortDirection = null, $showDeleted = false, $filter = null
+    $companyFid = null, $affiliateFid = null, $foundationFid = null
   )
   {
-    $payload = new PaginatedDataNodePayload();
-    $payload->limit = $limit;
-    $payload->page = $page;
-    $payload->sortField = $sortField;
-    $payload->sortDirection = $sortDirection;
-    $payload->showDeleted = $showDeleted;
-    $payload->filter = $filter;
+    $payload = new ListAffiliatePolicyPayload();
+    $payload->companyFid = $companyFid;
+    $payload->affiliateFid = $affiliateFid;
+    $payload->foundationFid = $foundationFid;
 
     $ep = AffiliateFraudPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

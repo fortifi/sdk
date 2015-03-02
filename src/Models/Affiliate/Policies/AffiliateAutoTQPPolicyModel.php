@@ -4,11 +4,11 @@ namespace Fortifi\Sdk\Models\Affiliate\Policies;
 use Fortifi\FortifiApi\Affiliate\Endpoints\Policies\AffiliateAutoTQPPolicyEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\AutoTQP\CreateAffiliateAutoTQPPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\AutoTQP\UpdateAffiliateAutoTQPPolicyPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Policies\ListAffiliatePolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\AutoTQP\AffiliateAutoTQPPoliciesResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\AutoTQP\AffiliateAutoTQPPolicyResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\AutoTQP\CreateAffiliateAutoTQPPolicyResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -16,27 +16,20 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class AffiliateAutoTQPPolicyModel extends FortifiApiModel
 {
   /**
-   * @param int    $limit
-   * @param int    $page
-   * @param string $sortField
-   * @param string $sortDirection
-   * @param bool   $showDeleted
-   * @param string $filter
+   * @param string $companyFid;
+   * @param string $affiliateFid;
+   * @param string $foundationFid;
    *
    * @return AffiliateAutoTQPPoliciesResponse|FortifiApiRequestInterface
    */
   public function all(
-    $limit = 10, $page = 1, $sortField = null,
-    $sortDirection = null, $showDeleted = false, $filter = null
+    $companyFid = null, $affiliateFid = null, $foundationFid = null
   )
   {
-    $payload = new PaginatedDataNodePayload();
-    $payload->limit = $limit;
-    $payload->page = $page;
-    $payload->sortField = $sortField;
-    $payload->sortDirection = $sortDirection;
-    $payload->showDeleted = $showDeleted;
-    $payload->filter = $filter;
+    $payload = new ListAffiliatePolicyPayload();
+    $payload->companyFid = $companyFid;
+    $payload->affiliateFid = $affiliateFid;
+    $payload->foundationFid = $foundationFid;
 
     $ep = AffiliateAutoTQPPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();

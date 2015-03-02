@@ -2,13 +2,13 @@
 namespace Fortifi\Sdk\Models\Affiliate\Policies;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\Policies\AffiliatePaycheckPolicyEndpoint;
+use Fortifi\FortifiApi\Affiliate\Payloads\Policies\ListAffiliatePolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\Paycheck\CreateAffiliatePaycheckPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\Paycheck\UpdateAffiliatePaycheckPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Paycheck\AffiliatePaycheckPoliciesResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Paycheck\AffiliatePaycheckPolicyResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Policies\Paycheck\CreateAffiliatePaycheckPolicyResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
-use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -16,27 +16,20 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class AffiliatePaycheckPolicyModel extends FortifiApiModel
 {
   /**
-   * @param int    $limit
-   * @param int    $page
-   * @param string $sortField
-   * @param string $sortDirection
-   * @param bool   $showDeleted
-   * @param string $filter
+   * @param string $companyFid;
+   * @param string $affiliateFid;
+   * @param string $foundationFid;
    *
    * @return AffiliatePaycheckPoliciesResponse|FortifiApiRequestInterface
    */
   public function all(
-    $limit = 10, $page = 1, $sortField = null,
-    $sortDirection = null, $showDeleted = false, $filter = null
+    $companyFid = null, $affiliateFid = null, $foundationFid = null
   )
   {
-    $payload = new PaginatedDataNodePayload();
-    $payload->limit = $limit;
-    $payload->page = $page;
-    $payload->sortField = $sortField;
-    $payload->sortDirection = $sortDirection;
-    $payload->showDeleted = $showDeleted;
-    $payload->filter = $filter;
+    $payload = new ListAffiliatePolicyPayload();
+    $payload->companyFid = $companyFid;
+    $payload->affiliateFid = $affiliateFid;
+    $payload->foundationFid = $foundationFid;
 
     $ep = AffiliatePaycheckPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
