@@ -61,17 +61,15 @@ class AffiliateCampaignModel extends FortifiApiModel
    * @param string $affiliateFid
    * @param string $companyFid
    * @param string $displayName
-   * @param string $options
    *
    * @return FortifiApiRequestInterface|CreateAffiliateCampaignResponse
    */
-  public function create($affiliateFid, $companyFid, $displayName, $options)
+  public function create($affiliateFid, $companyFid, $displayName)
   {
     $payload = new CreateAffiliateCampaignPayload();
     $payload->affiliateFid = $affiliateFid;
     $payload->companyFid = $companyFid;
     $payload->displayName = $displayName;
-    $payload->options = $options;
 
     $ep = AffiliateCampaignEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
