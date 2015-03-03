@@ -2,9 +2,11 @@
 namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateDailyMetricEndpoint;
+use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateDailySummaryPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\RetrieveAffiliateDailyMetricPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricsResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailySummaryResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -52,5 +54,21 @@ class AffiliateDailyMetricModel extends FortifiApiModel
 
     $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
     return $ep->retrieve($payload)->get();
+  }
+
+  /**
+   * @param string $affiliateFid
+   * @param int    $summariseDays
+   *
+   * @return AffiliateDailySummaryResponse|FortifiApiRequestInterface
+   */
+  public function summary($affiliateFid, $summariseDays = 30)
+  {
+    $payload = new ListAffiliateDailySummaryPayload();
+    $payload->affiliateFid = $affiliateFid;
+    $payload->summariseDays = $summariseDays;
+
+    $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
+    return $ep->summary($payload)->get();
   }
 }
