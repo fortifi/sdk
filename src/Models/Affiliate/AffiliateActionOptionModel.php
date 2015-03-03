@@ -137,7 +137,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
   {
     $payload = new DeleteAffiliateActionOptionPayload();
     $payload->fid = $fid;
-    $payload->fid = $key;
+    $payload->key = $key;
 
     $ep = AffiliateActionOptionEndpoint::bound($this->getApi());
     return $ep->delete($payload)->get();
