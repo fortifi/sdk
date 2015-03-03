@@ -9,7 +9,6 @@ use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\RetrieveAffiliateActionOp
 use Fortifi\FortifiApi\Affiliate\Payloads\ActionOption\UpdateAffiliateActionOptionPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\AffiliateActionOptionsResponse;
-use Fortifi\FortifiApi\Affiliate\Responses\ActionOption\CreateAffiliateActionOptionResponse;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -72,7 +71,7 @@ class AffiliateActionOptionModel extends FortifiApiModel
    * @param string $defaultValue
    * @param string $urlType
    *
-   * @return FortifiApiRequestInterface|CreateAffiliateActionOptionResponse
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function create(
     $actionFid, $key, $destinationKey, $name, $visibility,
