@@ -3,10 +3,12 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateDailyMetricEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateDailySummaryPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateTopAffiliatesPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\RetrieveAffiliateDailyMetricPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailySummaryResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateTopAffiliatesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -70,5 +72,21 @@ class AffiliateDailyMetricModel extends FortifiApiModel
 
     $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
     return $ep->summary($payload)->get();
+  }
+
+  /**
+   * @param int $limit
+   * @param int $days
+   *
+   * @return AffiliateTopAffiliatesResponse|FortifiApiRequestInterface
+   */
+  public function topAffiliates($limit = 10, $days = 30)
+  {
+    $payload = new ListAffiliateTopAffiliatesPayload();
+    $payload->limit = $limit;
+    $payload->days = $days;
+
+    $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
+    return $ep->topAffiliates($payload)->get();
   }
 }
