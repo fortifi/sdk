@@ -71,12 +71,14 @@ class AffiliateActionModel extends FortifiApiModel
    * @param string $maxCommission
    * @param string $url
    * @param int    $redirectCode
+   * @param string $lookupUrl
    *
    * @return FortifiApiRequestInterface|CreateAffiliateActionResponse
    */
   public function create(
     $companyFid, $displayName, $key, $description, $type,
-    $approvalType, $approvalDays, $maxCommission, $url, $redirectCode
+    $approvalType, $approvalDays, $maxCommission, $url,
+    $redirectCode, $lookupUrl
   )
   {
     $payload = new CreateAffiliateActionPayload();
@@ -90,6 +92,7 @@ class AffiliateActionModel extends FortifiApiModel
     $payload->maxCommission = $maxCommission;
     $payload->url = $url;
     $payload->redirectCode = $redirectCode;
+    $payload->lookupUrl = $lookupUrl;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -104,12 +107,14 @@ class AffiliateActionModel extends FortifiApiModel
    * @param string $maxCommission
    * @param string $url
    * @param int    $redirectCode
+   * @param string $lookupUrl
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
   public function update(
     $fid, $displayName, $description, $approvalType,
-    $approvalDays, $maxCommission, $url, $redirectCode
+    $approvalDays, $maxCommission, $url, $redirectCode,
+    $lookupUrl
   )
   {
     $payload = new UpdateAffiliateActionPayload();
@@ -121,6 +126,7 @@ class AffiliateActionModel extends FortifiApiModel
     $payload->maxCommission = $maxCommission;
     $payload->url = $url;
     $payload->redirectCode = $redirectCode;
+    $payload->lookupUrl = $lookupUrl;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
