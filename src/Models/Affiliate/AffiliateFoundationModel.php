@@ -85,4 +85,18 @@ class AffiliateFoundationModel extends FortifiApiModel
     $ep = AffiliateFoundationEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
   }
+
+  /**
+   * @param $fid
+   *
+   * @return FortifiApiRequestInterface|BoolResponse
+   */
+  public function delete($fid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliateFoundationEndpoint::bound($this->getApi());
+    return $ep->delete($payload)->get();
+  }
 }
