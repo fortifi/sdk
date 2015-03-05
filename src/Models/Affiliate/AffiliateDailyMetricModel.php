@@ -100,4 +100,31 @@ class AffiliateDailyMetricModel extends FortifiApiModel
     $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
     return $ep->topAffiliates($payload)->get();
   }
+
+  /**
+   * @param int    $limit
+   * @param int    $page
+   * @param string $sortField
+   * @param string $sortDirection
+   * @param string $filter
+   * @param int    $days
+   *
+   * @return AffiliateTopAffiliatesResponse|FortifiApiRequestInterface
+   */
+  public function salesOverview(
+    $limit = null, $page = 1, $days = 7, $sortField = null,
+    $sortDirection = null, $filter = null
+  )
+  {
+    $payload = new ListAffiliateStatsDurationPayload();
+    $payload->limit = $limit;
+    $payload->page = $page;
+    $payload->sortField = $sortField;
+    $payload->sortDirection = $sortDirection;
+    $payload->filter = $filter;
+    $payload->days = $days;
+
+    $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
+    return $ep->salesOverview($payload)->get();
+  }
 }
