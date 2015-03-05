@@ -12,15 +12,13 @@ class AccountantModel extends FortifiApiModel
 {
   /**
    * @param $objectFid
-   * @param $accountType
    *
    * @return AccountsResponse
    */
-  public function all($objectFid, $accountType = null)
+  public function all($objectFid)
   {
     $payload = new ListAccountsPayload();
     $payload->objectFid = $objectFid;
-    $payload->accountType = $accountType;
     $ep = AccountantEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
   }
