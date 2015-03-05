@@ -3,7 +3,7 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateDailyMetricEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateDailySummaryPayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateTopAffiliatesPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateStatsDurationPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\RetrieveAffiliateDailyMetricPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricsResponse;
@@ -89,7 +89,7 @@ class AffiliateDailyMetricModel extends FortifiApiModel
     $sortDirection = null, $filter = null
   )
   {
-    $payload = new ListAffiliateTopAffiliatesPayload();
+    $payload = new ListAffiliateStatsDurationPayload();
     $payload->limit = $limit;
     $payload->page = $page;
     $payload->sortField = $sortField;
