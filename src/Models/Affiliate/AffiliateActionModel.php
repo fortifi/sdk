@@ -28,7 +28,8 @@ class AffiliateActionModel extends FortifiApiModel
    *
    * @return AffiliateActionsResponse|FortifiApiRequestInterface
    */
-  public function all($companyFid,
+  public function all(
+    $companyFid,
     $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
@@ -92,7 +93,7 @@ class AffiliateActionModel extends FortifiApiModel
     $payload->maxCommission = $maxCommission;
     $payload->url = $url;
     $payload->redirectCode = $redirectCode;
-    $payload->lookupUrl = $lookupUrl;
+    $payload->lookupUrl = is_null($lookupUrl) ? '' : $lookupUrl;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -126,7 +127,7 @@ class AffiliateActionModel extends FortifiApiModel
     $payload->maxCommission = $maxCommission;
     $payload->url = $url;
     $payload->redirectCode = $redirectCode;
-    $payload->lookupUrl = $lookupUrl;
+    $payload->lookupUrl = is_null($lookupUrl) ? '' : $lookupUrl;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
