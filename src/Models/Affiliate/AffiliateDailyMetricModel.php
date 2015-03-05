@@ -8,6 +8,7 @@ use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\RetrieveAffiliateDailyMet
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailyMetricsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailySummaryResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateSalesOverviewResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateTopAffiliatesResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
@@ -109,7 +110,7 @@ class AffiliateDailyMetricModel extends FortifiApiModel
    * @param string $filter
    * @param int    $days
    *
-   * @return AffiliateTopAffiliatesResponse|FortifiApiRequestInterface
+   * @return AffiliateSalesOverviewResponse|FortifiApiRequestInterface
    */
   public function salesOverview(
     $limit = null, $page = 1, $days = 7, $sortField = null,
