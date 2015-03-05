@@ -15,13 +15,15 @@ class AffiliateActionViewPolicyModel extends FortifiApiModel
 {
   /**
    * @param string $resourceFid;
+   * @param string $companyFid;
    *
    * @return AffiliateActionViewPoliciesResponse|FortifiApiRequestInterface
    */
-  public function all($resourceFid = null)
+  public function all($resourceFid = null, $companyFid = null)
   {
     $payload = new ListAffiliateActionViewPolicyPayload();
     $payload->resourceFid = $resourceFid;
+    $payload->companyFid = $companyFid;
 
     $ep = AffiliateActionViewPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
@@ -29,14 +31,16 @@ class AffiliateActionViewPolicyModel extends FortifiApiModel
 
   /**
    * @param string $resourceFid
+   * @param string $companyFid
    * @param string $actionKey
    *
    * @return AffiliateActionViewPolicyResponse|FortifiApiRequestInterface
    */
-  public function retrieve($resourceFid, $actionKey)
+  public function retrieve($resourceFid, $companyFid, $actionKey)
   {
     $payload = new RetrieveAffiliateActionViewPolicyPayload();
     $payload->resourceFid = $resourceFid;
+    $payload->companyFid = $companyFid;
     $payload->actionKey = $actionKey;
 
     $ep = AffiliateActionViewPolicyEndpoint::bound($this->getApi());
@@ -45,15 +49,17 @@ class AffiliateActionViewPolicyModel extends FortifiApiModel
 
   /**
    * @param string $resourceFid
+   * @param string $companyFid
    * @param string $actionKey
    * @param string $canView
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function create($resourceFid, $actionKey, $canView)
+  public function create($resourceFid, $companyFid, $actionKey, $canView)
   {
     $payload = new AffiliateActionViewPolicyPayload();
     $payload->resourceFid = $resourceFid;
+    $payload->companyFid = $companyFid;
     $payload->actionKey = $actionKey;
     $payload->canView = $canView;
 
@@ -63,15 +69,17 @@ class AffiliateActionViewPolicyModel extends FortifiApiModel
 
   /**
    * @param string $resourceFid
+   * @param string $companyFid
    * @param string $actionKey
    * @param string $canView
    *
    * @return FortifiApiRequestInterface|BoolResponse
    */
-  public function update($resourceFid, $actionKey, $canView)
+  public function update($resourceFid, $companyFid, $actionKey, $canView)
   {
     $payload = new AffiliateActionViewPolicyPayload();
     $payload->resourceFid = $resourceFid;
+    $payload->companyFid = $companyFid;
     $payload->actionKey = $actionKey;
     $payload->canView = $canView;
 
