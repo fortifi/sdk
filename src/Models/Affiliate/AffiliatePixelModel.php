@@ -6,6 +6,7 @@ use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\CreatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\ListPixelPoliciesPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\UpdatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelPoliciesResponse;
+use Fortifi\FortifiApi\Foundation\Exceptions\NotFoundException;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
@@ -71,6 +72,7 @@ class AffiliatePixelModel extends FortifiApiModel
    * @param string $content
    *
    * @return BoolResponse|FortifiApiRequestInterface
+   * @throws NotFoundException
    */
   public function update($pixelFid, $displayName, $pixelType, $url, $content)
   {
@@ -89,6 +91,7 @@ class AffiliatePixelModel extends FortifiApiModel
    * @param string $pixelFid
    *
    * @return BoolResponse|FortifiApiRequestInterface
+   * @throws NotFoundException
    */
   public function approve($pixelFid)
   {
