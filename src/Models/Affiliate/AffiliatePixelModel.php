@@ -63,6 +63,7 @@ class AffiliatePixelModel extends FortifiApiModel
     $payload->content = $content;
     $payload->platform = $platform;
     $payload->companyFid = '';
+    $payload->country = '';
 
     $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
