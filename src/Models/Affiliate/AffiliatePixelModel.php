@@ -41,12 +41,13 @@ class AffiliatePixelModel extends FortifiApiModel
    * @param string $pixelType
    * @param string $url
    * @param string $content
+   * @param string $platform
    *
-   * @return BoolResponse|FortifiApiRequestInterface
+   * @return FortifiApiRequestInterface|BoolResponse
    */
   public function create(
     $affiliateFid, $action, $campaign, $sid1, $sid2, $sid3,
-    $displayName, $pixelType, $url, $content
+    $displayName, $pixelType, $url, $content, $platform
   )
   {
     $payload = new CreatePixelPolicyPayload();
@@ -56,11 +57,11 @@ class AffiliatePixelModel extends FortifiApiModel
     $payload->sid1 = $sid1;
     $payload->sid2 = $sid2;
     $payload->sid3 = $sid3;
-
     $payload->displayName = $displayName;
     $payload->pixelType = $pixelType;
     $payload->url = $url;
     $payload->content = $content;
+    $payload->platform = $platform;
 
     $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
