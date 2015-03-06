@@ -6,6 +6,7 @@ use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\CreatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\ListPixelPoliciesPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\UpdatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelPoliciesResponse;
+use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -82,5 +83,19 @@ class AffiliatePixelModel extends FortifiApiModel
 
     $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
+  }
+
+  /**
+   * @param string $pixelFid
+   *
+   * @return BoolResponse|FortifiApiRequestInterface
+   */
+  public function approve($pixelFid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $pixelFid;
+
+    $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
+    return $ep->approve($payload)->get();
   }
 }
