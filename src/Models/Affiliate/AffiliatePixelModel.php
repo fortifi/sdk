@@ -6,6 +6,7 @@ use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\CreatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\ListPixelPoliciesPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\PixelApprovalPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\UpdatePixelPolicyPayload;
+use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelHistoriesResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelPoliciesResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelPolicyResponse;
 use Fortifi\FortifiApi\Foundation\Exceptions\NotFoundException;
@@ -90,6 +91,20 @@ class AffiliatePixelModel extends FortifiApiModel
 
     $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();
+  }
+
+  /**
+   * @param string $pixelFid
+   *
+   * @return PixelHistoriesResponse
+   */
+  public function history($pixelFid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $pixelFid;
+
+    $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
+    return $ep->history($payload)->get();
   }
 
   /**
