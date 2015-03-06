@@ -3,11 +3,8 @@ namespace Fortifi\Sdk\Models\Affiliate;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateDailyMetricEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateDailySummaryPayload;
-use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateMetricsDurationPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\DailyMetrics\ListAffiliateStatsDurationPayload;
-use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateConversionMetricsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateDailySummaryResponse;
-use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateFinanceMetricsResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateSalesOverviewResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\DailyMetrics\AffiliateTopAffiliatesResponse;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
@@ -83,33 +80,5 @@ class AffiliateDailyMetricModel extends FortifiApiModel
 
     $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
     return $ep->salesOverview($payload)->get();
-  }
-
-  /**
-   * @param int $days
-   *
-   * @return AffiliateConversionMetricsResponse|FortifiApiRequestInterface
-   */
-  public function conversionMetrics($days = 30)
-  {
-    $payload = new ListAffiliateMetricsDurationPayload();
-    $payload->days = $days;
-
-    $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
-    return $ep->conversionMetrics($payload)->get();
-  }
-
-  /**
-   * @param int $days
-   *
-   * @return AffiliateFinanceMetricsResponse|FortifiApiRequestInterface
-   */
-  public function financeMetrics($days = 30)
-  {
-    $payload = new ListAffiliateMetricsDurationPayload();
-    $payload->days = $days;
-
-    $ep = AffiliateDailyMetricEndpoint::bound($this->getApi());
-    return $ep->financeMetrics($payload)->get();
   }
 }
