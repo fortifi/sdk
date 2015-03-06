@@ -7,7 +7,9 @@ use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\ListPixelPoliciesPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\PixelApprovalPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\UpdatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelPoliciesResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelPolicyResponse;
 use Fortifi\FortifiApi\Foundation\Exceptions\NotFoundException;
+use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -102,5 +104,50 @@ class AffiliatePixelModel extends FortifiApiModel
 
     $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
     return $ep->approve($payload)->get();
+  }
+
+  /**
+   * @param string $pixelFid
+   *
+   * @return PixelPolicyResponse|FortifiApiRequestInterface
+   * @throws NotFoundException
+   */
+  public function retrieve($pixelFid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $pixelFid;
+
+    $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
+    return $ep->retrieve($payload)->get();
+  }
+
+  /**
+   * @param string $pixelFid
+   *
+   * @return BoolResponse|FortifiApiRequestInterface
+   * @throws NotFoundException
+   */
+  public function delete($pixelFid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $pixelFid;
+
+    $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
+    return $ep->delete($payload)->get();
+  }
+
+  /**
+   * @param string $pixelFid
+   *
+   * @return BoolResponse|FortifiApiRequestInterface
+   * @throws NotFoundException
+   */
+  public function restore($pixelFid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $pixelFid;
+
+    $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
+    return $ep->restore($payload)->get();
   }
 }
