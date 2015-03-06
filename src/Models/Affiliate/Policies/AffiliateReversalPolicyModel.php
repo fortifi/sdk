@@ -74,7 +74,7 @@ class AffiliateReversalPolicyModel extends FortifiApiModel
   )
   {
     $payload = new CreateAffiliateReversalPolicyPayload();
-    $payload->companyFid = is_null($companyFid) ? '' : $companyFid;
+    $payload->companyFid = (string)$companyFid;
     $payload->resourceFid = $resourceFid;
     $payload->campaignHash = $campaignHash;
     $payload->sid1 = $sid1;

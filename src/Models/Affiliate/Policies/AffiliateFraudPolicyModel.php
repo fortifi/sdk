@@ -75,7 +75,7 @@ class AffiliateFraudPolicyModel extends FortifiApiModel
   )
   {
     $payload = new CreateAffiliateFraudPolicyPayload();
-    $payload->companyFid = is_null($companyFid) ? '' : $companyFid;
+    $payload->companyFid = (string)$companyFid;
     $payload->resourceFid = $resourceFid;
     $payload->campaignHash = $campaignHash;
     $payload->sid1 = $sid1;
@@ -86,7 +86,7 @@ class AffiliateFraudPolicyModel extends FortifiApiModel
     $payload->platform = $platform;
     $payload->description = $description;
     $payload->blockRepeatSeconds = $blockRepeatSeconds;
-    $payload->blockIps = is_null($blockIps) ? '' : $blockIps;
+    $payload->blockIps = (string)$blockIps;
     $payload->blockReferrers = $blockReferrers;
     $payload->approveOnlyReferrers = $approveOnlyReferrers;
 

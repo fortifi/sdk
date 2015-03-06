@@ -88,12 +88,12 @@ class AffiliateActionModel extends FortifiApiModel
     $payload->key = $key;
     $payload->description = $description;
     $payload->type = $type;
-    $payload->approvalType = is_null($approvalType) ? '' : $approvalType;
+    $payload->approvalType = (string)$approvalType;
     $payload->approvalDays = $approvalDays;
     $payload->maxCommission = $maxCommission;
     $payload->url = $url;
     $payload->redirectCode = $redirectCode;
-    $payload->lookupUrl = is_null($lookupUrl) ? '' : $lookupUrl;
+    $payload->lookupUrl = (string)$lookupUrl;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
@@ -127,7 +127,7 @@ class AffiliateActionModel extends FortifiApiModel
     $payload->maxCommission = $maxCommission;
     $payload->url = $url;
     $payload->redirectCode = $redirectCode;
-    $payload->lookupUrl = is_null($lookupUrl) ? '' : $lookupUrl;
+    $payload->lookupUrl = (string)$lookupUrl;
 
     $ep = AffiliateActionEndpoint::bound($this->getApi());
     return $ep->update($payload)->get();

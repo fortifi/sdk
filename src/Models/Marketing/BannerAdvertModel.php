@@ -82,7 +82,7 @@ class BannerAdvertModel extends FortifiApiModel
     $payload->companyFid = $companyFid;
     $payload->language = $language;
     $payload->type = $type;
-    $payload->imageUrl = is_null($imageUrl)?'':$imageUrl;
+    $payload->imageUrl = (string)$imageUrl;
     $payload->rawCode = $rawCode;
     $payload->height = $height;
     $payload->width = $width;

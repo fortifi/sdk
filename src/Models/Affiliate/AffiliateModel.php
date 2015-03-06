@@ -91,8 +91,7 @@ class AffiliateModel extends FortifiApiModel
     $payload->phone = $phone;
     $payload->email = $email;
     $payload->website = $website;
-    $payload->accountManagerFid =
-      is_null($accountManagerFid) ? '' : $accountManagerFid;
+    $payload->accountManagerFid = (string)$accountManagerFid;
 
     $ep = AffiliateEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
