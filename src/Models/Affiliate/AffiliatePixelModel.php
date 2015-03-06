@@ -4,10 +4,10 @@ namespace Fortifi\Sdk\Models\Affiliate;
 use Fortifi\FortifiApi\Affiliate\Endpoints\Policies\AffiliatePixelPolicyEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\CreatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\ListPixelPoliciesPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\PixelApprovalPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Pixels\UpdatePixelPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelPoliciesResponse;
 use Fortifi\FortifiApi\Foundation\Exceptions\NotFoundException;
-use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
@@ -89,14 +89,16 @@ class AffiliatePixelModel extends FortifiApiModel
 
   /**
    * @param string $pixelFid
+   * @param bool   $approve
    *
    * @return BoolResponse|FortifiApiRequestInterface
    * @throws NotFoundException
    */
-  public function approve($pixelFid)
+  public function approve($pixelFid, $approve = true)
   {
-    $payload = new FidPayload();
+    $payload = new PixelApprovalPayload();
     $payload->fid = $pixelFid;
+    $payload->approved = $approve;
 
     $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
     return $ep->approve($payload)->get();
