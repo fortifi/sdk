@@ -11,10 +11,10 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class MetricModel extends FortifiApiModel
 {
   /**
-   * @param $object
-   * @param $metric
-   * @param $count
-   * @param $timestamp (optional)
+   * @param string $object    FID of the object to retrieve metrics from
+   * @param string $metric    click, lead, sale, ...
+   * @param int    $count     number to increment by
+   * @param int    $timestamp (optional) microtime
    *
    * @return BoolResponse
    */
@@ -33,11 +33,11 @@ class MetricModel extends FortifiApiModel
   }
 
   /**
-   * @param $object
-   * @param $start
-   * @param $end      (optional)
-   * @param $metric   (optional)
-   * @param $interval (optional)
+   * @param string $object   FID of the object to retrieve metrics from
+   * @param int    $start    microtime
+   * @param int    $end      (optional) microtime
+   * @param string $metric   (optional) click, lead, sale, ...
+   * @param string $interval (optional) MetricInterval constant
    *
    * @return MetricsResponse
    */
