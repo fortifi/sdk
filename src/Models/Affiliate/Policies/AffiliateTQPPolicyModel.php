@@ -2,6 +2,7 @@
 namespace Fortifi\Sdk\Models\Affiliate\Policies;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\Policies\AffiliateTQPPolicyEndpoint;
+use Fortifi\FortifiApi\Affiliate\Payloads\Policies\FindAffiliatePolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\ListAffiliatePolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\TQP\CreateAffiliateTQPPolicyPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Policies\TQP\UpdateAffiliateTQPPolicyPayload;
@@ -131,5 +132,41 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
 
     $ep = AffiliateTQPPolicyEndpoint::bound($this->getApi());
     return $ep->restore($payload)->get();
+  }
+
+  /**
+   * @param string $companyFid;
+   * @param string $affiliateFid;
+   * @param string $foundationFid;
+   * @param string $campaignHash
+   * @param string $sid1
+   * @param string $sid2
+   * @param string $sid3
+   * @param string $action
+   * @param string $country
+   * @param string $platform
+   *
+   * @return AffiliateTQPPoliciesResponse|FortifiApiRequestInterface
+   */
+  public function find(
+    $companyFid = null, $affiliateFid = null, $foundationFid = null,
+    $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null,
+    $action = null, $country = null, $platform = null
+  )
+  {
+    $payload = new FindAffiliatePolicyPayload();
+    $payload->companyFid = $companyFid;
+    $payload->affiliateFid = $affiliateFid;
+    $payload->foundationFid = $foundationFid;
+    $payload->campaignHash = $campaignHash;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
+    $payload->action = $action;
+    $payload->country = $country;
+    $payload->platform = $platform;
+
+    $ep = AffiliateTQPPolicyEndpoint::bound($this->getApi());
+    return $ep->find($payload)->get();
   }
 }
