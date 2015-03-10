@@ -76,22 +76,6 @@ class DomainModel extends FortifiApiModel
 
   /**
    * @param string $fid
-   * @param string $domain
-   *
-   * @return BoolResponse
-   */
-  public function update($fid, $domain)
-  {
-    $payload = new UpdateDomainPayload();
-    $payload->fid = $fid;
-    $payload->domain = $domain;
-
-    $ep = DomainEndpoint::bound($this->getApi());
-    return $ep->update($payload)->get();
-  }
-
-  /**
-   * @param string $fid
    *
    * @return BoolResponse
    */
