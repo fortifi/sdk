@@ -136,8 +136,7 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
 
   /**
    * @param string $companyFid;
-   * @param string $affiliateFid;
-   * @param string $foundationFid;
+   * @param string $resourceFid;
    * @param string $campaignHash
    * @param string $sid1
    * @param string $sid2
@@ -149,15 +148,14 @@ class AffiliateTQPPolicyModel extends FortifiApiModel
    * @return AffiliateTQPPoliciesResponse|FortifiApiRequestInterface
    */
   public function find(
-    $companyFid = null, $affiliateFid = null, $foundationFid = null,
+    $companyFid = null, $resourceFid = null,
     $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null,
     $action = null, $country = null, $platform = null
   )
   {
     $payload = new FindAffiliatePolicyPayload();
     $payload->companyFid = $companyFid;
-    $payload->affiliateFid = $affiliateFid;
-    $payload->foundationFid = $foundationFid;
+    $payload->resourceFid = $resourceFid;
     $payload->campaignHash = $campaignHash;
     $payload->sid1 = $sid1;
     $payload->sid2 = $sid2;
