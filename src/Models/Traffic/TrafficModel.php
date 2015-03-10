@@ -6,6 +6,7 @@ use Fortifi\FortifiApi\Traffic\Endpoints\TrafficEndpoint;
 use Fortifi\FortifiApi\Traffic\Payloads\AffiliateVisitorPayload;
 use Fortifi\FortifiApi\Traffic\Payloads\VisitorPayload;
 use Fortifi\FortifiApi\Traffic\Responses\AffiliateVisitorResponse;
+use Fortifi\FortifiApi\Traffic\Responses\VisitorDevicesResponse;
 use Fortifi\FortifiApi\Traffic\Responses\VisitorResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
@@ -44,7 +45,7 @@ class TrafficModel extends FortifiApiModel
   /**
    * @param string $visitorId
    *
-   * @return FortifiApiRequestInterface|VisitorResponse
+   * @return FortifiApiRequestInterface|VisitorDevicesResponse
    */
   public function devices($visitorId)
   {
