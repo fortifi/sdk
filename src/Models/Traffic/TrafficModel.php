@@ -5,10 +5,11 @@ use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Traffic\Endpoints\TrafficEndpoint;
 use Fortifi\FortifiApi\Traffic\Payloads\AffiliateVisitorPayload;
 use Fortifi\FortifiApi\Traffic\Payloads\VisitorPayload;
+use Fortifi\FortifiApi\Traffic\Responses\AffiliateVisitorResponse;
 use Fortifi\FortifiApi\Traffic\Responses\VisitorResponse;
 use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
-class VisitorModel extends FortifiApiModel
+class TrafficModel extends FortifiApiModel
 {
   /**
    * @param int $visitorId
@@ -28,7 +29,7 @@ class VisitorModel extends FortifiApiModel
    * @param string $affiliateFid
    * @param int    $visitorId
    *
-   * @return FortifiApiRequestInterface|VisitorResponse
+   * @return FortifiApiRequestInterface|AffiliateVisitorResponse
    */
   public function affiliateVisitor($affiliateFid, $visitorId)
   {
