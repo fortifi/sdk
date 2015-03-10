@@ -40,4 +40,18 @@ class TrafficModel extends FortifiApiModel
     $ep = TrafficEndpoint::bound($this->getApi());
     return $ep->affiliateVisitor($payload)->get();
   }
+
+  /**
+   * @param string $visitorId
+   *
+   * @return FortifiApiRequestInterface|VisitorResponse
+   */
+  public function devices($visitorId)
+  {
+    $payload = new VisitorPayload();
+    $payload->visitorId = $visitorId;
+
+    $ep = TrafficEndpoint::bound($this->getApi());
+    return $ep->devices($payload)->get();
+  }
 }
