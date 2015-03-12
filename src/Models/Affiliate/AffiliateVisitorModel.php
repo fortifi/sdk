@@ -1,6 +1,8 @@
 <?php
 namespace Fortifi\Sdk\Models\Affiliate;
 
+use Fortifi\FortifiApi\Affiliate\Payloads\Visitor\VisitorEventPayload;
+use Fortifi\FortifiApi\Affiliate\Responses\Visitor\VisitorEventResponse;
 use Fortifi\FortifiApi\Foundation\Requests\FortifiApiRequestInterface;
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateVisitorEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Visitor\VisitorPayload;
@@ -27,7 +29,7 @@ class AffiliateVisitorModel extends FortifiApiModel
   }
 
   /**
-   * @param int    $visitorId
+   * @param int $visitorId
    *
    * @return FortifiApiRequestInterface|AffiliatesResponse
    */
@@ -52,5 +54,21 @@ class AffiliateVisitorModel extends FortifiApiModel
 
     $ep = AffiliateVisitorEndpoint::bound($this->getApi());
     return $ep->events($payload)->get();
+  }
+
+  /**
+   * @param string $visitorId
+   * @param string $eventId
+   *
+   * @return FortifiApiRequestInterface|VisitorEventResponse
+   */
+  public function event($visitorId, $eventId)
+  {
+    $payload = new VisitorEventPayload();
+    $payload->visitorId = $visitorId;
+    $payload->eventId = $eventId;
+
+    $ep = AffiliateVisitorEndpoint::bound($this->getApi());
+    return $ep->event($payload)->get();
   }
 }
