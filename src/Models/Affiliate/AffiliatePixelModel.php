@@ -19,13 +19,15 @@ class AffiliatePixelModel extends FortifiApiModel
 {
   /**
    * @param string $affiliateFid
+   * @param bool   $showPending
    *
    * @return PixelPoliciesResponse|FortifiApiRequestInterface
    */
-  public function all($affiliateFid)
+  public function all($affiliateFid = null, $showPending = null)
   {
     $payload = new ListPixelPoliciesPayload();
     $payload->affiliateFid = $affiliateFid;
+    $payload->showPending = $showPending;
 
     $ep = AffiliatePixelPolicyEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
