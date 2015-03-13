@@ -63,6 +63,17 @@ class FortifiProvider extends AbstractProvider
   }
 
   /**
+   * @param AccessToken $token
+   *
+   * @return string
+   */
+  public function urlLogout(AccessToken $token)
+  {
+    return build_path_unix($this->_url, 'auth', 'logout')
+    . '?access_token=' . $token->accessToken;
+  }
+
+  /**
    * @param             $response
    * @param AccessToken $token
    *
@@ -114,6 +125,12 @@ class FortifiProvider extends AbstractProvider
   public function userScreenName($response, AccessToken $token)
   {
     return isset($response->name) && $response->name ? $response->name : null;
+  }
+
+  public function logout(AccessToken $token)
+  {
+    $this->fetchProviderData($this->urlLogout($token));
+    return true;
   }
 
   protected function fetchUserDetails(AccessToken $token)
