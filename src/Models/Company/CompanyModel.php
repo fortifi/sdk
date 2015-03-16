@@ -2,7 +2,6 @@
 namespace Fortifi\Sdk\Models\Company;
 
 use Fortifi\FortifiApi\Company\Endpoints\CompanyEndpoint;
-use Fortifi\FortifiApi\Company\Payloads\CompanyEmployeesPayload;
 use Fortifi\FortifiApi\Company\Payloads\CreateCompanyPayload;
 use Fortifi\FortifiApi\Company\Payloads\UpdateCompanyPayload;
 use Fortifi\FortifiApi\Company\Responses;
