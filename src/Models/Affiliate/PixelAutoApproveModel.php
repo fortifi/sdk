@@ -24,13 +24,13 @@ class PixelAutoApproveModel extends FortifiApiModel
    *
    * @return PixelAutoApprovalsResponse
    */
-  public function save($type, $approve)
+  public function approve($type, $approve)
   {
     $payload = new UpdatePixelAutoApprovalPayload();
     $payload->type = $type;
     $payload->approve = $approve;
 
     $ep = AffiliatePixelAutoApprovalEndpoint::bound($this->getApi());
-    return $ep->all($payload)->get();
+    return $ep->approve($payload)->get();
   }
 }
