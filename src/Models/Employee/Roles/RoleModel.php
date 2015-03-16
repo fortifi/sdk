@@ -179,22 +179,6 @@ class RoleModel extends FortifiApiModel
   }
 
   /**
-   * @param string $roleFid
-   * @param        $items
-   *
-   * @return FortifiApiRequestInterface|BoolResponse
-   */
-  public function replaceEmployees($roleFid, $items)
-  {
-    $payload = new RoleEmployeesPayload();
-    $payload->roleFid = $roleFid;
-    $payload->items = $items;
-
-    $ep = EmployeeRoleEndpoint::bound($this->getApi());
-    return $ep->replaceEmployees($payload)->get();
-  }
-
-  /**
    * @param string $fid
    * @param bool   $loadRefs
    *

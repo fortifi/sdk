@@ -242,22 +242,6 @@ class EmployeeModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
-   * @param $items
-   *
-   * @return FortifiApiRequestInterface|BoolResponse
-   */
-  public function replaceCompanies($fid, $items)
-  {
-    $payload = new EmployeeCompaniesPayload();
-    $payload->employeeFid = $fid;
-    $payload->items = $items;
-
-    $ep = EmployeeEndpoint::bound($this->getApi());
-    return $ep->replaceCompanies($payload)->get();
-  }
-
-  /**
    * @param string $fid
    * @param bool   $loadRefs
    * @param int    $limit
@@ -326,22 +310,6 @@ class EmployeeModel extends FortifiApiModel
 
     $ep = EmployeeEndpoint::bound($this->getApi());
     return $ep->removeRoles($payload)->get();
-  }
-
-  /**
-   * @param $fid
-   * @param $items
-   *
-   * @return FortifiApiRequestInterface|BoolResponse
-   */
-  public function replaceRoles($fid, $items)
-  {
-    $payload = new EmployeeRolesPayload();
-    $payload->employeeFid = $fid;
-    $payload->items = $items;
-
-    $ep = EmployeeEndpoint::bound($this->getApi());
-    return $ep->replaceRoles($payload)->get();
   }
 
   /**

@@ -127,54 +127,6 @@ class CompanyModel extends FortifiApiModel
   }
 
   /**
-   * @param string $companyFid
-   * @param        $items
-   *
-   * @return FortifiApiRequestInterface|BoolResponse
-   */
-  public function addEmployees($companyFid, $items)
-  {
-    $payload = new CompanyEmployeesPayload();
-    $payload->companyFid = $companyFid;
-    $payload->items = $items;
-
-    $ep = CompanyEndpoint::bound($this->getApi());
-    return $ep->addEmployees($payload)->get();
-  }
-
-  /**
-   * @param string $companyFid
-   * @param        $items
-   *
-   * @return FortifiApiRequestInterface|BoolResponse
-   */
-  public function removeEmployees($companyFid, $items)
-  {
-    $payload = new CompanyEmployeesPayload();
-    $payload->companyFid = $companyFid;
-    $payload->items = $items;
-
-    $ep = CompanyEndpoint::bound($this->getApi());
-    return $ep->removeEmployees($payload)->get();
-  }
-
-  /**
-   * @param string $companyFid
-   * @param        $items
-   *
-   * @return FortifiApiRequestInterface|BoolResponse
-   */
-  public function replaceEmployees($companyFid, $items)
-  {
-    $payload = new CompanyEmployeesPayload();
-    $payload->companyFid = $companyFid;
-    $payload->items = $items;
-
-    $ep = CompanyEndpoint::bound($this->getApi());
-    return $ep->replaceEmployees($payload)->get();
-  }
-
-  /**
    * @param string $fid
    *
    * @param bool   $loadRefs
