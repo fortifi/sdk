@@ -4,6 +4,7 @@ namespace Fortifi\Sdk\Models\Affiliate;
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliatePaycheckEndpoint;
 use Fortifi\FortifiApi\Affiliate\Payloads\Paychecks\ListPaychecksPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Paychecks\MarkPaycheckPaidPayload;
+use Fortifi\FortifiApi\Affiliate\Responses\Paychecks\AffiliatePaycheckResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Paychecks\AffiliatePaychecksResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\FidsPayload;
@@ -12,7 +13,6 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 
 class AffiliatePaycheckModel extends FortifiApiModel
 {
-
   /**
    * @param string $affiliateFid
    * @param string $paymentService
@@ -34,6 +34,20 @@ class AffiliatePaycheckModel extends FortifiApiModel
 
     $ep = AffiliatePaycheckEndpoint::bound($this->getApi());
     return $ep->all($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return AffiliatePaycheckResponse
+   */
+  public function retrieve($fid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliatePaycheckEndpoint::bound($this->getApi());
+    return $ep->retrieve($payload)->get();
   }
 
   /**
