@@ -6,6 +6,8 @@ use Fortifi\FortifiApi\Affiliate\Payloads\Paychecks\ListPaychecksPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Paychecks\MarkPaycheckPaidPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Paychecks\AffiliatePaycheckResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Paychecks\AffiliatePaychecksResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\Paychecks\AffiliatePaycheckTransactionsResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\Paychecks\PrintPaycheckResponse;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\FidsPayload;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
@@ -96,5 +98,33 @@ class AffiliatePaycheckModel extends FortifiApiModel
 
     $ep = AffiliatePaycheckEndpoint::bound($this->getApi());
     return $ep->markPaid($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return PrintPaycheckResponse
+   */
+  public function pdf($fid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliatePaycheckEndpoint::bound($this->getApi());
+    return $ep->pdf($payload)->get();
+  }
+
+  /**
+   * @param string $fid
+   *
+   * @return AffiliatePaycheckTransactionsResponse
+   */
+  public function transactions($fid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $fid;
+
+    $ep = AffiliatePaycheckEndpoint::bound($this->getApi());
+    return $ep->transactions($payload)->get();
   }
 }
