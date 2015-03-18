@@ -20,7 +20,7 @@ class ConfigModel extends FortifiApiModel
    * @param $name
    * @param $value
    *
-   * @return ConfigItemResponse|FortifiApiRequestInterface
+   * @return ConfigItemResponse
    */
   public function getItem($fid, $objectFid, $section, $name, $value)
   {
@@ -39,7 +39,7 @@ class ConfigModel extends FortifiApiModel
    * @param $objectFid
    * @param $section
    *
-   * @return ConfigurationResponse|FortifiApiRequestInterface
+   * @return ConfigurationResponse
    */
   public function getConfiguration(
     $objectFid, $section
@@ -60,7 +60,7 @@ class ConfigModel extends FortifiApiModel
    * @param $blend
    * @param $section
    *
-   * @return ConfigurationResponse|FortifiApiRequestInterface
+   * @return ConfigurationResponse
    */
   public function getUserConfiguration(
     $companyFid, $userFid, $organisation, $blend, $section
@@ -78,18 +78,16 @@ class ConfigModel extends FortifiApiModel
   }
 
   /**
-   * @param $fid
    * @param $objectFid
    * @param $section
    * @param $name
    * @param $value
    *
-   * @return FortifiApiRequestInterface|BoolResponse
+   * @return BoolResponse
    */
-  public function setConfigItem($fid, $objectFid, $section, $name, $value)
+  public function setConfigItem($objectFid, $section, $name, $value)
   {
     $payload = new ConfigItemPayload();
-    $payload->fid = $fid;
     $payload->objectFid = $objectFid;
     $payload->section = $section;
     $payload->name = $name;
@@ -106,7 +104,7 @@ class ConfigModel extends FortifiApiModel
    * @param $name
    * @param $value
    *
-   * @return FortifiApiRequestInterface|BoolResponse
+   * @return BoolResponse
    */
   public function deleteConfigItem($fid, $objectFid, $section, $name, $value)
   {
