@@ -99,6 +99,22 @@ class ConfigModel extends FortifiApiModel
 
   /**
    * @param $fid
+   * @param $value
+   *
+   * @return BoolResponse
+   */
+  public function setConfigItemByFid($fid, $value)
+  {
+    $payload = new ConfigItemPayload();
+    $payload->fid = $fid;
+    $payload->value = $value;
+
+    $ep = ConfigEndpoint::bound($this->getApi());
+    return $ep->setConfigItem($payload)->get();
+  }
+
+  /**
+   * @param $fid
    * @param $objectFid
    * @param $section
    * @param $name
