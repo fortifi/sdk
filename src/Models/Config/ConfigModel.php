@@ -14,7 +14,6 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class ConfigModel extends FortifiApiModel
 {
   /**
-   * @param $fid
    * @param $objectFid
    * @param $section
    * @param $name
@@ -22,13 +21,28 @@ class ConfigModel extends FortifiApiModel
    *
    * @return ConfigItemResponse
    */
-  public function getItem($fid, $objectFid, $section, $name, $value)
+  public function getItem($objectFid, $section, $name, $value)
   {
     $payload = new ConfigItemPayload();
-    $payload->fid = $fid;
     $payload->objectFid = $objectFid;
     $payload->section = $section;
     $payload->name = $name;
+    $payload->value = $value;
+
+    $ep = ConfigEndpoint::bound($this->getApi());
+    return $ep->getItem($payload)->get();
+  }
+
+  /**
+   * @param $fid
+   * @param $value
+   *
+   * @return ConfigItemResponse
+   */
+  public function getItemByFid($fid, $value)
+  {
+    $payload = new ConfigItemPayload();
+    $payload->fid = $fid;
     $payload->value = $value;
 
     $ep = ConfigEndpoint::bound($this->getApi());
