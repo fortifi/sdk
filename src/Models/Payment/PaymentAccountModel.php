@@ -76,6 +76,20 @@ class PaymentAccountModel extends FortifiApiModel
   }
 
   /**
+   * @param $ownerFid
+   *
+   * @return PaymentAccountResponse
+   */
+  public function retrieveDefault($ownerFid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $ownerFid;
+
+    $ep = PaymentAccountEndpoint::bound($this->getApi());
+    return $ep->retrieveDefault($payload)->get();
+  }
+
+  /**
    * @param $accountFid
    *
    * @return BoolResponse
@@ -117,5 +131,19 @@ class PaymentAccountModel extends FortifiApiModel
 
     $ep = PaymentAccountEndpoint::bound($this->getApi());
     return $ep->setConfiguration($payload)->get();
+  }
+
+  /**
+   * @param $accountFid
+   *
+   * @return BoolResponse
+   */
+  public function setAsDefault($accountFid)
+  {
+    $payload = new FidPayload();
+    $payload->fid = $accountFid;
+
+    $ep = PaymentAccountEndpoint::bound($this->getApi());
+    return $ep->setAsDefault($payload)->get();
   }
 }
