@@ -29,8 +29,7 @@ class AffiliateActionModel extends FortifiApiModel
    * @return AffiliateActionsResponse|FortifiApiRequestInterface
    */
   public function all(
-    $companyFid,
-    $limit = 10, $page = 1, $sortField = null,
+    $companyFid = null, $limit = 10, $page = 1, $sortField = null,
     $sortDirection = null, $showDeleted = false, $filter = null
   )
   {
