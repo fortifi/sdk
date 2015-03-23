@@ -14,18 +14,22 @@ use Fortifi\Sdk\Models\Api\FortifiApiModel;
 class PaymentAccountModel extends FortifiApiModel
 {
   /**
-   * @param $ownerFid
-   * @param $serviceFid
-   * @param $configuration
+   * @param string $ownerFid
+   * @param string $serviceFid
+   * @param string $displayName
+   * @param array  $configuration
    *
    * @return PaymentAccountResponse
    */
-  public function create($ownerFid, $serviceFid, $configuration)
+  public function create(
+    $ownerFid, $serviceFid, $displayName, $configuration = []
+  )
   {
     $payload = new CreatePaymentAccountPayload();
     $payload->ownerFid = $ownerFid;
     $payload->serviceFid = $serviceFid;
     $payload->configuration = $configuration;
+    $payload->name = $displayName;
 
     $ep = PaymentAccountEndpoint::bound($this->getApi());
     return $ep->create($payload)->get();
