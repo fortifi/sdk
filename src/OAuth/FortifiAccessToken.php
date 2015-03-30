@@ -1,7 +1,9 @@
 <?php
 namespace Fortifi\Sdk\OAuth;
 
-class AccessToken extends \League\OAuth2\Client\Token\AccessToken
+use League\OAuth2\Client\Token\AccessToken;
+
+class FortifiAccessToken extends AccessToken
 {
   protected $_secret;
 

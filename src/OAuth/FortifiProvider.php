@@ -4,7 +4,6 @@ namespace Fortifi\Sdk\OAuth;
 use Fortifi\FortifiApi\Auth\Responses\AuthUserDetailsResponse;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
-use Packaged\Helpers\ValueAs;
 
 class FortifiProvider extends AbstractProvider
 {
@@ -166,7 +165,10 @@ class FortifiProvider extends AbstractProvider
 
   public function logout(AccessToken $token)
   {
-    $this->fetchProviderData($this->urlLogout($token));
+    $this->fetchProviderData(
+      $this->urlLogout($token),
+      $this->getHeaders($token)
+    );
     return true;
   }
 

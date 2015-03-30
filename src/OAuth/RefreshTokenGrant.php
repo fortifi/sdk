@@ -7,6 +7,6 @@ class RefreshTokenGrant extends RefreshToken
 {
   public function handleResponse($response = [])
   {
-    return new AccessToken($response);
+    return new FortifiAccessToken($response);
   }
 }

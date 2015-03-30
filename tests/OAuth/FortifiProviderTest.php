@@ -30,6 +30,11 @@ class FortifiProviderTest extends \PHPUnit_Framework_TestCase
       $fortifiUrl . '/auth/details?access_token=abc',
       $provider->urlUserDetails(new AccessToken(['access_token' => 'abc']))
     );
+
+    $this->assertEquals(
+      $fortifiUrl . '/auth/logout?access_token=abc',
+      $provider->urlLogout(new AccessToken(['access_token' => 'abc']))
+    );
   }
 
   public function testUserDetails()
@@ -83,5 +88,62 @@ class FortifiProviderTest extends \PHPUnit_Framework_TestCase
     $provider->setClient(new Client('client', 'secret'));
     $this->assertEquals('client', $provider->getClient()->getId());
     $this->assertEquals('secret', $provider->getClient()->getSecret());
+  }
+
+  public function testOrgFid()
+  {
+    $provider = new FortifiProvider();
+    $provider->setOrgFid('ORG-12');
+    $this->assertEquals('ORG-12', $provider->getOrgFid());
+    $headers = $provider->getHeaders();
+    $this->assertArrayHasKey('X-Fortifi-Org', $headers);
+    $this->assertEquals('ORG-12', $headers['X-Fortifi-Org']);
+  }
+
+  public function testCalls()
+  {
+    $token = new AccessToken(['access_token' => 'abc']);
+    $provider = new MockProvider();
+
+    $fortifiUrl = 'http://api.fortifi.co';
+    $provider->setFortifiUrl($fortifiUrl);
+    $provider->setOrgFid('org-xyz');
+
+    $provider->getUserDetails($token);
+    $this->assertEquals(
+      $fortifiUrl . '/auth/details?access_token=abc',
+      $provider->getLastUrl()
+    );
+
+    $this->assertArrayHasKey('X-Fortifi-Org', $provider->getLastHeaders());
+
+    $provider->logout($token);
+    $this->assertEquals(
+      $fortifiUrl . '/auth/logout?access_token=abc',
+      $provider->getLastUrl()
+    );
+  }
+}
+
+class MockProvider extends FortifiProvider
+{
+  protected $_lastUrl;
+  protected $_lastHeaders;
+
+  protected function fetchProviderData($url, array $headers = [])
+  {
+    $this->_lastUrl = $url;
+    $this->_lastHeaders = $headers;
+    return true;
+  }
+
+  public function getLastUrl()
+  {
+    return $this->_lastUrl;
+  }
+
+  public function getLastHeaders()
+  {
+    return $this->_lastHeaders;
   }
 }
