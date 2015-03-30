@@ -9,9 +9,10 @@ class FortifiProviderTest extends \PHPUnit_Framework_TestCase
 {
   public function testUrls()
   {
-    $fortifiUrl = 'https://org-dc-1448-6f535.fortifi.co';
-    $provider   = new FortifiProvider();
+    $fortifiUrl = 'http://org-dc-1448-6f535.fortifi.co';
+    $provider = new FortifiProvider();
     $provider->setFortifiUrl($fortifiUrl);
+    $provider->setOrgFid('org-dc-1448-6f535');
 
     $this->assertEquals($fortifiUrl, $provider->getFortifiUrl());
 
@@ -26,29 +27,54 @@ class FortifiProviderTest extends \PHPUnit_Framework_TestCase
     );
 
     $this->assertEquals(
-      $fortifiUrl . '/oauth/details?access_token=abc',
+      $fortifiUrl . '/auth/details?access_token=abc',
       $provider->urlUserDetails(new AccessToken(['access_token' => 'abc']))
     );
   }
 
   public function testUserDetails()
   {
-    $token          = new AccessToken(['access_token' => 'abc']);
-    $details        = new \stdClass();
-    $details->id    = 123;
-    $details->uid   = 'FID:USER:2374';
-    $details->name  = 'John Smith';
-    $details->email = 'john@smith.com';
+    $token = new AccessToken(['access_token' => 'abc']);
+
+    $response = '{"status":{"code":200,"message":""},'
+      . '"type":"\\\\Fortifi\\\\FortifiApi\\\\Auth\\\\Responses\\\\AuthUserDetailsResponse",'
+      . '"result":{'
+      . '"userFid":"FID:AUTH:USER:1424364068:2972543",'
+      . '"avatarUrl":null,'
+      . '"authedFid":"FID:EMPL:1424364068:bee20f637947",'
+      . '"language":"en",'
+      . '"timezone":"UTC",'
+      . '"username":"brooke",'
+      . '"isApproved":false,'
+      . '"isDisabled":false,'
+      . '"userType":"3",'
+      . '"displayName":"Brooke Bryan",'
+      . '"firstName":"Brooke",'
+      . '"lastName":"Bryan",'
+      . '"description":"",'
+      . '"permissions":"1",'
+      . '"roles":'
+      . '["1",'
+      . '"FID:EMPL:ROLE:1424355162:753bc09",'
+      . '"affiliate.manager",'
+      . '"5",'
+      . '"FID:EMPL:ROLE:1426510567:793210d"]'
+      . '}}';
+    $details = json_decode($response);
+    $details = $details->result;
 
     $provider = new FortifiProvider();
-    $provider->setUserDetailsCache(json_encode($details));
-
-    $this->assertEquals('john@smith.com', $provider->getUserEmail($token));
-    $this->assertEquals('John Smith', $provider->getUserScreenName($token));
-    $this->assertEquals(123, $provider->getUserUid($token));
+    $provider->setUserDetailsCache($response);
 
     $user = $provider->getUserDetails($token);
-    $this->assertEquals('FID:USER:2374', $user->uid);
+    $this->assertEquals($details->userFid, $user->uid);
+
+    $this->assertEquals($details->username, $provider->getUserEmail($token));
+    $this->assertEquals(
+      $details->displayName,
+      $provider->getUserScreenName($token)
+    );
+    $this->assertEquals($details->userFid, $provider->getUserUid($token));
   }
 
   public function testClient()

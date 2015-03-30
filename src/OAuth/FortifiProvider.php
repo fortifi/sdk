@@ -4,11 +4,13 @@ namespace Fortifi\Sdk\OAuth;
 use Fortifi\FortifiApi\Auth\Responses\AuthUserDetailsResponse;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
+use Packaged\Helpers\ValueAs;
 
 class FortifiProvider extends AbstractProvider
 {
   protected $_url;
   protected $_userDetails;
+  protected $_orgFid;
   /**
    * @var Client
    */
@@ -23,6 +25,28 @@ class FortifiProvider extends AbstractProvider
   {
     $this->_url = $url;
     return $this;
+  }
+
+  /**
+   * Set the current organisation FID
+   *
+   * @param $fid
+   *
+   * @return $this
+   */
+  public function setOrgFid($fid)
+  {
+    $this->_orgFid = $fid;
+    return $this;
+  }
+
+  /**
+   * Retrieve the current organisation ID
+   * @return string|null
+   */
+  public function getOrgFid()
+  {
+    return $this->_orgFid;
   }
 
   /**
@@ -82,7 +106,7 @@ class FortifiProvider extends AbstractProvider
   public function userDetails($response, AccessToken $token)
   {
     $user = new OAuthUser();
-    $result = $response->result;
+    $result = idp($response, 'result', $response);
     /**
      * @var $result AuthUserDetailsResponse
      */
@@ -103,6 +127,8 @@ class FortifiProvider extends AbstractProvider
         ),
         'locale'      => $result->language,
         'location'    => $result->timezone,
+        'name'        => $result->displayName,
+        'imageUrl'    => $result->avatarUrl,
         'firstName'   => $result->firstName,
         'lastName'    => $result->lastName,
         'description' => $result->description,
@@ -114,17 +140,28 @@ class FortifiProvider extends AbstractProvider
 
   public function userUid($response, AccessToken $token)
   {
-    return isset($response->id) && $response->id ? $response->id : null;
+    return $this->_getProperty($response, ['userFid', 'authedFid', 'id']);
   }
 
   public function userEmail($response, AccessToken $token)
   {
-    return isset($response->email) && $response->email ? $response->email : null;
+    return $this->_getProperty($response, ['email', 'username']);
   }
 
   public function userScreenName($response, AccessToken $token)
   {
-    return isset($response->name) && $response->name ? $response->name : null;
+    return $this->_getProperty($response, ['displayName', 'name', 'firstName']);
+  }
+
+  protected function _getProperty($object, $propertyList)
+  {
+    $properties = (array)$propertyList;
+    $result = pnonempty($object, $properties);
+    if($result === null && isset($object->result))
+    {
+      $result = pnonempty($object->result, $properties);
+    }
+    return $result;
   }
 
   public function logout(AccessToken $token)
@@ -159,5 +196,11 @@ class FortifiProvider extends AbstractProvider
   public function getClient()
   {
     return $this->_client;
+  }
+
+  public function getHeaders($token = null)
+  {
+    $headers = parent::getHeaders($token);
+    return array_merge($headers, ['X-Fortifi-Org' => $this->_orgFid]);
   }
 }
