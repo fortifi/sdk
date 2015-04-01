@@ -5,7 +5,7 @@
   "license": "BSD-3-Clause",
   "require": {
     "fortifi/fortifi-api": "dev-master",
-    "league/oauth2-client": "~0.5",
+    "league/oauth2-client": "~0.10",
     "packaged/helpers": "~0.6"
   },
   "require-dev": {
@@ -13,8 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Fortifi\\Sdk\\": "src/",
-      "Fortifi\\Tests\\Integration\\": "tests/"
+      "Fortifi\\Sdk\\": "src/"
     }
   },
   "repositories": [

@@ -2,8 +2,18 @@
 namespace Fortifi\Sdk\OAuth;
 
 use Fortifi\FortifiApi\Auth\Responses\AuthUserDetailsResponse;
+use Fortifi\FortifiApi\Foundation\Exceptions\FortifiApiException;
+use Guzzle\Http\Exception\BadResponseException;
+use GuzzleHttp\Message\Response;
+use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Stream\Stream;
+use League\OAuth2\Client\Exception\IDPException;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
+use Packaged\Api\Exceptions\InvalidApiResponseException;
+use Packaged\Api\Format\JsonFormat;
+use Packaged\Api\Response\ApiCallData;
+use Packaged\Api\Response\ResponseBuilder;
 
 class FortifiProvider extends AbstractProvider
 {
@@ -179,6 +189,56 @@ class FortifiProvider extends AbstractProvider
       $this->setUserDetailsCache(parent::fetchUserDetails($token));
     }
     return $this->_userDetails;
+  }
+
+  protected function fetchProviderData($url, array $headers = [])
+  {
+    $time = microtime(true);
+    try
+    {
+      $client = $this->getHttpClient();
+      $client->setBaseUrl($url);
+
+      if($headers)
+      {
+        $client->setDefaultOption('headers', $headers);
+      }
+
+      $request = $client->get()->send();
+      $response = $request->getBody();
+    }
+    catch(BadResponseException $e)
+    {
+      // @codeCoverageIgnoreStart
+      $decode = new JsonFormat();
+      try
+      {
+        $totalTime = microtime(true) - $time;
+
+        $response = $decode->decode(
+          new Response(
+            $e->getResponse()->getStatusCode(),
+            $e->getResponse()->getHeaders()->getAll(),
+            new Stream($e->getResponse()->getBody()->getStream())
+          ),
+          $totalTime
+        );
+
+        throw new \Exception(
+          $response->getApiCallData()->getStatusMessage(),
+          $response->getApiCallData()->getStatusCode(),
+          $e
+        );
+      }
+      catch(InvalidApiResponseException $ex)
+      {
+        $raw_response = explode("\n", $e->getResponse());
+        throw new IDPException(end($raw_response));
+      }
+      // @codeCoverageIgnoreEnd
+    }
+
+    return $response;
   }
 
   public function setUserDetailsCache($response)
