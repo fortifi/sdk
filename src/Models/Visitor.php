@@ -36,6 +36,7 @@ class Visitor extends FortifiModel
   /**
    * Trigger a visitor action
    *
+   * @param        $companyFid
    * @param        $actionKey
    * @param        $transactionId
    * @param int    $transactionValue
@@ -47,12 +48,17 @@ class Visitor extends FortifiModel
    * @return PostActionResponse
    */
   public function triggerAction(
-    $actionKey, $transactionId, $transactionValue = 0, array $data = null,
-    $couponCode = null, $returnPixels = true, $userReference = null
+    $companyFid, $actionKey, $transactionId, $transactionValue = 0,
+    array $data = null, $couponCode = null, $returnPixels = true,
+    $userReference = null
   )
   {
     $endpoint = AffiliateActionEndpoint::bound($this->_getApi());
     $payload = new PostActionPayload();
+    $payload->userAgent = $this->_fortifi->getUserAgent();
+    $payload->language = $this->_fortifi->getUserLanguage();
+    $payload->clientIp = $this->_fortifi->getClientIp();
+    $payload->companyFid = $companyFid;
     $payload->actionKey = $actionKey;
     $payload->transactionId = $transactionId;
     $payload->transactionValue = $transactionValue;

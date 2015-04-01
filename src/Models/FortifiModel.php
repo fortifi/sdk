@@ -3,7 +3,7 @@ namespace Fortifi\Sdk\Models;
 
 use Fortifi\FortifiApi\Foundation\Exceptions\AccessDeniedException;
 use Fortifi\Sdk\Fortifi;
-use Packaged\Api\ApiRequest;
+use Packaged\Api\Interfaces\ApiRequestInterface;
 
 abstract class FortifiModel
 {
@@ -16,7 +16,7 @@ abstract class FortifiModel
   {
   }
 
-  protected function _processRequest(ApiRequest $request)
+  protected function _processRequest(ApiRequestInterface $request)
   {
     try
     {

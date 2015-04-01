@@ -9,7 +9,13 @@ $fortifi = Fortifi::getInstance(
   'MjgyYjRmMzdhODM0Y2U2YmZhYTM5NTYyY2I1OWQ2'
 );
 
-var_dump_json($fortifi->visitor()->triggerAction('lead', 'LEAD-123'));
+var_dump_json(
+  $fortifi->visitor('VIS:123')->triggerAction(
+    'FID:COMP:1427472077:4b37c88345e0',
+    'lead',
+    'LEAD-124'
+  )
+);
 
 //Create a new customer
 $customer = $fortifi->customer()

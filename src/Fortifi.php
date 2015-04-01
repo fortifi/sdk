@@ -7,7 +7,6 @@ use Fortifi\Sdk\Models\Customer;
 use Fortifi\Sdk\Models\Visitor;
 use Fortifi\Sdk\OAuth\FortifiAccessToken;
 use Fortifi\Sdk\OAuth\FortifiProvider;
-use Fortifi\Sdk\OAuth\PasswordGrant;
 use Fortifi\Sdk\OAuth\ServiceAccountGrant;
 use Fortifi\Sdk\OAuth\TokenStorage\TmpFileTokenStorage;
 use Fortifi\Sdk\OAuth\TokenStorage\TokenStorageInterface;
@@ -26,6 +25,7 @@ final class Fortifi
   protected $_apiUser;
   protected $_apiKey;
   protected $_userAgent;
+  protected $_userLanguage;
   protected $_clientIp;
   /**
    * @var TokenStorageInterface
@@ -41,6 +41,7 @@ final class Fortifi
   protected function __construct()
   {
     $this->_userAgent = idx($_SERVER, 'HTTP_USER_AGENT');
+    $this->_userLanguage = idx($_SERVER, 'HTTP_ACCEPT_LANGUAGE');
     $this->_clientIp = $this->getRequestClientIp();
   }
 
@@ -93,17 +94,10 @@ final class Fortifi
       );
       if(empty($token))
       {
-        try
-        {
-          $token = $this->_oAuthProvider->getAccessToken(
-            new ServiceAccountGrant($this->_apiUser, $this->_apiKey),
-            ['source' => 'fortifi.sdk.php']
-          );
-        }
-        catch(\Exception $e)
-        {
-          //TODO: Handle Exceptions
-        }
+        $token = $this->_oAuthProvider->getAccessToken(
+          new ServiceAccountGrant($this->_apiUser, $this->_apiKey),
+          ['source' => 'fortifi.sdk.php']
+        );
         $this->_tokenStorage->storeToken($this->_tokenKey, $token);
       }
       $this->_token = $token;
@@ -154,6 +148,41 @@ final class Fortifi
   {
     $this->_clientIp = $ip;
     return $this;
+  }
+
+  /**
+   * @return null
+   */
+  public function getUserAgent()
+  {
+    return $this->_userAgent;
+  }
+
+  /**
+   * @return string
+   */
+  public function getUserLanguage()
+  {
+    return $this->_userLanguage;
+  }
+
+  /**
+   * @param $userLanguage
+   *
+   * @return $this
+   */
+  public function setUserLanguage($userLanguage)
+  {
+    $this->_userLanguage = $userLanguage;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getClientIp()
+  {
+    return $this->_clientIp;
   }
 
   /**
