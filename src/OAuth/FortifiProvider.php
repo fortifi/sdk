@@ -8,6 +8,7 @@ use GuzzleHttp\Message\Response;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Stream\Stream;
 use League\OAuth2\Client\Exception\IDPException;
+use League\OAuth2\Client\Grant\GrantInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use Packaged\Api\Exceptions\InvalidApiResponseException;
@@ -264,5 +265,103 @@ class FortifiProvider extends AbstractProvider
   {
     $headers = parent::getHeaders($token);
     return array_merge($headers, ['X-Fortifi-Org' => $this->_orgFid]);
+  }
+
+  public function getAccessToken($grant = 'authorization_code', $params = [])
+  {
+    if(is_string($grant))
+    {
+      // PascalCase the grant. E.g: 'authorization_code' becomes 'AuthorizationCode'
+      $className = str_replace(
+        ' ',
+        '',
+        ucwords(str_replace(['-', '_'], ' ', $grant))
+      );
+      $grant = 'League\\OAuth2\\Client\\Grant\\' . $className;
+      if(!class_exists($grant))
+      {
+        throw new \InvalidArgumentException('Unknown grant "' . $grant . '"');
+      }
+      $grant = new $grant();
+    }
+    elseif(!$grant instanceof GrantInterface)
+    {
+      $message = get_class(
+          $grant
+        ) . ' is not an instance of League\OAuth2\Client\Grant\GrantInterface';
+      throw new \InvalidArgumentException($message);
+    }
+
+    $defaultParams = [
+      'client_id'     => $this->clientId,
+      'client_secret' => $this->clientSecret,
+      'redirect_uri'  => $this->redirectUri,
+      'grant_type'    => $grant,
+    ];
+
+    $requestParams = $grant->prepRequestParams($defaultParams, $params);
+
+    try
+    {
+      switch(strtoupper($this->method))
+      {
+        case 'GET':
+          // @codeCoverageIgnoreStart
+          // No providers included with this library use get but 3rd parties may
+          $client = $this->getHttpClient();
+          $client->setBaseUrl(
+            $this->urlAccessToken() . '?' . $this->httpBuildQuery(
+              $requestParams,
+              '',
+              '&'
+            )
+          );
+          $request = $client->get(null, $this->getHeaders(), $requestParams)
+            ->send();
+          $response = $request->getBody();
+          break;
+        // @codeCoverageIgnoreEnd
+        case 'POST':
+          $client = $this->getHttpClient();
+          $client->setBaseUrl($this->urlAccessToken());
+          $request = $client->post(null, $this->getHeaders(), $requestParams)
+            ->send();
+          $response = $request->getBody();
+          break;
+        // @codeCoverageIgnoreStart
+        default:
+          throw new \InvalidArgumentException(
+            'Neither GET nor POST is specified for request'
+          );
+        // @codeCoverageIgnoreEnd
+      }
+    }
+    catch(BadResponseException $e)
+    {
+      // @codeCoverageIgnoreStart
+      $response = $e->getResponse()->getBody();
+      // @codeCoverageIgnoreEnd
+    }
+
+    switch($this->responseType)
+    {
+      case 'json':
+        $result = json_decode($response, true);
+        break;
+      case 'string':
+        parse_str($response, $result);
+        break;
+    }
+
+    if(isset($result['error']) && !empty($result['error']))
+    {
+      // @codeCoverageIgnoreStart
+      throw new IDPException($result);
+      // @codeCoverageIgnoreEnd
+    }
+
+    $result = $this->prepareAccessTokenResult($result);
+
+    return $grant->handleResponse($result);
   }
 }
