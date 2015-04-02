@@ -2,12 +2,17 @@
 namespace Fortifi\Sdk\Models;
 
 use Fortifi\FortifiApi\Affiliate\Endpoints\AffiliateActionEndpoint;
+use Fortifi\FortifiApi\Affiliate\Enums\AffiliateBuiltInAction;
+use Fortifi\FortifiApi\Affiliate\Enums\ReversalReason;
 use Fortifi\FortifiApi\Affiliate\Payloads\Action\PostActionPayload;
+use Fortifi\FortifiApi\Affiliate\Payloads\Action\ReversalPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Action\PostActionResponse;
+use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 
 class Visitor extends FortifiModel
 {
   protected $_visitorId;
+  protected $_alias;
   protected $_pixels = [];
 
   /**
@@ -27,10 +32,16 @@ class Visitor extends FortifiModel
    * Please be aware, when setting the same alias on multiple visitors, the most
    * recent visitor be used
    *
+   * This will only be applied to the next trigger action call
+   *
    * @param $alias
+   *
+   * @return Visitor
    */
   public function alias($alias)
   {
+    $this->_alias = $alias;
+    return $this;
   }
 
   /**
@@ -66,9 +77,44 @@ class Visitor extends FortifiModel
     $payload->data = $data;
     $payload->returnPixels = $returnPixels;
     $payload->visitorId = $this->_visitorId;
-    $payload->userReference = $userReference;
+    $payload->userReference = nonempty($userReference, $this->_alias);
 
     $req = $endpoint->post($payload);
+    return $this->_processRequest($req);
+  }
+
+  /**
+   * Reverse a previously triggered action
+   *
+   * @param        $transactionId
+   * @param string $originalAction
+   * @param string $reason
+   * @param null   $reversalId
+   * @param int    $reversalAmount
+   * @param array  $data
+   *
+   * @return BoolResponse
+   */
+  public function reverseAction(
+    $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
+    $reason = ReversalReason::CANCEL, $reversalId = null, $reversalAmount = 0,
+    array $data = null
+  )
+  {
+    $endpoint = AffiliateActionEndpoint::bound($this->_getApi());
+    $payload = new ReversalPayload();
+    $payload->userAgent = $this->_fortifi->getUserAgent();
+    $payload->language = $this->_fortifi->getUserLanguage();
+    $payload->clientIp = $this->_fortifi->getClientIp();
+    $payload->reason = $reason;
+    $payload->reversalAmount = $reversalAmount;
+    $payload->reversalId = $reversalId;
+    $payload->sourceActionKey = $originalAction;
+    $payload->sourceTransactionId = $transactionId;
+    $payload->data = $data;
+    $payload->visitorId = $this->_visitorId;
+
+    $req = $endpoint->reverse($payload);
     return $this->_processRequest($req);
   }
 
