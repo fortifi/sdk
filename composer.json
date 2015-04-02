@@ -5,7 +5,7 @@
   "license": "BSD-3-Clause",
   "require": {
     "fortifi/fortifi-api": "dev-master",
-    "league/oauth2-client": "~0.10",
+    "league/oauth2-client": "~0.10.1",
     "packaged/helpers": "~0.6"
   },
   "require-dev": {
