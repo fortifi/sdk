@@ -165,7 +165,7 @@ class Customer extends FortifiModel
    */
   public function cancel(
     $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
-    $cancelId, $cancelAmount = 0, array $data = null
+    $cancelId = null, $cancelAmount = 0, array $data = null
   )
   {
     $this->_fortifi->visitor($this->_visitorId)->reverseAction(
