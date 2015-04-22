@@ -13,7 +13,7 @@ use Fortifi\Sdk\OAuth\TokenStorage\TokenStorageInterface;
 
 final class Fortifi
 {
-  const API_URL = 'api.fortifi.co';
+  public static $apiHost = 'api.fortifi.co';
 
   protected $_apiScheme = 'http';
 
@@ -62,7 +62,7 @@ final class Fortifi
     }
     $fortifi->_tokenStorage = $tokenStorage;
 
-    $url = $fortifi->_apiScheme . '://' . static::API_URL;
+    $url = $fortifi->_apiScheme . '://' . static::$apiHost;
 
     $fortifi->_api = new FortifiApi($url);
     $fortifi->_api->setOrgFid($orgFid);
