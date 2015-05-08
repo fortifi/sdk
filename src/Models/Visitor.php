@@ -55,13 +55,18 @@ class Visitor extends FortifiModel
    * @param null   $couponCode
    * @param bool   $returnPixels
    * @param string $userReference
+   * @param string $campaignHash
+   * @param string $sid1
+   * @param string $sid2
+   * @param string $sid3
    *
    * @return PostActionResponse
    */
   public function triggerAction(
     $companyFid, $actionKey, $transactionId, $transactionValue = 0,
     array $data = null, $couponCode = null, $returnPixels = true,
-    $userReference = null
+    $userReference = null,
+    $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null
   )
   {
     $endpoint = AffiliateActionEndpoint::bound($this->_getApi());
@@ -78,6 +83,10 @@ class Visitor extends FortifiModel
     $payload->returnPixels = $returnPixels;
     $payload->visitorId = $this->_visitorId;
     $payload->userReference = nonempty($userReference, $this->_alias);
+    $payload->campaignHash = $campaignHash;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
 
     $req = $endpoint->post($payload);
     return $this->_processRequest($req);
