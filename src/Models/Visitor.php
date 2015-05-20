@@ -7,13 +7,14 @@ use Fortifi\FortifiApi\Affiliate\Enums\ReversalReason;
 use Fortifi\FortifiApi\Affiliate\Payloads\Action\PostActionPayload;
 use Fortifi\FortifiApi\Affiliate\Payloads\Action\ReversalPayload;
 use Fortifi\FortifiApi\Affiliate\Responses\Action\PostActionResponse;
+use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelsResponse;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
+use Fortifi\FortifiApi\Helpers\Affiliate\AffiliatePixelModel;
 
 class Visitor extends FortifiModel
 {
   protected $_visitorId;
   protected $_alias;
-  protected $_pixels = [];
 
   /**
    * @param $visitorId
@@ -130,23 +131,11 @@ class Visitor extends FortifiModel
   /**
    * Retrieve queued pixels
    *
-   * @param bool $loadFromApi set to false to only retrieve pixels from
-   *                          triggerAction requests
-   * @param bool $clear       Clear pixels from the queue on retrieval
-   *
-   * @return array
+   * @return PixelsResponse
    */
-  public function getPixels($loadFromApi = false, $clear = true)
+  public function getPixels()
   {
-    if(!$loadFromApi)
-    {
-      $return = (array)$this->_pixels;
-      if($clear)
-      {
-        $this->_pixels = [];
-      }
-      return $return;
-    }
-    return [];
+    $endpoint = new AffiliatePixelModel($this->_getApi());
+    return $endpoint->getPending($this->_visitorId);
   }
 }
