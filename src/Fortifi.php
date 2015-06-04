@@ -26,6 +26,7 @@ final class Fortifi
   protected $_apiKey;
   protected $_userAgent;
   protected $_userLanguage;
+  protected $_userEncoding;
   protected $_clientIp;
   /**
    * @var TokenStorageInterface
@@ -42,6 +43,7 @@ final class Fortifi
   {
     $this->_userAgent = idx($_SERVER, 'HTTP_USER_AGENT');
     $this->_userLanguage = idx($_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+    $this->_userEncoding = idx($_SERVER, 'HTTP_ACCEPT_ENCODING');
     $this->_clientIp = $this->getRequestClientIp();
   }
 
@@ -174,6 +176,25 @@ final class Fortifi
   public function setUserLanguage($userLanguage)
   {
     $this->_userLanguage = $userLanguage;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getUserEncoding()
+  {
+    return $this->_userEncoding;
+  }
+
+  /**
+   * @param $userEncoding
+   *
+   * @return $this
+   */
+  public function setUserEncoding($userEncoding)
+  {
+    $this->_userEncoding = $userEncoding;
     return $this;
   }
 

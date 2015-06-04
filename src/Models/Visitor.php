@@ -15,6 +15,7 @@ class Visitor extends FortifiModel
 {
   protected $_visitorId;
   protected $_alias;
+  protected $_pixels;
 
   /**
    * @param $visitorId
@@ -75,6 +76,7 @@ class Visitor extends FortifiModel
     $payload->userAgent = $this->_fortifi->getUserAgent();
     $payload->language = $this->_fortifi->getUserLanguage();
     $payload->clientIp = $this->_fortifi->getClientIp();
+    $payload->encoding = $this->_fortifi->getUserEncoding();
     $payload->companyFid = $companyFid;
     $payload->actionKey = $actionKey;
     $payload->transactionId = $transactionId;
@@ -90,7 +92,17 @@ class Visitor extends FortifiModel
     $payload->sid3 = $sid3;
 
     $req = $endpoint->post($payload);
-    return $this->_processRequest($req);
+    $result = $this->_processRequest($req);
+
+    if($returnPixels)
+    {
+      /**
+       * @var $result PostActionResponse
+       */
+      $this->_pixels = $result->pixels;
+    }
+
+    return $result;
   }
 
   /**
@@ -116,6 +128,7 @@ class Visitor extends FortifiModel
     $payload->userAgent = $this->_fortifi->getUserAgent();
     $payload->language = $this->_fortifi->getUserLanguage();
     $payload->clientIp = $this->_fortifi->getClientIp();
+    $payload->encoding = $this->_fortifi->getUserEncoding();
     $payload->reason = $reason;
     $payload->reversalAmount = $reversalAmount;
     $payload->reversalId = $reversalId;
@@ -129,13 +142,28 @@ class Visitor extends FortifiModel
   }
 
   /**
-   * Retrieve queued pixels
+   * Retrieve queued pixels (you must call clearPixels to remove the pixels)
    *
    * @return PixelsResponse
    */
   public function getPixels()
   {
-    $endpoint = new AffiliatePixelModel($this->_getApi());
-    return $endpoint->getPending($this->_visitorId);
+    if(!$this->_pixels)
+    {
+      $endpoint = new AffiliatePixelModel($this->_getApi());
+      $this->_pixels = $endpoint->getPending($this->_visitorId);
+    }
+    return $this->_pixels;
+  }
+
+  /**
+   * Clear pixels already processed
+   *
+   * @return $this
+   */
+  public function clearPixels()
+  {
+    $this->_pixels = null;
+    return $this;
   }
 }
