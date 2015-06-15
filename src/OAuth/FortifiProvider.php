@@ -8,13 +8,15 @@ use GuzzleHttp\Message\Response;
 use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Stream\Stream;
 use League\OAuth2\Client\Exception\IDPException;
-use League\OAuth2\Client\Grant\GrantInterface;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use Packaged\Api\Exceptions\InvalidApiResponseException;
 use Packaged\Api\Format\JsonFormat;
 use Packaged\Api\Response\ApiCallData;
 use Packaged\Api\Response\ResponseBuilder;
+use Packaged\Helpers\Objects;
+use Packaged\Helpers\Path;
+use Packaged\Helpers\ValueAs;
 
 class FortifiProvider extends AbstractProvider
 {
@@ -74,7 +76,7 @@ class FortifiProvider extends AbstractProvider
    */
   public function urlAuthorize()
   {
-    return build_path_unix($this->_url, 'oauth', 'authorize');
+    return Path::buildUnix($this->_url, 'oauth', 'authorize');
   }
 
   /**
@@ -82,7 +84,7 @@ class FortifiProvider extends AbstractProvider
    */
   public function urlAccessToken()
   {
-    return build_path_unix($this->_url, 'oauth', 'access-token');
+    return Path::buildUnix($this->_url, 'oauth', 'access-token');
   }
 
   /**
@@ -92,7 +94,7 @@ class FortifiProvider extends AbstractProvider
    */
   public function urlUserDetails(AccessToken $token)
   {
-    return build_path_unix($this->_url, 'auth', 'details')
+    return Path::buildUnix($this->_url, 'auth', 'details')
     . '?access_token=' . $token->accessToken;
   }
 
@@ -103,7 +105,7 @@ class FortifiProvider extends AbstractProvider
    */
   public function urlLogout(AccessToken $token)
   {
-    return build_path_unix($this->_url, 'auth', 'logout')
+    return Path::buildUnix($this->_url, 'auth', 'logout')
     . '?access_token=' . $token->accessToken;
   }
 
@@ -116,7 +118,7 @@ class FortifiProvider extends AbstractProvider
   public function userDetails($response, AccessToken $token)
   {
     $user = new OAuthUser();
-    $result = idp($response, 'result', $response);
+    $result = Objects::property($response, 'result', $response);
     /**
      * @var $result AuthUserDetailsResponse
      */
@@ -128,7 +130,7 @@ class FortifiProvider extends AbstractProvider
     $user->exchangeArray(
       [
         'uid'         => $result->userFid,
-        'nickname'    => nonempty(
+        'nickname'    => ValueAs::nonempty(
           $result->displayName,
           $result->firstName,
           $result->lastName,
@@ -166,10 +168,10 @@ class FortifiProvider extends AbstractProvider
   protected function _getProperty($object, $propertyList)
   {
     $properties = (array)$propertyList;
-    $result = pnonempty($object, $properties);
+    $result = Objects::pnonempty($object, $properties);
     if($result === null && isset($object->result))
     {
-      $result = pnonempty($object->result, $properties);
+      $result = Objects::pnonempty($object->result, $properties);
     }
     return $result;
   }

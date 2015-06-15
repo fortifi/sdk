@@ -5,22 +5,15 @@
   "license": "BSD-3-Clause",
   "require": {
     "fortifi/fortifi-api": "~1.5",
-    "league/oauth2-client": "~0.10.1",
-    "packaged/helpers": "~0.11"
+    "league/oauth2-client": "~0.11",
+    "packaged/helpers": "~1.0"
   },
   "require-dev": {
-    "fortifi/fortifi-api": "dev-master as 1.5",
     "phpunit/phpunit": "~4.6"
   },
   "autoload": {
     "psr-4": {
       "Fortifi\\Sdk\\": "src/"
     }
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:fortifi/fortifi-api.git"
-    }
-  ]
+  }
 }

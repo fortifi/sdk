@@ -12,11 +12,13 @@ $fortifi = Fortifi::getInstance(
 
 $ref = Strings::randomString(3);
 
-var_dump_json(
-  $fortifi->visitor('VIS:' . $ref)->triggerAction(
-    'FID:COMP:1427472077:4b37c88345e0',
-    'lead',
-    'LEAD-' . $ref
+var_dump(
+  Strings::jsonPretty(
+    $fortifi->visitor('VIS:' . $ref)->triggerAction(
+      'FID:COMP:1427472077:4b37c88345e0',
+      'lead',
+      'LEAD-' . $ref
+    )
   )
 );
 
@@ -34,7 +36,7 @@ if($pixels)
   foreach($pixels as $pixel)
   {
     //Output $pixel to page
-    var_dump_json($pixel);
+    var_dump(Strings::jsonPretty($pixel));
   }
 }
 

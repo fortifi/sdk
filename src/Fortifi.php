@@ -10,6 +10,7 @@ use Fortifi\Sdk\OAuth\FortifiProvider;
 use Fortifi\Sdk\OAuth\ServiceAccountGrant;
 use Fortifi\Sdk\OAuth\TokenStorage\TmpFileTokenStorage;
 use Fortifi\Sdk\OAuth\TokenStorage\TokenStorageInterface;
+use Packaged\Helpers\Arrays;
 
 final class Fortifi
 {
@@ -41,9 +42,9 @@ final class Fortifi
 
   protected function __construct()
   {
-    $this->_userAgent = idx($_SERVER, 'HTTP_USER_AGENT');
-    $this->_userLanguage = idx($_SERVER, 'HTTP_ACCEPT_LANGUAGE');
-    $this->_userEncoding = idx($_SERVER, 'HTTP_ACCEPT_ENCODING');
+    $this->_userAgent = Arrays::value($_SERVER, 'HTTP_USER_AGENT');
+    $this->_userLanguage = Arrays::value($_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+    $this->_userEncoding = Arrays::value($_SERVER, 'HTTP_ACCEPT_ENCODING');
     $this->_clientIp = $this->getRequestClientIp();
   }
 
@@ -129,7 +130,7 @@ final class Fortifi
     {
       foreach($ipKeys as $ipKey)
       {
-        $ipString = idx($_SERVER, $ipKey);
+        $ipString = Arrays::value($_SERVER, $ipKey);
         if($ipString !== null)
         {
           foreach(explode(",", $ipString) as $ip)
@@ -213,7 +214,7 @@ final class Fortifi
    */
   public function getVisitorIdCookie()
   {
-    return idx($_COOKIE, CookieReference::VISITOR_ID);
+    return Arrays::value($_COOKIE, CookieReference::VISITOR_ID);
   }
 
   /**

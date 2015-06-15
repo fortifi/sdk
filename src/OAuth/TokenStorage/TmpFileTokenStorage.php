@@ -1,6 +1,8 @@
 <?php
 namespace Fortifi\Sdk\OAuth\TokenStorage;
 
+use Packaged\Helpers\Path;
+
 class TmpFileTokenStorage implements TokenStorageInterface
 {
   /**
@@ -43,6 +45,6 @@ class TmpFileTokenStorage implements TokenStorageInterface
    */
   private function _createFileName($key)
   {
-    return build_path(sys_get_temp_dir(), 'Fortifi-Token-' . $key);
+    return Path::build(sys_get_temp_dir(), 'Fortifi-Token-' . $key);
   }
 }

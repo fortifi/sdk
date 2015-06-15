@@ -10,6 +10,7 @@ use Fortifi\FortifiApi\Affiliate\Responses\Action\PostActionResponse;
 use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelsResponse;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Helpers\Affiliate\AffiliatePixelModel;
+use Packaged\Helpers\ValueAs;
 
 class Visitor extends FortifiModel
 {
@@ -85,7 +86,7 @@ class Visitor extends FortifiModel
     $payload->data = $data;
     $payload->returnPixels = $returnPixels;
     $payload->visitorId = $this->_visitorId;
-    $payload->userReference = nonempty($userReference, $this->_alias);
+    $payload->userReference = ValueAs::nonempty($userReference, $this->_alias);
     $payload->campaignHash = $campaignHash;
     $payload->sid1 = $sid1;
     $payload->sid2 = $sid2;
