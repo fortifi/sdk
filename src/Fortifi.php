@@ -12,7 +12,7 @@ use Fortifi\Sdk\OAuth\TokenStorage\TmpFileTokenStorage;
 use Fortifi\Sdk\OAuth\TokenStorage\TokenStorageInterface;
 use Packaged\Helpers\Arrays;
 
-final class Fortifi
+class Fortifi
 {
   public static $apiHost = 'api.fortifi.co';
 
