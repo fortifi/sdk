@@ -14,6 +14,9 @@ use Packaged\Helpers\Arrays;
 
 class Fortifi
 {
+  const ENV_PROD = 'production';
+  const ENV_STAGE = 'stage';
+
   public static $apiHost = 'api.fortifi.co';
 
   protected $_apiScheme = 'http';
@@ -46,6 +49,22 @@ class Fortifi
     $this->_userLanguage = Arrays::value($_SERVER, 'HTTP_ACCEPT_LANGUAGE');
     $this->_userEncoding = Arrays::value($_SERVER, 'HTTP_ACCEPT_ENCODING');
     $this->_clientIp = $this->getRequestClientIp();
+  }
+
+  /**
+   * Set the environment to connect to
+   *
+   * @param string $env
+   */
+  public static function setEnvironment($env = self::ENV_STAGE)
+  {
+    $prefix = '';
+    if($env === self::ENV_STAGE)
+    {
+      $prefix = 's';
+    }
+
+    static::$apiHost = $prefix . 'api.fortifi.co';
   }
 
   public static function getInstance(
