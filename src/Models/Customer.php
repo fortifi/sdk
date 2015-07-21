@@ -3,10 +3,16 @@ namespace Fortifi\Sdk\Models;
 
 use Fortifi\FortifiApi\Affiliate\Enums\AffiliateBuiltInAction;
 use Fortifi\FortifiApi\Affiliate\Enums\ReversalReason;
+use Fortifi\FortifiApi\Customer\Enums\CustomerAccountStatus;
+use Fortifi\FortifiApi\Customer\Enums\CustomerAccountType;
+use Fortifi\FortifiApi\Customer\Enums\CustomerSubscriptionType;
+use Fortifi\FortifiApi\Customer\Payloads\CreateCustomerPayload;
+use Fortifi\FortifiApi\Customer\Payloads\CustomerSetAffiliatePayload;
+use Fortifi\FortifiApi\Customer\Payloads\CustomerSetLocationPayload;
+use Packaged\Helpers\ValueAs;
 
-class Customer extends FortifiModel
+class Customer extends AbstractCustomer
 {
-  protected $_customerFid;
   protected $_visitorId;
 
   /**
@@ -21,6 +27,16 @@ class Customer extends FortifiModel
   }
 
   /**
+   * Retrieve the current defined customer Fid
+   *
+   * @return string|null
+   */
+  public function getCustomerFid()
+  {
+    return $this->_customerFid;
+  }
+
+  /**
    * @param $visitorId
    *
    * @return $this
@@ -32,6 +48,16 @@ class Customer extends FortifiModel
   }
 
   /**
+   * Retrieve the current visitor ID
+   *
+   * @return string
+   */
+  public function getVisitorId()
+  {
+    return $this->_visitorId;
+  }
+
+  /**
    * Create a new customer (and trigger a lead)
    *
    * @param string $companyFid
@@ -39,28 +65,107 @@ class Customer extends FortifiModel
    * @param string $firstName
    * @param string $lastName
    * @param string $phoneNumber
-   * @param string $reference Your internal ID for this customer (e.g. user id)
+   * @param string $reference                   Your internal ID for this
+   *                                            customer (e.g. user id)
+   * @param string $accountType
+   * @param string $accountStatus
+   * @param string $subscriptionType
+   * @param bool   $triggerLeadAction
    *
    * @return $this
    */
   public function create(
     $companyFid, $email, $firstName, $lastName = null, $phoneNumber = null,
-    $reference = null
+    $reference = null, $accountType = CustomerAccountType::RESIDENTIAL,
+    $accountStatus = CustomerAccountStatus::ACTIVE,
+    $subscriptionType = CustomerSubscriptionType::FREE,
+    $triggerLeadAction = false
   )
   {
-    $this->_fortifi->visitor($this->_visitorId)->triggerAction(
-      $companyFid,
-      AffiliateBuiltInAction::LEAD,
-      $reference,
-      0,
-      [
-        'email'              => $email,
-        'first_name'         => $firstName,
-        'last_name'          => $lastName,
-        'phone_number'       => $phoneNumber,
-        'external_reference' => $reference,
-      ]
-    );
+    $exRef = ValueAs::nonempty($reference, $this->_externalReference);
+
+    $createCustomerPayload = new CreateCustomerPayload();
+    $createCustomerPayload->externalReference = $exRef;
+    $createCustomerPayload->companyFid = $companyFid;
+    $createCustomerPayload->email = $email;
+    $createCustomerPayload->firstName = $firstName;
+    $createCustomerPayload->lastName = $lastName;
+    $createCustomerPayload->accountType = $accountType;
+    $createCustomerPayload->accountStatus = $accountStatus;
+    $createCustomerPayload->subscriptionType = $subscriptionType;
+
+    $customerEp = $this->_getEndpoint();
+    $req = $customerEp->createCustomer($createCustomerPayload);
+    $customer = $this->_processRequest($req);
+
+    $this->_customerFid = $customer->fid;
+
+    if(!empty($phoneNumber))
+    {
+      try
+      {
+        $this->addPhoneNumber($phoneNumber, true);
+      }
+      catch(\Exception $e)
+      {
+      }
+    }
+
+    if($triggerLeadAction)
+    {
+      $trigger = $this->_fortifi->visitor($this->_visitorId)->triggerAction(
+        $companyFid,
+        AffiliateBuiltInAction::LEAD,
+        $reference,
+        0,
+        [
+          'customerFid'        => $this->_customerFid,
+          'email'              => $email,
+          'first_name'         => $firstName,
+          'last_name'          => $lastName,
+          'phone_number'       => $phoneNumber,
+          'external_reference' => $exRef,
+          'accountType'        => $accountType,
+          'accountStatus'      => $accountStatus,
+          'subscriptionType'   => $subscriptionType,
+        ]
+      );
+
+      if(!empty($trigger->visitorId))
+      {
+        $this->setVisitorId($trigger->visitorId);
+      }
+
+      $affPayload = new CustomerSetAffiliatePayload();
+      $affPayload->affiliateFid = $trigger->affiliate;
+      $affPayload->fid = $this->_customerFid;
+      $affPayload->sid1 = $trigger->sid1;
+      $affPayload->sid2 = $trigger->sid2;
+      $affPayload->sid3 = $trigger->sid3;
+      try
+      {
+        $this->_processRequest(
+          $this->_getEndpoint()->setAffiliate($affPayload)
+        );
+      }
+      catch(\Exception $e)
+      {
+      }
+    }
+
+    try
+    {
+      $locationPayload = new CustomerSetLocationPayload();
+      $locationPayload->fid = $this->_customerFid;
+      $locationPayload->userIp = $this->_fortifi->getClientIp();
+      $this->_processRequest(
+        $this->_getEndpoint()->setLocation($locationPayload)
+      );
+    }
+    catch(\Exception $e)
+    {
+    }
+
     return $this;
   }
 
