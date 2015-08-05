@@ -9,6 +9,7 @@ use Fortifi\FortifiApi\Customer\Enums\CustomerSubscriptionType;
 use Fortifi\FortifiApi\Customer\Payloads\CreateCustomerPayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerSetAffiliatePayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerSetLocationPayload;
+use Fortifi\FortifiApi\Foundation\Payloads\DataNodePropertyPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Packaged\Helpers\ValueAs;
 
@@ -185,7 +186,39 @@ class Customer extends AbstractCustomer
     );
     return $this;
   }
-  
+
+  public function setLoyal($bool = true)
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot set a customers loyalty before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->setLoyal(DataNodePropertyPayload::create($this->_customerFid, $bool))
+    );
+    return $this;
+  }
+
+  public function setVIP($bool = true)
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot set a customers VIP status before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->setVip(DataNodePropertyPayload::create($this->_customerFid, $bool))
+    );
+    return $this;
+  }
+
   /**
    * Record a customer subscription purchase
    *
