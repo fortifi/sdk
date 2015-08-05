@@ -9,6 +9,7 @@ use Fortifi\FortifiApi\Customer\Enums\CustomerSubscriptionType;
 use Fortifi\FortifiApi\Customer\Payloads\CreateCustomerPayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerSetAffiliatePayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerSetLocationPayload;
+use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
 use Packaged\Helpers\ValueAs;
 
 class Customer extends AbstractCustomer
@@ -169,6 +170,22 @@ class Customer extends AbstractCustomer
     return $this;
   }
 
+  public function markQualified()
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot mark a customer as qualified before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->markQualified(FidPayload::create($this->_customerFid))
+    );
+    return $this;
+  }
+  
   /**
    * Record a customer subscription purchase
    *
