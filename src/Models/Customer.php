@@ -187,6 +187,22 @@ class Customer extends AbstractCustomer
     return $this;
   }
 
+  public function markPurchased()
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot mark a customer as purchased before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->markPurchased(FidPayload::create($this->_customerFid))
+    );
+    return $this;
+  }
+
   public function setLoyal($bool = true)
   {
     if(empty($this->_customerFid))
