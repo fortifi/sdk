@@ -24,7 +24,7 @@ var_dump(
 
 //Create a new customer
 $customer = $fortifi->customer()
-  ->create('test@test.com', 'John', 'Smith', '036486346', 'TEST-' . $ref);
+  ->create('FID:COMP:1427472077:4b37c88345e0','test@test.com', 'John', 'Smith', '036486346', 'TEST-' . $ref);
 
 //Customer FID applied to this customer object, for future requests do:
 $customer = $fortifi->customer('CustomerFid');
