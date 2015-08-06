@@ -287,6 +287,8 @@ class Customer extends AbstractCustomer
    * @param        $transactionId
    * @param int    $transactionValue
    * @param array  $data
+   *
+   * @return $this
    */
   public function purchaseUpsell(
     $companyFid, $transactionId, $transactionValue = 0, array $data = null
@@ -299,6 +301,7 @@ class Customer extends AbstractCustomer
       $transactionValue,
       $data
     );
+    return $this;
   }
 
   /**
