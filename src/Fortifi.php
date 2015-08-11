@@ -4,6 +4,7 @@ namespace Fortifi\Sdk;
 use Fortifi\FortifiApi\FortifiApi;
 use Fortifi\FortifiApi\Generic\CookieReference;
 use Fortifi\Sdk\Models\Customer;
+use Fortifi\Sdk\Models\Event;
 use Fortifi\Sdk\Models\Visitor;
 use Fortifi\Sdk\OAuth\FortifiAccessToken;
 use Fortifi\Sdk\OAuth\FortifiProvider;
@@ -267,5 +268,13 @@ class Fortifi
     return Customer::newInstance($this)
       ->setVisitorId($visitorId)
       ->setCustomerFid($customerFid);
+  }
+
+  /**
+   * @return Event
+   */
+  public function event()
+  {
+    return Event::newInstance($this);
   }
 }
