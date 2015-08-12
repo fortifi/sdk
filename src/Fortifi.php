@@ -271,6 +271,16 @@ class Fortifi
   }
 
   /**
+   * @param string $prospectFid
+   *
+   * @return Prospect
+   */
+  public function prospect($prospectFid = null)
+  {
+    return Prospect::newInstance($this)->setProspectFid($prospectFid);
+  }
+
+  /**
    * @return Event
    */
   public function event()
