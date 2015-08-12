@@ -5,6 +5,7 @@ use Fortifi\FortifiApi\FortifiApi;
 use Fortifi\FortifiApi\Generic\CookieReference;
 use Fortifi\Sdk\Models\Customer;
 use Fortifi\Sdk\Models\Event;
+use Fortifi\Sdk\Models\Prospect;
 use Fortifi\Sdk\Models\Visitor;
 use Fortifi\Sdk\OAuth\FortifiAccessToken;
 use Fortifi\Sdk\OAuth\FortifiProvider;
