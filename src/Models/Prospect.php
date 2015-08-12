@@ -43,7 +43,8 @@ class Prospect extends AbstractCustomer
    */
   public function create(
     $companyFid, $email, $firstName, $lastName = null, $phoneNumber = null,
-    $reference = null, $accountType = CustomerAccountType::RESIDENTIAL
+    $reference = null, $accountType = CustomerAccountType::RESIDENTIAL,
+    $createdTime = null
   )
   {
     $exRef = ValueAs::nonempty($reference, $this->_externalReference);
@@ -55,6 +56,7 @@ class Prospect extends AbstractCustomer
     $createCustomerPayload->firstName = $firstName;
     $createCustomerPayload->lastName = $lastName;
     $createCustomerPayload->accountType = $accountType;
+    $createCustomerPayload->createdTime = $createdTime;
 
     $customerEp = $this->_getEndpoint();
     $req = $customerEp->createCustomer($createCustomerPayload);

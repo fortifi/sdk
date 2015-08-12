@@ -73,6 +73,7 @@ class Customer extends AbstractCustomer
    * @param string $accountStatus
    * @param string $subscriptionType
    * @param bool   $triggerLeadAction
+   * @param int    $createdTime
    *
    * @return $this
    */
@@ -81,7 +82,7 @@ class Customer extends AbstractCustomer
     $reference = null, $accountType = CustomerAccountType::RESIDENTIAL,
     $accountStatus = CustomerAccountStatus::ACTIVE,
     $subscriptionType = CustomerSubscriptionType::FREE,
-    $triggerLeadAction = false
+    $triggerLeadAction = false, $createdTime = null
   )
   {
     $exRef = ValueAs::nonempty($reference, $this->_externalReference);
@@ -95,6 +96,7 @@ class Customer extends AbstractCustomer
     $createCustomerPayload->accountType = $accountType;
     $createCustomerPayload->accountStatus = $accountStatus;
     $createCustomerPayload->subscriptionType = $subscriptionType;
+    $createCustomerPayload->createdTime = $createdTime;
 
     $customerEp = $this->_getEndpoint();
     $req = $customerEp->createCustomer($createCustomerPayload);
