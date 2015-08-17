@@ -4,6 +4,7 @@ namespace Fortifi\Sdk;
 use Fortifi\FortifiApi\FortifiApi;
 use Fortifi\FortifiApi\Generic\CookieReference;
 use Fortifi\Sdk\Models\Customer;
+use Fortifi\Sdk\Models\EmailAddress;
 use Fortifi\Sdk\Models\Event;
 use Fortifi\Sdk\Models\Prospect;
 use Fortifi\Sdk\Models\Visitor;
@@ -287,5 +288,20 @@ class Fortifi
   public function event()
   {
     return Event::newInstance($this);
+  }
+
+  /**
+   * @param null $email
+   *
+   * @return EmailAddress
+   */
+  public function email($email = null)
+  {
+    $eml = EmailAddress::newInstance($this);
+    if($email !== null)
+    {
+      $eml->setEmailAddress($email);
+    }
+    return $eml;
   }
 }
