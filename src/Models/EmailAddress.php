@@ -28,11 +28,12 @@ class EmailAddress extends FortifiModel
     return $this;
   }
 
-  public function unsubscribe($groupFid = null)
+  public function unsubscribe($companyFid, $groupFid = null)
   {
     $payload = new UnsubscribeEmailPayload();
     $payload->emailAddress = $this->_emailAddress;
     $payload->groupFid = $groupFid;
+    $payload->companyFid = $companyFid;
     $payload->type = UnsubscribeType::UNSUBSCRIBE_HARD;
 
     $endpoint = EmailEndpoint::bound($this->_getApi());
