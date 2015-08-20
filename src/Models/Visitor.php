@@ -149,7 +149,7 @@ class Visitor extends FortifiModel
    */
   public function getPixels()
   {
-    if(!$this->_pixels)
+    if(!$this->_pixels && !empty($this->_visitorId))
     {
       $endpoint = new AffiliatePixelModel($this->_getApi());
       $this->_pixels = $endpoint->getPending($this->_visitorId);
