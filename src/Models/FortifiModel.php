@@ -24,7 +24,8 @@ abstract class FortifiModel
     }
     catch(AccessDeniedException $e)
     {
-      $this->_fortifi->getToken(true);
+      $token = $this->_fortifi->getToken(true);
+      $this->_getApi()->setAccessToken($token->accessToken);
       return $request->get();
     }
   }
