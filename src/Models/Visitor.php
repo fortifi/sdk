@@ -11,6 +11,7 @@ use Fortifi\FortifiApi\Affiliate\Responses\Pixels\PixelsResponse;
 use Fortifi\FortifiApi\Foundation\Responses\BoolResponse;
 use Fortifi\FortifiApi\Helpers\Affiliate\AffiliatePixelModel;
 use Packaged\Helpers\ValueAs;
+use Carbon\Carbon;
 
 class Visitor extends FortifiModel
 {
@@ -53,6 +54,7 @@ class Visitor extends FortifiModel
    * @param        $companyFid
    * @param        $actionKey
    * @param        $transactionId
+   * @param Carbon $time,
    * @param int    $transactionValue
    * @param array  $data
    * @param null   $couponCode
@@ -66,31 +68,38 @@ class Visitor extends FortifiModel
    * @return PostActionResponse
    */
   public function triggerAction(
-    $companyFid, $actionKey, $transactionId, $transactionValue = 0,
-    array $data = null, $couponCode = null, $returnPixels = true,
+    $companyFid,
+    $actionKey,
+    $transactionId,
+    Carbon $time,
+    $transactionValue = 0,
+    array $data = null,
+    $couponCode = null,
+    $returnPixels = true,
     $userReference = null,
-    $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null
+    $campaignHash = null,
+    $sid1 = null,
+    $sid2 = null,
+    $sid3 = null
   )
   {
     $endpoint = AffiliateActionEndpoint::bound($this->_getApi());
-    $payload = new PostActionPayload();
-    $payload->userAgent = $this->_fortifi->getUserAgent();
-    $payload->language = $this->_fortifi->getUserLanguage();
-    $payload->clientIp = $this->_fortifi->getClientIp();
-    $payload->encoding = $this->_fortifi->getUserEncoding();
-    $payload->companyFid = $companyFid;
-    $payload->actionKey = $actionKey;
-    $payload->transactionId = $transactionId;
-    $payload->transactionValue = $transactionValue;
-    $payload->coupon = $couponCode;
-    $payload->data = $data;
-    $payload->returnPixels = $returnPixels;
-    $payload->visitorId = $this->_visitorId;
-    $payload->userReference = ValueAs::nonempty($userReference, $this->_alias);
-    $payload->campaignHash = $campaignHash;
-    $payload->sid1 = $sid1;
-    $payload->sid2 = $sid2;
-    $payload->sid3 = $sid3;
+
+    $payload = $this->preparePayload(
+      $companyFid,
+      $actionKey,
+      $transactionId,
+      $time,
+      $transactionValue,
+      $data,
+      $couponCode,
+      $returnPixels,
+      $userReference,
+      $campaignHash,
+      $sid1,
+      $sid2,
+      $sid3
+    );
 
     $req = $endpoint->post($payload);
     $result = $this->_processRequest($req);
@@ -104,6 +113,63 @@ class Visitor extends FortifiModel
     }
 
     return $result;
+  }
+
+  /**
+   * Trigger a visitor action
+   *
+   * @param        $companyFid
+   * @param        $actionKey
+   * @param        $transactionId
+   * @param Carbon $time,
+   * @param int    $transactionValue
+   * @param array  $data
+   * @param null   $couponCode
+   * @param bool   $returnPixels
+   * @param string $userReference
+   * @param string $campaignHash
+   * @param string $sid1
+   * @param string $sid2
+   * @param string $sid3
+   *
+   * @return PostActionPayload
+   */
+  public function preparePayload(
+    $companyFid,
+    $actionKey,
+    $transactionId,
+    Carbon $time,
+    $transactionValue = 0,
+    array $data = null,
+    $couponCode = null,
+    $returnPixels = true,
+    $userReference = null,
+    $campaignHash = null,
+    $sid1 = null,
+    $sid2 = null,
+    $sid3 = null
+  )
+  {
+    $payload = new PostActionPayload();
+    $payload->userAgent = $this->_fortifi->getUserAgent();
+    $payload->language = $this->_fortifi->getUserLanguage();
+    $payload->clientIp = $this->_fortifi->getClientIp();
+    $payload->encoding = $this->_fortifi->getUserEncoding();
+    $payload->companyFid = $companyFid;
+    $payload->actionKey = $actionKey;
+    $payload->transactionId = $transactionId;
+    $payload->timestamp = $time->getTimestamp();
+    $payload->transactionValue = $transactionValue;
+    $payload->coupon = $couponCode;
+    $payload->data = $data;
+    $payload->returnPixels = $returnPixels;
+    $payload->visitorId = $this->_visitorId;
+    $payload->userReference = ValueAs::nonempty($userReference, $this->_alias);
+    $payload->campaignHash = $campaignHash;
+    $payload->sid1 = $sid1;
+    $payload->sid2 = $sid2;
+    $payload->sid3 = $sid3;
+    return $payload;
   }
 
   /**
