@@ -72,7 +72,46 @@ class Visitor extends FortifiModel
     $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null
   )
   {
-    $endpoint = AffiliateActionEndpoint::bound($this->_getApi());
+    $payload = $this->createTriggerActionPayload(
+      $companyFid,
+      $actionKey,
+      $transactionId,
+      $transactionValue,
+      $data,
+      $couponCode,
+      $returnPixels,
+      $userReference,
+      $campaignHash,
+      $sid1,
+      $sid2,
+      $sid3
+    );
+    return $this->triggerActionWithPayload($payload);
+  }
+
+  /**
+   * @param            $companyFid
+   * @param            $actionKey
+   * @param            $transactionId
+   * @param int        $transactionValue
+   * @param array|null $data
+   * @param null       $couponCode
+   * @param bool|true  $returnPixels
+   * @param null       $userReference
+   * @param null       $campaignHash
+   * @param null       $sid1
+   * @param null       $sid2
+   * @param null       $sid3
+   *
+   * @return PostActionPayload
+   */
+  public function createTriggerActionPayload(
+    $companyFid, $actionKey, $transactionId, $transactionValue = 0,
+    array $data = null, $couponCode = null, $returnPixels = true,
+    $userReference = null,
+    $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null
+  )
+  {
     $payload = new PostActionPayload();
     $payload->userAgent = $this->_fortifi->getUserAgent();
     $payload->language = $this->_fortifi->getUserLanguage();
@@ -91,11 +130,21 @@ class Visitor extends FortifiModel
     $payload->sid1 = $sid1;
     $payload->sid2 = $sid2;
     $payload->sid3 = $sid3;
+    return $payload;
+  }
 
+  /**
+   * @param PostActionPayload $payload
+   *
+   * @return PostActionResponse
+   */
+  public function triggerActionWithPayload(PostActionPayload $payload)
+  {
+    $endpoint = AffiliateActionEndpoint::bound($this->_getApi());
     $req = $endpoint->post($payload);
     $result = $this->_processRequest($req);
 
-    if($returnPixels)
+    if($payload->returnPixels)
     {
       /**
        * @var $result PostActionResponse
