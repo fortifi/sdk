@@ -202,6 +202,7 @@ class Customer extends AbstractCustomer
     $this->_processRequest(
       $ep->markPurchased(FidPayload::create($this->_customerFid))
     );
+
     return $this;
   }
 
@@ -233,6 +234,24 @@ class Customer extends AbstractCustomer
     $ep = $this->_getEndpoint();
     $this->_processRequest(
       $ep->setVip(DataNodePropertyPayload::create($this->_customerFid, $bool))
+    );
+    return $this;
+  }
+
+  public function setAccountStatus($status = CustomerAccountStatus::ACTIVE)
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot set a customers account status before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->setAccountStatus(
+        DataNodePropertyPayload::create($this->_customerFid, $status)
+      )
     );
     return $this;
   }
