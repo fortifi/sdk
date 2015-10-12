@@ -6,6 +6,7 @@ use Fortifi\FortifiApi\Generic\CookieReference;
 use Fortifi\Sdk\Models\Customer;
 use Fortifi\Sdk\Models\EmailAddress;
 use Fortifi\Sdk\Models\Event;
+use Fortifi\Sdk\Models\Messenger;
 use Fortifi\Sdk\Models\Prospect;
 use Fortifi\Sdk\Models\Visitor;
 use Fortifi\Sdk\OAuth\FortifiAccessToken;
@@ -288,6 +289,14 @@ class Fortifi
   public function event()
   {
     return Event::newInstance($this);
+  }
+
+  /**
+   * @return Messenger
+   */
+  public function messenger()
+  {
+    return Messenger::newInstance($this);
   }
 
   /**
