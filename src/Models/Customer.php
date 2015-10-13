@@ -189,6 +189,38 @@ class Customer extends AbstractCustomer
     return $this;
   }
 
+  public function markChargedback()
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot mark a customer as chargedback before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->markChargeback(FidPayload::create($this->_customerFid))
+    );
+    return $this;
+  }
+
+  public function markFraud()
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot mark a customer as fraud before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->markFraud(FidPayload::create($this->_customerFid))
+    );
+    return $this;
+  }
+
   public function markPurchased()
   {
     if(empty($this->_customerFid))
