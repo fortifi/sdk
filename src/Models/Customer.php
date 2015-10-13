@@ -287,4 +287,29 @@ class Customer extends AbstractCustomer
     );
     return $this;
   }
+
+  public function setCurrency($currency = 'USD')
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot set a customers currency before setting a customer fid"
+      );
+    }
+
+    if(strlen($currency) != 3)
+    {
+      throw new \RuntimeException(
+        "You must specify the currency in ISO 4217 format"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->setCurrency(
+        DataNodePropertyPayload::create($this->_customerFid, $currency)
+      )
+    );
+    return $this;
+  }
 }
