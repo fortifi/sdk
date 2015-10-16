@@ -9,7 +9,7 @@ use Fortifi\FortifiApi\Customer\Payloads\CreateCustomerPayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerSetAffiliatePayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerSetLocationPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\DataNodePropertyPayload;
-use Fortifi\FortifiApi\Foundation\Payloads\FidPayload;
+use Fortifi\FortifiApi\Foundation\Payloads\MarkDatePayload;
 use Packaged\Helpers\ValueAs;
 
 class Customer extends AbstractCustomer
@@ -173,7 +173,12 @@ class Customer extends AbstractCustomer
     return $this;
   }
 
-  public function markQualified()
+  /**
+   * @param int|null $timestamp
+   *
+   * @return $this
+   */
+  public function markQualified($timestamp = null)
   {
     if(empty($this->_customerFid))
     {
@@ -184,12 +189,19 @@ class Customer extends AbstractCustomer
 
     $ep = $this->_getEndpoint();
     $this->_processRequest(
-      $ep->markQualified(FidPayload::create($this->_customerFid))
+      $ep->markQualified(
+        MarkDatePayload::create($this->_customerFid, $timestamp)
+      )
     );
     return $this;
   }
 
-  public function markChargedback()
+  /**
+   * @param int|null $timestamp
+   *
+   * @return $this
+   */
+  public function markChargedback($timestamp = null)
   {
     if(empty($this->_customerFid))
     {
@@ -200,12 +212,19 @@ class Customer extends AbstractCustomer
 
     $ep = $this->_getEndpoint();
     $this->_processRequest(
-      $ep->markChargeback(FidPayload::create($this->_customerFid))
+      $ep->markChargeback(
+        MarkDatePayload::create($this->_customerFid, $timestamp)
+      )
     );
     return $this;
   }
 
-  public function markFraud()
+  /**
+   * @param int|null $timestamp
+   *
+   * @return $this
+   */
+  public function markFraud($timestamp = null)
   {
     if(empty($this->_customerFid))
     {
@@ -216,12 +235,17 @@ class Customer extends AbstractCustomer
 
     $ep = $this->_getEndpoint();
     $this->_processRequest(
-      $ep->markFraud(FidPayload::create($this->_customerFid))
+      $ep->markFraud(MarkDatePayload::create($this->_customerFid, $timestamp))
     );
     return $this;
   }
 
-  public function markPurchased()
+  /**
+   * @param int|null $timestamp
+   *
+   * @return $this
+   */
+  public function markPurchased($timestamp = null)
   {
     if(empty($this->_customerFid))
     {
@@ -232,7 +256,9 @@ class Customer extends AbstractCustomer
 
     $ep = $this->_getEndpoint();
     $this->_processRequest(
-      $ep->markPurchased(FidPayload::create($this->_customerFid))
+      $ep->markPurchased(
+        MarkDatePayload::create($this->_customerFid, $timestamp)
+      )
     );
 
     return $this;
