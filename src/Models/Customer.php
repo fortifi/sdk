@@ -2,6 +2,7 @@
 namespace Fortifi\Sdk\Models;
 
 use Fortifi\FortifiApi\Affiliate\Enums\AffiliateBuiltInAction;
+use Fortifi\FortifiApi\Affiliate\Enums\ReversalReason;
 use Fortifi\FortifiApi\Customer\Enums\CustomerAccountStatus;
 use Fortifi\FortifiApi\Customer\Enums\CustomerAccountType;
 use Fortifi\FortifiApi\Customer\Enums\CustomerSubscriptionType;
@@ -96,7 +97,6 @@ class Customer extends AbstractCustomer
     $createCustomerPayload->accountStatus = $accountStatus;
     $createCustomerPayload->subscriptionType = $subscriptionType;
     $createCustomerPayload->createdTime = $createdTime;
-    $createCustomerPayload->visitorId = $this->getVisitorId();
 
     $customerEp = $this->_getEndpoint();
     $req = $customerEp->createCustomer($createCustomerPayload);
@@ -337,5 +337,144 @@ class Customer extends AbstractCustomer
       )
     );
     return $this;
+  }
+
+  /**
+   * Record a customer subscription purchase
+   *
+   * @param string $companyFid
+   * @param        $transactionId
+   * @param int    $transactionValue
+   * @param array  $data
+   *
+   * @return $this
+   */
+  public function purchase(
+    $companyFid, $transactionId, $transactionValue = 0, array $data = null
+  )
+  {
+    $this->_fortifi->visitor($this->_visitorId)->triggerAction(
+      $companyFid,
+      AffiliateBuiltInAction::ACQUISITION,
+      $transactionId,
+      $transactionValue,
+      $data
+    );
+    return $this;
+  }
+
+  /**
+   * Record a customer subscription renewal
+   *
+   * @param string $companyFid
+   * @param        $transactionId
+   * @param int    $transactionValue
+   * @param array  $data
+   */
+  public function renewed(
+    $companyFid, $transactionId, $transactionValue = 0, array $data = null
+  )
+  {
+    $this->_fortifi->visitor($this->_visitorId)->triggerAction(
+      $companyFid,
+      AffiliateBuiltInAction::RENEWAL,
+      $transactionId,
+      $transactionValue,
+      $data
+    );
+  }
+
+  /**
+   * Record a customer upsell puchase
+   *
+   * @param string $companyFid
+   * @param        $transactionId
+   * @param int    $transactionValue
+   * @param array  $data
+   *
+   * @return $this
+   */
+  public function purchaseUpsell(
+    $companyFid, $transactionId, $transactionValue = 0, array $data = null
+  )
+  {
+    $this->_fortifi->visitor($this->_visitorId)->triggerAction(
+      $companyFid,
+      AffiliateBuiltInAction::UPSELL,
+      $transactionId,
+      $transactionValue,
+      $data
+    );
+    return $this;
+  }
+
+  /**
+   * Mark a transaction as chargebacked
+   *
+   * @param       $transactionId
+   * @param       $originalAction
+   * @param       $chargebackId
+   * @param int   $chargebackAmount
+   * @param array $data
+   */
+  public function chargeback(
+    $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
+    $chargebackId, $chargebackAmount = 0, array $data = null
+  )
+  {
+    $this->_fortifi->visitor($this->_visitorId)->reverseAction(
+      $transactionId,
+      $originalAction,
+      ReversalReason::CHARGEBACK,
+      $chargebackId,
+      $chargebackAmount,
+      $data
+    );
+  }
+
+  /**
+   * Mark a transaction as cancelled
+   *
+   * @param       $transactionId
+   * @param       $originalAction
+   * @param       $cancelId
+   * @param int   $cancelAmount
+   * @param array $data
+   */
+  public function cancel(
+    $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
+    $cancelId = null, $cancelAmount = 0, array $data = null
+  )
+  {
+    $this->_fortifi->visitor($this->_visitorId)->reverseAction(
+      $transactionId,
+      $originalAction,
+      ReversalReason::CANCEL,
+      $cancelId,
+      $cancelAmount,
+      $data
+    );
+  }
+
+  /**
+   * Mark a transaction as fraud
+   *
+   * @param       $transactionId
+   * @param       $originalAction
+   * @param array $data
+   */
+  public function markAsFraud(
+    $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
+    array $data = null
+  )
+  {
+    $this->_fortifi->visitor($this->_visitorId)->reverseAction(
+      $transactionId,
+      $originalAction,
+      ReversalReason::FRAUD,
+      null,
+      0,
+      $data
+    );
   }
 }
