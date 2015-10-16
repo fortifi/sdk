@@ -97,6 +97,7 @@ class Customer extends AbstractCustomer
     $createCustomerPayload->accountStatus = $accountStatus;
     $createCustomerPayload->subscriptionType = $subscriptionType;
     $createCustomerPayload->createdTime = $createdTime;
+    $createCustomerPayload->visitorId = $this->getVisitorId();
 
     $customerEp = $this->_getEndpoint();
     $req = $customerEp->createCustomer($createCustomerPayload);
