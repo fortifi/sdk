@@ -100,9 +100,9 @@ class Fortifi
     return $fortifi;
   }
 
-  public function getApi()
+  public function getApi($fresh = false)
   {
-    $this->_api->setAccessToken($this->getToken()->accessToken);
+    $this->_api->setAccessToken($this->getToken($fresh)->accessToken);
     return $this->_api;
   }
 
