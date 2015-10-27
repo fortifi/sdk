@@ -97,6 +97,8 @@ class Customer extends AbstractCustomer
     $createCustomerPayload->accountStatus = $accountStatus;
     $createCustomerPayload->subscriptionType = $subscriptionType;
     $createCustomerPayload->createdTime = $createdTime;
+    $createCustomerPayload->userIp = $this->_fortifi->getClientIp();
+    $createCustomerPayload->phoneNumber = $phoneNumber;
     $createCustomerPayload->visitorId = $this->getVisitorId();
 
     $customerEp = $this->_getEndpoint();
@@ -104,17 +106,6 @@ class Customer extends AbstractCustomer
     $customer = $this->_processRequest($req);
 
     $this->_customerFid = $customer->fid;
-
-    if(!empty($phoneNumber))
-    {
-      try
-      {
-        $this->addPhoneNumber($phoneNumber, true);
-      }
-      catch(\Exception $e)
-      {
-      }
-    }
 
     if($triggerLeadAction)
     {
@@ -156,19 +147,6 @@ class Customer extends AbstractCustomer
       catch(\Exception $e)
       {
       }
-    }
-
-    try
-    {
-      $locationPayload = new CustomerSetLocationPayload();
-      $locationPayload->fid = $this->_customerFid;
-      $locationPayload->userIp = $this->_fortifi->getClientIp();
-      $this->_processRequest(
-        $this->_getEndpoint()->setLocation($locationPayload)
-      );
-    }
-    catch(\Exception $e)
-    {
     }
 
     return $this;
