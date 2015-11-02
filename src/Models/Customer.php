@@ -339,7 +339,7 @@ class Customer extends AbstractCustomer
         $reference
       )
     ];
-    $customers = $ep->all($payload)->get();
+    $customers = $this->_processRequest($ep->all($payload));
     if(count($customers->items) > 1)
     {
       return Arrays::first($customers->items);
