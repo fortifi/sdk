@@ -340,7 +340,7 @@ class Customer extends AbstractCustomer
       )
     ];
     $customers = $this->_processRequest($ep->all($payload));
-    if(count($customers->items) > 1)
+    if(count($customers->items) >= 1)
     {
       return Arrays::first($customers->items);
     }
