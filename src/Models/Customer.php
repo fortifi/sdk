@@ -2,15 +2,19 @@
 namespace Fortifi\Sdk\Models;
 
 use Fortifi\FortifiApi\Affiliate\Enums\AffiliateBuiltInAction;
-use Fortifi\FortifiApi\Affiliate\Enums\ReversalReason;
 use Fortifi\FortifiApi\Customer\Enums\CustomerAccountStatus;
 use Fortifi\FortifiApi\Customer\Enums\CustomerAccountType;
 use Fortifi\FortifiApi\Customer\Enums\CustomerSubscriptionType;
 use Fortifi\FortifiApi\Customer\Payloads\CreateCustomerPayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerSetAffiliatePayload;
-use Fortifi\FortifiApi\Customer\Payloads\CustomerSetLocationPayload;
+use Fortifi\FortifiApi\Customer\Responses\CustomerResponse;
+use Fortifi\FortifiApi\Foundation\Enums\AdvancedFilterComparator;
+use Fortifi\FortifiApi\Foundation\Exceptions\NotFoundException;
+use Fortifi\FortifiApi\Foundation\Payloads\AdvancedFilterPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\DataNodePropertyPayload;
 use Fortifi\FortifiApi\Foundation\Payloads\MarkDatePayload;
+use Fortifi\FortifiApi\Foundation\Payloads\PaginatedDataNodePayload;
+use Packaged\Helpers\Arrays;
 use Packaged\Helpers\ValueAs;
 
 class Customer extends AbstractCustomer
@@ -112,7 +116,7 @@ class Customer extends AbstractCustomer
       $trigger = $this->_fortifi->visitor($this->_visitorId)->triggerAction(
         $companyFid,
         AffiliateBuiltInAction::LEAD,
-        $reference,
+        $exRef,
         0,
         [
           'customerFid'        => $this->_customerFid,
@@ -319,141 +323,32 @@ class Customer extends AbstractCustomer
   }
 
   /**
-   * Record a customer subscription purchase
+   * @param $reference
    *
-   * @param string $companyFid
-   * @param        $transactionId
-   * @param int    $transactionValue
-   * @param array  $data
-   *
-   * @return $this
+   * @return CustomerResponse
+   * @throws NotFoundException
    */
-  public function purchase(
-    $companyFid, $transactionId, $transactionValue = 0, array $data = null
-  )
+  public function retrieveCustomerByExternalReference($reference)
   {
-    $this->_fortifi->visitor($this->_visitorId)->triggerAction(
-      $companyFid,
-      AffiliateBuiltInAction::ACQUISITION,
-      $transactionId,
-      $transactionValue,
-      $data
-    );
-    return $this;
-  }
-
-  /**
-   * Record a customer subscription renewal
-   *
-   * @param string $companyFid
-   * @param        $transactionId
-   * @param int    $transactionValue
-   * @param array  $data
-   */
-  public function renewed(
-    $companyFid, $transactionId, $transactionValue = 0, array $data = null
-  )
-  {
-    $this->_fortifi->visitor($this->_visitorId)->triggerAction(
-      $companyFid,
-      AffiliateBuiltInAction::RENEWAL,
-      $transactionId,
-      $transactionValue,
-      $data
-    );
-  }
-
-  /**
-   * Record a customer upsell puchase
-   *
-   * @param string $companyFid
-   * @param        $transactionId
-   * @param int    $transactionValue
-   * @param array  $data
-   *
-   * @return $this
-   */
-  public function purchaseUpsell(
-    $companyFid, $transactionId, $transactionValue = 0, array $data = null
-  )
-  {
-    $this->_fortifi->visitor($this->_visitorId)->triggerAction(
-      $companyFid,
-      AffiliateBuiltInAction::UPSELL,
-      $transactionId,
-      $transactionValue,
-      $data
-    );
-    return $this;
-  }
-
-  /**
-   * Mark a transaction as chargebacked
-   *
-   * @param       $transactionId
-   * @param       $originalAction
-   * @param       $chargebackId
-   * @param int   $chargebackAmount
-   * @param array $data
-   */
-  public function chargeback(
-    $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
-    $chargebackId, $chargebackAmount = 0, array $data = null
-  )
-  {
-    $this->_fortifi->visitor($this->_visitorId)->reverseAction(
-      $transactionId,
-      $originalAction,
-      ReversalReason::CHARGEBACK,
-      $chargebackId,
-      $chargebackAmount,
-      $data
-    );
-  }
-
-  /**
-   * Mark a transaction as cancelled
-   *
-   * @param       $transactionId
-   * @param       $originalAction
-   * @param       $cancelId
-   * @param int   $cancelAmount
-   * @param array $data
-   */
-  public function cancel(
-    $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
-    $cancelId = null, $cancelAmount = 0, array $data = null
-  )
-  {
-    $this->_fortifi->visitor($this->_visitorId)->reverseAction(
-      $transactionId,
-      $originalAction,
-      ReversalReason::CANCEL,
-      $cancelId,
-      $cancelAmount,
-      $data
-    );
-  }
-
-  /**
-   * Mark a transaction as fraud
-   *
-   * @param       $transactionId
-   * @param       $originalAction
-   * @param array $data
-   */
-  public function markAsFraud(
-    $transactionId, $originalAction = AffiliateBuiltInAction::ACQUISITION,
-    array $data = null
-  )
-  {
-    $this->_fortifi->visitor($this->_visitorId)->reverseAction(
-      $transactionId,
-      $originalAction,
-      ReversalReason::FRAUD,
-      null,
-      0,
-      $data
-    );
+    $ep = $this->_getEndpoint();
+    $payload = new PaginatedDataNodePayload();
+    $payload->filter = [
+      AdvancedFilterPayload::create(
+        'externalReference',
+        AdvancedFilterComparator::EQUAL,
+        $reference
+      )
+    ];
+    $customers = $ep->all($payload)->get();
+    if(count($customers->items) > 1)
+    {
+      return Arrays::first($customers->items);
+    }
+    else
+    {
+      throw new NotFoundException(
+        "No customer could be located with the reference $reference"
+      );
+    }
   }
 }
