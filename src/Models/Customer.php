@@ -297,6 +297,24 @@ class Customer extends AbstractCustomer
     return $this;
   }
 
+  public function setSubscriptionType($type = CustomerSubscriptionType::FREE)
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot set a customers subscription type before setting a customer fid"
+      );
+    }
+
+    $ep = $this->_getEndpoint();
+    $this->_processRequest(
+      $ep->setSubscriptionType(
+        DataNodePropertyPayload::create($this->_customerFid, $type)
+      )
+    );
+    return $this;
+  }
+
   public function setCurrency($currency = 'USD')
   {
     if(empty($this->_customerFid))
