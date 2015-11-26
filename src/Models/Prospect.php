@@ -38,6 +38,7 @@ class Prospect extends AbstractCustomer
    * @param string $reference                   Your internal ID for this
    *                                            customer (e.g. user id)
    * @param string $accountType
+   * @param string $createdTime
    *
    * @return $this
    */
@@ -59,7 +60,7 @@ class Prospect extends AbstractCustomer
     $createCustomerPayload->createdTime = $createdTime;
 
     $customerEp = $this->_getEndpoint();
-    $req = $customerEp->createCustomer($createCustomerPayload);
+    $req = $customerEp->createProspect($createCustomerPayload);
     $customer = $this->_processRequest($req);
 
     $this->_customerFid = $customer->fid;
