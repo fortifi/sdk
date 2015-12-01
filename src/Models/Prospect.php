@@ -38,14 +38,15 @@ class Prospect extends AbstractCustomer
    * @param string $reference                   Your internal ID for this
    *                                            customer (e.g. user id)
    * @param string $accountType
-   * @param string $createdTime
+   * @param int    $createdTime
+   * @param bool   $isImport
    *
    * @return $this
    */
   public function create(
     $companyFid, $email, $firstName, $lastName = null, $phoneNumber = null,
     $reference = null, $accountType = CustomerAccountType::RESIDENTIAL,
-    $createdTime = null
+    $createdTime = null, $isImport = false
   )
   {
     $exRef = ValueAs::nonempty($reference, $this->_externalReference);
@@ -58,6 +59,7 @@ class Prospect extends AbstractCustomer
     $createCustomerPayload->lastName = $lastName;
     $createCustomerPayload->accountType = $accountType;
     $createCustomerPayload->createdTime = $createdTime;
+    $createCustomerPayload->isImport = $isImport;
 
     $customerEp = $this->_getEndpoint();
     $req = $customerEp->createProspect($createCustomerPayload);

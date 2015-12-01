@@ -78,6 +78,7 @@ class Customer extends AbstractCustomer
    * @param string $subscriptionType
    * @param bool   $triggerLeadAction
    * @param int    $createdTime
+   * @param bool   $isImport
    *
    * @return $this
    */
@@ -86,7 +87,7 @@ class Customer extends AbstractCustomer
     $reference = null, $accountType = CustomerAccountType::RESIDENTIAL,
     $accountStatus = CustomerAccountStatus::ACTIVE,
     $subscriptionType = CustomerSubscriptionType::FREE,
-    $triggerLeadAction = false, $createdTime = null
+    $triggerLeadAction = false, $createdTime = null, $isImport = false
   )
   {
     $exRef = ValueAs::nonempty($reference, $this->_externalReference);
@@ -104,6 +105,7 @@ class Customer extends AbstractCustomer
     $createCustomerPayload->userIp = $this->_fortifi->getClientIp();
     $createCustomerPayload->phoneNumber = $phoneNumber;
     $createCustomerPayload->visitorId = $this->getVisitorId();
+    $createCustomerPayload->isImport = $isImport;
 
     $customerEp = $this->_getEndpoint();
     $req = $customerEp->createCustomer($createCustomerPayload);
@@ -355,7 +357,7 @@ class Customer extends AbstractCustomer
         'externalReference',
         AdvancedFilterComparator::EQUAL,
         $reference
-      )
+      ),
     ];
     $customers = $this->_processRequest($ep->all($payload));
     if(count($customers->items) >= 1)
