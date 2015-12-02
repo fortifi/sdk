@@ -19,7 +19,7 @@ abstract class FortifiModel
   public static function processRequest(
     Fortifi $fortifi, ApiRequestInterface $request
   )
-  {P
+  {
     try
     {
       return $request->get();
