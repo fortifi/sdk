@@ -16,18 +16,25 @@ abstract class FortifiModel
   {
   }
 
-  protected function _processRequest(ApiRequestInterface $request)
-  {
+  public static function processRequest(
+    Fortifi $fortifi, ApiRequestInterface $request
+  )
+  {P
     try
     {
       return $request->get();
     }
     catch(AccessDeniedException $e)
     {
-      $token = $this->_fortifi->getToken(true);
-      $this->_getApi()->setAccessToken($token->accessToken);
+      $token = $fortifi->getToken(true);
+      $fortifi->getApi()->setAccessToken($token->accessToken);
       return $request->get();
     }
+  }
+
+  protected function _processRequest(ApiRequestInterface $request)
+  {
+    return static::processRequest($this->_fortifi, $request);
   }
 
   public static function newInstance(Fortifi $fortifi)
