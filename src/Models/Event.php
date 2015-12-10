@@ -7,7 +7,9 @@ use Fortifi\FortifiApi\Foundation\Fids\FidHelper;
 
 class Event extends FortifiModel
 {
-  public function trigger($dataNodeFid, $eventAlias, array $data = [])
+  public function trigger(
+    $dataNodeFid, $eventAlias, array $data = [], $triggerMessenger = true
+  )
   {
     if(!FidHelper::isFid($dataNodeFid))
     {
@@ -20,6 +22,7 @@ class Event extends FortifiModel
     $payload->fid = $dataNodeFid;
     $payload->alias = $eventAlias;
     $payload->properties = $data;
+    $payload->triggerMessenger = $triggerMessenger;
 
     $endpoint = EventsEndpoint::bound($this->_getApi());
     return $this->_processRequest($endpoint->triggerEvent($payload));
