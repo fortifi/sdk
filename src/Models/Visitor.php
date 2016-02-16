@@ -14,9 +14,21 @@ use Packaged\Helpers\ValueAs;
 
 class Visitor extends FortifiModel
 {
+  private static $_returnPixels = true;
+
   protected $_visitorId;
   protected $_alias;
   protected $_pixels;
+
+  /**
+   * Set to true to return pixels by default, false will leave pixels queued
+   *
+   * @param boolean $bool
+   */
+  public static function setReturnPixelBehaviour($bool)
+  {
+    self::$_returnPixels = $bool;
+  }
 
   /**
    * @param $visitorId
@@ -67,11 +79,15 @@ class Visitor extends FortifiModel
    */
   public function triggerAction(
     $companyFid, $actionKey, $transactionId, $transactionValue = 0,
-    array $data = null, $couponCode = null, $returnPixels = true,
+    array $data = null, $couponCode = null, $returnPixels = null,
     $userReference = null,
     $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null
   )
   {
+    if($returnPixels === null)
+    {
+      $returnPixels = self::$_returnPixels;
+    }
     $payload = $this->createTriggerActionPayload(
       $companyFid,
       $actionKey,
@@ -107,11 +123,15 @@ class Visitor extends FortifiModel
    */
   public function createTriggerActionPayload(
     $companyFid, $actionKey, $transactionId, $transactionValue = 0,
-    array $data = null, $couponCode = null, $returnPixels = true,
+    array $data = null, $couponCode = null, $returnPixels = null,
     $userReference = null,
     $campaignHash = null, $sid1 = null, $sid2 = null, $sid3 = null
   )
   {
+    if($returnPixels === null)
+    {
+      $returnPixels = self::$_returnPixels;
+    }
     $payload = new PostActionPayload();
     $payload->userAgent = $this->_fortifi->getUserAgent();
     $payload->language = $this->_fortifi->getUserLanguage();
