@@ -4,12 +4,12 @@
   "homepage": "http://fortifi.co",
   "license": "BSD-3-Clause",
   "require": {
-    "fortifi/fortifi-api": "~3",
+    "fortifi/fortifi-api": "~4",
     "league/oauth2-client": "~0.11",
     "packaged/helpers": "~1.0"
   },
   "require-dev": {
-    "fortifi/fortifi-api": "dev-develop as 3.1",
+    "fortifi/fortifi-api": "dev-develop as 4.1",
     "phpunit/phpunit": "~4.6"
   },
   "autoload": {
