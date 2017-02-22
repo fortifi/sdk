@@ -4,6 +4,7 @@ namespace Fortifi\Sdk\Models;
 use Fortifi\FortifiApi\Customer\Endpoints\CustomerEndpoint;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerEmailPayload;
 use Fortifi\FortifiApi\Customer\Payloads\CustomerPhonePayload;
+use Fortifi\FortifiApi\Customer\Payloads\UpdateCustomerPayload;
 use Fortifi\FortifiApi\Property\Endpoints\PropertyEndpoint;
 use Fortifi\FortifiApi\Property\Payloads\SetPropertyValuePayload;
 use Packaged\Helpers\ValueAs;
@@ -137,6 +138,22 @@ abstract class AbstractCustomer extends FortifiModel
       $this->_getPropertyEndpoint()->decrementCounter($payload)
     );
 
+    return $this;
+  }
+
+  public function setName($first, $last)
+  {
+    if(empty($this->_customerFid))
+    {
+      throw new \RuntimeException(
+        "You cannot set a name before setting a customer fid"
+      );
+    }
+
+    $pl = UpdateCustomerPayload::create($this->_customerFid);
+    $pl->firstName = $first;
+    $pl->lastName = $last;
+    $this->_processRequest($this->_getEndpoint()->update($pl));
     return $this;
   }
 }
