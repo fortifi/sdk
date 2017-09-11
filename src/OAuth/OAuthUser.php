@@ -10,6 +10,10 @@ class OAuthUser extends GenericResourceOwner
 
   public function getId()
   {
+    if($this->_authUserDetails instanceof AuthUserDetailsResponse)
+    {
+      return $this->_authUserDetails->userFid ?: $this->resourceOwnerId;
+    }
     return $this->resourceOwnerId;
   }
 
