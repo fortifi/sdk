@@ -14,6 +14,10 @@ class FortifiAccessToken extends AccessToken
    */
   public function __construct(array $options = null)
   {
+    if(isset($options['uid']) && !isset($options['resource_owner_id']))
+    {
+      $options['resource_owner_id'] = $options['uid'];
+    }
     parent::__construct($options);
 
     if(isset($options['session_secret']))

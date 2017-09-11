@@ -4,12 +4,14 @@ namespace Fortifi\Tests\Sdk\OAuth;
 use Fortifi\Sdk\OAuth\Client;
 use Fortifi\Sdk\OAuth\FortifiProvider;
 use League\OAuth2\Client\Token\AccessToken;
+use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
-class FortifiProviderTest extends \PHPUnit_Framework_TestCase
+class FortifiProviderTest extends TestCase
 {
   public function testUrls()
   {
-    $fortifiUrl = 'http://org-dc-1448-6f535.fortifi.co';
+    $fortifiUrl = 'http://org-dc-1448-6f535.fortifi.io';
     $provider = new FortifiProvider();
     $provider->setFortifiUrl($fortifiUrl);
     $provider->setOrgFid('org-dc-1448-6f535');
@@ -18,17 +20,19 @@ class FortifiProviderTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals(
       $fortifiUrl . '/oauth/access-token',
-      $provider->urlAccessToken()
+      $provider->getBaseAccessTokenUrl([])
     );
 
     $this->assertEquals(
       $fortifiUrl . '/oauth/authorize',
-      $provider->urlAuthorize()
+      $provider->getBaseAuthorizationUrl()
     );
 
     $this->assertEquals(
       $fortifiUrl . '/auth/details?access_token=abc',
-      $provider->urlUserDetails(new AccessToken(['access_token' => 'abc']))
+      $provider->getResourceOwnerDetailsUrl(
+        new AccessToken(['access_token' => 'abc'])
+      )
     );
 
     $this->assertEquals(
@@ -71,15 +75,15 @@ class FortifiProviderTest extends \PHPUnit_Framework_TestCase
     $provider = new FortifiProvider();
     $provider->setUserDetailsCache($response);
 
-    $user = $provider->getUserDetails($token);
-    $this->assertEquals($details->userFid, $user->uid);
+    $user = $provider->getResourceOwner($token);
+    $this->assertEquals($details->userFid, $user->getId());
 
-    $this->assertEquals($details->username, $provider->getUserEmail($token));
+    $this->assertEquals($details->username, $provider->userEmail($user));
     $this->assertEquals(
       $details->displayName,
-      $provider->getUserScreenName($token)
+      $provider->userScreenName($user)
     );
-    $this->assertEquals($details->userFid, $provider->getUserUid($token));
+    $this->assertEquals($details->userFid, $provider->userUid($user));
   }
 
   public function testClient()
@@ -105,11 +109,11 @@ class FortifiProviderTest extends \PHPUnit_Framework_TestCase
     $token = new AccessToken(['access_token' => 'abc']);
     $provider = new MockProvider();
 
-    $fortifiUrl = 'http://api.fortifi.co';
+    $fortifiUrl = 'http://api.fortifi.io';
     $provider->setFortifiUrl($fortifiUrl);
     $provider->setOrgFid('org-xyz');
 
-    $provider->getUserDetails($token);
+    $provider->getResourceOwner($token);
     $this->assertEquals(
       $fortifiUrl . '/auth/details?access_token=abc',
       $provider->getLastUrl()
@@ -130,11 +134,11 @@ class MockProvider extends FortifiProvider
   protected $_lastUrl;
   protected $_lastHeaders;
 
-  protected function fetchProviderData($url, array $headers = [])
+  public function getResponse(RequestInterface $request)
   {
-    $this->_lastUrl = $url;
-    $this->_lastHeaders = $headers;
-    return true;
+    $this->_lastUrl = (string)$request->getUri();
+    $this->_lastHeaders = $request->getHeaders();
+    return parent::getResponse($request);
   }
 
   public function getLastUrl()

@@ -2,21 +2,15 @@
 namespace Fortifi\Sdk\OAuth;
 
 use Fortifi\FortifiApi\Auth\Responses\AuthUserDetailsResponse;
-use Fortifi\FortifiApi\Foundation\Exceptions\FortifiApiException;
-use Guzzle\Http\Exception\BadResponseException;
-use GuzzleHttp\Message\Response;
-use GuzzleHttp\Message\ResponseInterface;
-use GuzzleHttp\Stream\Stream;
-use League\OAuth2\Client\Exception\IDPException;
+use League\OAuth2\Client\Grant\AbstractGrant;
 use League\OAuth2\Client\Provider\AbstractProvider;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
-use Packaged\Api\Exceptions\InvalidApiResponseException;
-use Packaged\Api\Format\JsonFormat;
-use Packaged\Api\Response\ApiCallData;
-use Packaged\Api\Response\ResponseBuilder;
-use Packaged\Helpers\Objects;
+use Packaged\Helpers\Arrays;
 use Packaged\Helpers\Path;
 use Packaged\Helpers\ValueAs;
+use Psr\Http\Message\ResponseInterface;
 
 class FortifiProvider extends AbstractProvider
 {
@@ -54,6 +48,7 @@ class FortifiProvider extends AbstractProvider
 
   /**
    * Retrieve the current organisation ID
+   *
    * @return string|null
    */
   public function getOrgFid()
@@ -72,33 +67,6 @@ class FortifiProvider extends AbstractProvider
   }
 
   /**
-   * @return string
-   */
-  public function urlAuthorize()
-  {
-    return Path::buildUnix($this->_url, 'oauth', 'authorize');
-  }
-
-  /**
-   * @return string
-   */
-  public function urlAccessToken()
-  {
-    return Path::buildUnix($this->_url, 'oauth', 'access-token');
-  }
-
-  /**
-   * @param AccessToken $token
-   *
-   * @return string
-   */
-  public function urlUserDetails(AccessToken $token)
-  {
-    return Path::buildUnix($this->_url, 'auth', 'details')
-    . '?access_token=' . $token->accessToken;
-  }
-
-  /**
    * @param AccessToken $token
    *
    * @return string
@@ -106,19 +74,22 @@ class FortifiProvider extends AbstractProvider
   public function urlLogout(AccessToken $token)
   {
     return Path::buildUnix($this->_url, 'auth', 'logout')
-    . '?access_token=' . $token->accessToken;
+      . '?access_token=' . $token->getToken();
   }
 
   /**
-   * @param             $response
-   * @param AccessToken $token
+   * Generates a resource owner object from a successful resource owner
+   * details request.
    *
-   * @return OAuthUser
+   * @param  array       $response
+   * @param  AccessToken $token
+   *
+   * @return ResourceOwnerInterface
    */
-  public function userDetails($response, AccessToken $token)
+  protected function createResourceOwner(array $response, AccessToken $token)
   {
-    $user = new OAuthUser();
-    $result = Objects::property($response, 'result', $response);
+    $result = isset($response['result']) ? $response['result'] : [];
+
     /**
      * @var $result AuthUserDetailsResponse
      */
@@ -126,8 +97,7 @@ class FortifiProvider extends AbstractProvider
     {
       $result = AuthUserDetailsResponse::make($result);
     }
-    $user->setAuthUserDetails($result);
-    $user->exchangeArray(
+    $user = new OAuthUser(
       [
         'uid'         => $result->userFid,
         'nickname'    => ValueAs::nonempty(
@@ -144,109 +114,66 @@ class FortifiProvider extends AbstractProvider
         'firstName'   => $result->firstName,
         'lastName'    => $result->lastName,
         'description' => $result->description,
-        'email'       => $result->username
-      ]
+        'email'       => $result->username,
+      ], $result->userFid
     );
+    $user->setAuthUserDetails($result);
     return $user;
   }
 
-  public function userUid($response, AccessToken $token)
+  public function userUid(ResourceOwnerInterface $owner)
   {
-    return $this->_getProperty($response, ['userFid', 'authedFid', 'id']);
+    return Arrays::inonempty(
+      $owner->toArray(),
+      ['userFid', 'authedFid', 'uid']
+    );
   }
 
-  public function userEmail($response, AccessToken $token)
+  public function userEmail(ResourceOwnerInterface $owner)
   {
-    return $this->_getProperty($response, ['email', 'username']);
+    return Arrays::inonempty($owner->toArray(), ['email', 'username']);
   }
 
-  public function userScreenName($response, AccessToken $token)
+  public function userScreenName(ResourceOwnerInterface $owner)
   {
-    return $this->_getProperty($response, ['displayName', 'name', 'firstName']);
-  }
-
-  protected function _getProperty($object, $propertyList)
-  {
-    $properties = (array)$propertyList;
-    $result = Objects::pnonempty($object, $properties);
-    if($result === null && isset($object->result))
-    {
-      $result = Objects::pnonempty($object->result, $properties);
-    }
-    return $result;
+    return Arrays::inonempty(
+      $owner->toArray(),
+      ['displayName', 'name', 'firstName']
+    );
   }
 
   public function logout(AccessToken $token)
   {
-    $this->fetchProviderData(
-      $this->urlLogout($token),
-      $this->getHeaders($token)
+    $this->getParsedResponse(
+      $this->getAuthenticatedRequest(
+        "POST",
+        $this->urlLogout($token),
+        $token,
+        ['headers' => $this->getHeaders($token)]
+      )
     );
     return true;
   }
 
-  protected function fetchUserDetails(AccessToken $token)
+  protected function fetchResourceOwnerDetails(AccessToken $token)
   {
     if($this->_userDetails === null)
     {
-      $this->setUserDetailsCache(parent::fetchUserDetails($token));
+      $this->setUserDetailsCache(parent::fetchResourceOwnerDetails($token));
     }
     return $this->_userDetails;
   }
 
-  protected function fetchProviderData($url, array $headers = [])
-  {
-    $time = microtime(true);
-    try
-    {
-      $client = $this->getHttpClient();
-      $client->setBaseUrl($url);
-
-      if($headers)
-      {
-        $client->setDefaultOption('headers', $headers);
-      }
-
-      $request = $client->get()->send();
-      $response = $request->getBody();
-    }
-    catch(BadResponseException $e)
-    {
-      // @codeCoverageIgnoreStart
-      $decode = new JsonFormat();
-      try
-      {
-        $totalTime = microtime(true) - $time;
-
-        $response = $decode->decode(
-          new Response(
-            $e->getResponse()->getStatusCode(),
-            $e->getResponse()->getHeaders()->getAll(),
-            new Stream($e->getResponse()->getBody()->getStream())
-          ),
-          $totalTime
-        );
-
-        throw new \Exception(
-          $response->getApiCallData()->getStatusMessage(),
-          $response->getApiCallData()->getStatusCode(),
-          $e
-        );
-      }
-      catch(InvalidApiResponseException $ex)
-      {
-        $raw_response = explode("\n", $e->getResponse());
-        throw new IDPException(end($raw_response));
-      }
-      // @codeCoverageIgnoreEnd
-    }
-
-    return $response;
-  }
-
   public function setUserDetailsCache($response)
   {
-    $this->_userDetails = $response;
+    if(is_string($response))
+    {
+      $this->_userDetails = $this->parseJson($response);
+    }
+    else
+    {
+      $this->_userDetails = $response;
+    }
     return $this;
   }
 
@@ -268,4 +195,92 @@ class FortifiProvider extends AbstractProvider
     $headers = parent::getHeaders($token);
     return array_merge($headers, ['X-Fortifi-Org' => $this->_orgFid]);
   }
+
+  /**
+   * Returns the base URL for authorizing a client.
+   *
+   * Eg. https://oauth.service.com/authorize
+   *
+   * @return string
+   */
+  public function getBaseAuthorizationUrl()
+  {
+    return Path::buildUnix($this->_url, 'oauth', 'authorize');
+  }
+
+  /**
+   * Returns the base URL for requesting an access token.
+   *
+   * Eg. https://oauth.service.com/token
+   *
+   * @param array $params
+   *
+   * @return string
+   */
+  public function getBaseAccessTokenUrl(array $params)
+  {
+    return Path::buildUnix($this->_url, 'oauth', 'access-token');
+  }
+
+  /**
+   * Returns the URL for requesting the resource owner's details.
+   *
+   * @param AccessToken $token
+   *
+   * @return string
+   */
+  public function getResourceOwnerDetailsUrl(AccessToken $token)
+  {
+    return Path::buildUnix($this->_url, 'auth', 'details')
+      . '?access_token=' . $token->getToken();
+  }
+
+  /**
+   * Returns the default scopes used by this provider.
+   *
+   * This should only be the scopes that are required to request the details
+   * of the resource owner, rather than all the available scopes.
+   *
+   * @return array
+   */
+  protected function getDefaultScopes()
+  {
+    return [];
+  }
+
+  /**
+   * Checks a provider response for errors.
+   *
+   * @throws IdentityProviderException
+   *
+   * @param  ResponseInterface $response
+   * @param  array|string      $data Parsed response data
+   *
+   * @return void
+   */
+  protected function checkResponse(ResponseInterface $response, $data)
+  {
+    //error_log(print_r(['data' => $data, 'resp' => $response], true));
+  }
+
+  /**
+   * Creates an access token from a response.
+   *
+   * The grant that was used to fetch the response can be used to provide
+   * additional context.
+   *
+   * @param  array         $response
+   * @param  AbstractGrant $grant
+   *
+   * @return AccessToken
+   */
+  protected function createAccessToken(array $response, AbstractGrant $grant)
+  {
+    if($grant instanceof FortifiGrant)
+    {
+      return $grant->handleResponse($response);
+    }
+    return new AccessToken($response);
+  }
+
 }

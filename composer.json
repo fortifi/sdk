@@ -4,12 +4,13 @@
   "homepage": "http://fortifi.co",
   "license": "BSD-3-Clause",
   "require": {
-    "fortifi/fortifi-api": "^7",
-    "league/oauth2-client": "~0.11",
-    "packaged/helpers": "~1.7"
+    "fortifi/fortifi-api": "~7.20",
+    "league/oauth2-client": "~2.2",
+    "packaged/helpers": "~1.7",
+    "packaged/api": "1.0.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.8"
+    "phpunit/phpunit": "~6.3"
   },
   "autoload": {
     "psr-4": {
@@ -20,6 +21,10 @@
     {
       "type": "vcs",
       "url": "git@github.com:fortifi/fortifi-api.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:packaged/api.git"
     }
   ]
 }
