@@ -7,7 +7,7 @@
     "fortifi/fortifi-api": "dev-api-update",
     "league/oauth2-client": "~2.2",
     "packaged/helpers": "~1.7",
-    "packaged/api": "1.0.0-RC1"
+    "packaged/api": "1.0.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~6.3"
