@@ -2,8 +2,9 @@
 namespace Fortifi\Tests\Sdk\OAuth;
 
 use Fortifi\Sdk\OAuth\RefreshTokenGrant;
+use PHPUnit\Framework\TestCase;
 
-class RefreshTokenGrantTest extends \PHPUnit_Framework_TestCase
+class RefreshTokenGrantTest extends TestCase
 {
   public function testHandleResponse()
   {

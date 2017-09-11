@@ -2,8 +2,9 @@
 namespace Fortifi\Tests\Sdk\OAuth;
 
 use Fortifi\Sdk\OAuth\FortifiAccessToken;
+use PHPUnit\Framework\TestCase;
 
-class FortifiAccessTokenTest extends \PHPUnit_Framework_TestCase
+class FortifiAccessTokenTest extends TestCase
 {
   public function testSessionSecret()
   {

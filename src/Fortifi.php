@@ -68,7 +68,7 @@ class Fortifi
       $prefix = 's';
     }
 
-    static::$apiHost = $prefix . 'api.fortifi.co';
+    static::$apiHost = $prefix . 'api.fortifi.io';
   }
 
   public static function getInstance(
@@ -102,7 +102,7 @@ class Fortifi
 
   public function getApi()
   {
-    $this->_api->setAccessToken($this->getToken()->accessToken);
+    $this->_api->setAccessToken($this->getToken()->getToken());
     return $this->_api;
   }
 
@@ -147,7 +147,7 @@ class Fortifi
       'HTTP_X_CLUSTER_CLIENT_IP',
       'HTTP_FORWARDED_FOR',
       'HTTP_FORWARDED',
-      'REMOTE_ADDR'
+      'REMOTE_ADDR',
     ];
     if($ip === null)
     {

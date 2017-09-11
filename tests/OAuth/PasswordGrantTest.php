@@ -2,8 +2,9 @@
 namespace Fortifi\Tests\Sdk\OAuth;
 
 use Fortifi\Sdk\OAuth\PasswordGrant;
+use PHPUnit\Framework\TestCase;
 
-class PasswordGrantTest extends \PHPUnit_Framework_TestCase
+class PasswordGrantTest extends TestCase
 {
   public function testHandleResponse()
   {

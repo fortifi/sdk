@@ -2,11 +2,16 @@
 namespace Fortifi\Sdk\OAuth;
 
 use Fortifi\FortifiApi\Auth\Responses\AuthUserDetailsResponse;
-use League\OAuth2\Client\Entity\User;
+use League\OAuth2\Client\Provider\GenericResourceOwner;
 
-class OAuthUser extends User
+class OAuthUser extends GenericResourceOwner
 {
   protected $_authUserDetails;
+
+  public function getId()
+  {
+    return $this->resourceOwnerId;
+  }
 
   /**
    * @return AuthUserDetailsResponse
