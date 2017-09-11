@@ -4,7 +4,7 @@
   "homepage": "http://fortifi.co",
   "license": "BSD-3-Clause",
   "require": {
-    "fortifi/fortifi-api": "dev-api-update",
+    "fortifi/fortifi-api": "~7.20",
     "league/oauth2-client": "~2.2",
     "packaged/helpers": "~1.7",
     "packaged/api": "1.0.0"
