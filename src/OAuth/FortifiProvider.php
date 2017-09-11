@@ -2,6 +2,7 @@
 namespace Fortifi\Sdk\OAuth;
 
 use Fortifi\FortifiApi\Auth\Responses\AuthUserDetailsResponse;
+use League\OAuth2\Client\Grant\AbstractGrant;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
@@ -260,6 +261,26 @@ class FortifiProvider extends AbstractProvider
   protected function checkResponse(ResponseInterface $response, $data)
   {
     //error_log(print_r(['data' => $data, 'resp' => $response], true));
+  }
+
+  /**
+   * Creates an access token from a response.
+   *
+   * The grant that was used to fetch the response can be used to provide
+   * additional context.
+   *
+   * @param  array         $response
+   * @param  AbstractGrant $grant
+   *
+   * @return AccessToken
+   */
+  protected function createAccessToken(array $response, AbstractGrant $grant)
+  {
+    if($grant instanceof FortifiGrant)
+    {
+      return $grant->handleResponse($response);
+    }
+    return new AccessToken($response);
   }
 
 }

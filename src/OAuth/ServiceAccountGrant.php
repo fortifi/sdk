@@ -3,7 +3,7 @@ namespace Fortifi\Sdk\OAuth;
 
 use League\OAuth2\Client\Grant\AbstractGrant;
 
-class ServiceAccountGrant extends AbstractGrant
+class ServiceAccountGrant extends AbstractGrant implements FortifiGrant
 {
   protected $_apiKey;
   protected $_apiUser;
