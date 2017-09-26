@@ -262,7 +262,7 @@ class FortifiProvider extends AbstractProvider
   {
     if($response->getStatusCode() != 200)
     {
-      $msg = Arrays::value($data, ['message'], 'An unknown error occurred');
+      $msg = Arrays::value($data, 'message', 'An unknown error occurred');
       throw new IdentityProviderException($msg, $response->getStatusCode(), (array)$data);
     }
   }
