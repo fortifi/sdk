@@ -146,7 +146,7 @@ class FortifiProvider extends AbstractProvider
   {
     $this->getParsedResponse(
       $this->getAuthenticatedRequest(
-        "POST",
+        "GET",
         $this->urlLogout($token),
         $token,
         ['headers' => $this->getHeaders($token)]
