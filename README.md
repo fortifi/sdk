@@ -1,4 +1,4 @@
-sdk
+DEPRECATED
 ===
 
-Fortifi SDK
+Please use https://github.com/fortifi/php-api
