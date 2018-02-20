@@ -260,15 +260,11 @@ class FortifiProvider extends AbstractProvider
    */
   protected function checkResponse(ResponseInterface $response, $data)
   {
-    $dataIsArray = is_array($data);
-    if($response->getStatusCode() != 200 || !$dataIsArray)
+    if($response->getStatusCode() != 200 || !is_array($data))
     {
-      if(!$dataIsArray)
-      {
-        $data = [$data];
-      }
+      $data = ValueAs::arr($data);
       $msg = Arrays::value($data, 'message', 'An unknown error occurred');
-      throw new IdentityProviderException($msg, $response->getStatusCode(), (array)$data);
+      throw new IdentityProviderException($msg, $response->getStatusCode(), $data);
     }
   }
 
